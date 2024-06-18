@@ -14,12 +14,9 @@ namespace ProjetoNotas.Mapping
         public void Configure(EntityTypeBuilder<Aluno> builder)
         {
             builder.ToTable("Aluno");
-
             builder.HasKey(x => x.AlunoId);
-
             builder.Property(x => x.AlunoId)
             .ValueGeneratedOnAdd().UseIdentityColumn(); ;
-
 
             builder.Property(x => x.Nome)
             .IsRequired()
@@ -62,7 +59,6 @@ namespace ProjetoNotas.Mapping
             .WithMany(x => x.Alunos)
             .UsingEntity<Dictionary<string, object>>(
 
-
              "AlunoDisciplina",
 
               Disciplina => Disciplina.HasOne<Disciplina>()
@@ -76,13 +72,6 @@ namespace ProjetoNotas.Mapping
              .HasForeignKey("AlunoId")
              .HasConstraintName("FK_AlunoDisciplina_AlunoId")
              .OnDelete(DeleteBehavior.NoAction));
-
-              
-
-             
-
-
-
         }
     }
 }

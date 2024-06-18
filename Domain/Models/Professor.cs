@@ -13,11 +13,7 @@ namespace ProjetoNotas.Models
         public int Idade { get; set; }
         public string? Email { get; set; }
         public string? Senha { get; set; }
-
         public override string Role => "Professor";
-
         public IList<Classe> Classes { get; set; } = new List<Classe>();
-
-     
     }
 }

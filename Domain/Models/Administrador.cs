@@ -7,11 +7,7 @@ namespace ProjetoNotas.Domain.Models
 {
     public class Administrador : User
     {
-     
         public int AdministradorId { get; set; }
-   
         public override string Role => "Admin";
-        
-   
     }
 }

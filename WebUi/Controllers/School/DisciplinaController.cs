@@ -12,20 +12,17 @@ using ProjetoNotas.Domain.ViewModels;
 
 namespace ProjetoNotas.WebUi.Controllers
 {
-    
     [ApiController]
     [Authorize(Roles = "Admin")]
     public class DisciplinaController : ControllerBase, IDisciplinaController
     {
         private readonly IDisciplinaService _disciplinaService;
-
         public DisciplinaController(IDisciplinaService disciplinaService)
         {
             _disciplinaService = disciplinaService;
         }
 
         [HttpGet("v1/getdisciplina/{id}")]
-
         public async Task<ActionResult<Disciplina>> GetDisciplinaByIdAsync(int id)
         {
             var disciplina = await _disciplinaService.GetDisciplinaByIdAsync(id);
@@ -35,7 +32,6 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             return Ok(disciplina);
         }
-
 
         [HttpPost("v1/adddisciplina")]
         public async Task<ActionResult<Disciplina>> AddDisciplinaAsync([FromServices] EscolaDataContext context, [FromBody] CreateDisciplinaViewModel model)

@@ -6,20 +6,15 @@ using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Models;
 using ProjetoNotas.ViewModels;
-
 namespace ProjetoNotas.WebUi.Services
 {
     public class ClasseService : IClasseService
     {
-         private readonly IClasseRepository _classeRepository;
-      
-
+        private readonly IClasseRepository _classeRepository;
         public ClasseService(IClasseRepository alunoRepository)
         {
             _classeRepository = alunoRepository;
-           
         }
-
         public async Task<Classe> GetClasseByIdAsync(int id)
         {
             try
@@ -31,13 +26,11 @@ namespace ProjetoNotas.WebUi.Services
                 }
                 return classe;
             }
-             catch (Exception)
-        {
-            throw new Exception("Falha interna no servidor");
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
         }
-           
-        }
-
         public async Task<Classe> AddClasseAsync(EscolaDataContext context, CreateClasseViewModel model)
         {
             // if (!ModelState.IsValid)
@@ -48,12 +41,11 @@ namespace ProjetoNotas.WebUi.Services
             {
                 Serie = model.Serie,
                 Turma = model.Turma,
-               
+
             };
             await _classeRepository.AddAsync(classe);
             return classe;
         }
-
         public async Task<bool> UpdateClasseAsync(int id, Classe classe)
         {
             try
@@ -70,10 +62,9 @@ namespace ProjetoNotas.WebUi.Services
             }
             catch (Exception)
             {
-                 throw new Exception("Falha interna no servidor");
+                throw new Exception("Falha interna no servidor");
             }
         }
-
         public async Task<bool> DeleteClasseAsync(int id)
         {
             try
@@ -84,7 +75,7 @@ namespace ProjetoNotas.WebUi.Services
                     return false;
                 }
                 await _classeRepository.DeleteAsync(classe);
-                
+
                 return true;
             }
             catch (Exception)
@@ -92,6 +83,5 @@ namespace ProjetoNotas.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-
     }
 }

@@ -12,29 +12,24 @@ namespace ProjetoNotas.Repository
     public class ProfessorRepository : IProfessorRepository
     {
         private readonly EscolaDataContext _context;
-
         public ProfessorRepository(EscolaDataContext context)
         {
             _context = context;
         }
-
         public async Task AddAsync(Professor professor)
         {
             await _context.Professores.AddAsync(professor);
             await _context.SaveChangesAsync();
         }
-
         public async Task DeleteAsync(Professor professor)
         {
             _context.Professores.Remove(professor);
             await _context.SaveChangesAsync();
         }
-
         public async Task<Professor> GetByIdAsync(int id)
         {
             return await _context.Professores.FirstOrDefaultAsync(x => x.ProfessorId == id);
         }
-
         public async Task UpdateAsync(Professor professor)
         {
             _context.Professores.Update(professor);

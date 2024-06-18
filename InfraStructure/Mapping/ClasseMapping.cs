@@ -11,17 +11,12 @@ namespace ProjetoNotas.Mapping
 {
     public class ClasseMapping : IEntityTypeConfiguration<Classe>
     {
-
-
         public void Configure(EntityTypeBuilder<Classe> builder)
         {
             builder.ToTable("Classe");
-
             builder.HasKey(x => x.ClasseId);
-
             builder.Property(x => x.ClasseId)
             .ValueGeneratedOnAdd().UseIdentityColumn();
-
 
             builder.Property(x => x.Serie)
             .IsRequired()
@@ -39,7 +34,6 @@ namespace ProjetoNotas.Mapping
             .WithMany(x => x.Classes)
             .UsingEntity<Dictionary<string, object>>(
 
-
              "ClasseProfessor",
 
               Professor => Professor.HasOne<Professor>()
@@ -53,15 +47,6 @@ namespace ProjetoNotas.Mapping
              .HasForeignKey("ClasseId")
              .HasConstraintName("FK_ClasseProfessor_ClasseId")
              .OnDelete(DeleteBehavior.NoAction));
-
-           
-             
-
-
-             
-
-            
-
         }
     }
 }

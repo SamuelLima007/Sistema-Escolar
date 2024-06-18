@@ -16,7 +16,6 @@ namespace ProjetoNotas.Controllers
     [ApiController]
     public class ClasseController : ControllerBase, IClasseController
     {
-       
         [Authorize(Roles = "Admin")]
         [HttpGet("v1/getclasse/{id}")]
         public async Task<IActionResult> GetClasseByIdAsync([FromServices] EscolaDataContext context, [FromRoute] int id)
@@ -24,12 +23,10 @@ namespace ProjetoNotas.Controllers
             try
             {
                 var classe = await context.Classes.FirstOrDefaultAsync(x => x.ClasseId == id);
-
                 if (classe == null)
                 {
                     return NotFound();
                 }
-
                 return Ok(classe);
             }
             catch (Exception)
@@ -39,7 +36,6 @@ namespace ProjetoNotas.Controllers
         }
 
         [HttpPost("v1/addclasse")]
-
         public async Task<IActionResult> AddClasseAsync([FromServices] EscolaDataContext context, [FromBody] CreateClasseViewModel model)
         {
             try
@@ -53,12 +49,10 @@ namespace ProjetoNotas.Controllers
                 await context.SaveChangesAsync();
                 return Created($"v1/classes{classe.ClasseId}", await context.SaveChangesAsync());
             }
-
             catch (Exception)
             {
                 return StatusCode(500, "Falha interna no servidor");
             }
-
         }
 
         [HttpPut("v1/updateclasse/{id}")]
@@ -83,8 +77,8 @@ namespace ProjetoNotas.Controllers
                 return StatusCode(500, "Falha interna no servidor");
             }
         }
-        [HttpDelete("v1/deleteclasse/{id:int}")]
 
+        [HttpDelete("v1/deleteclasse/{id:int}")]
         public async Task<IActionResult> DeleteClasseAsync([FromServices] EscolaDataContext context, [FromRoute] int id)
         {
             try
@@ -103,6 +97,5 @@ namespace ProjetoNotas.Controllers
                 return StatusCode(500, "Falha interna no servidor");
             }
         }
-
     }
 }

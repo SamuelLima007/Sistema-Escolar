@@ -12,15 +12,11 @@ namespace ProjetoNotas.WebUi.Services
     public class DisciplinaService : IDisciplinaService
     {
         private readonly IDisciplinaRepository _disciplinaRepository;
-    
-
         public DisciplinaService(IDisciplinaRepository disciplinaRepository)
         {
             _disciplinaRepository = disciplinaRepository;
-           
+
         }
-
-
         public async Task<Disciplina> GetDisciplinaByIdAsync(int id)
         {
             try
@@ -32,13 +28,11 @@ namespace ProjetoNotas.WebUi.Services
                 }
                 return Disciplina;
             }
-             catch (Exception)
-        {
-            throw new Exception("Falha interna no servidor");
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
         }
-           
-        }
-
         public async Task<Disciplina> AddDisciplinaAsync(EscolaDataContext context, CreateDisciplinaViewModel model)
         {
             // if (!ModelState.IsValid)
@@ -48,12 +42,11 @@ namespace ProjetoNotas.WebUi.Services
             var Disciplina = new Disciplina()
             {
                 Nome = model.Nome,
-               
+
             };
             await _disciplinaRepository.AddAsync(Disciplina);
             return Disciplina;
         }
-
         public async Task<bool> UpdateDisciplinaAsync(int id, Disciplina Disciplina)
         {
             try
@@ -64,16 +57,15 @@ namespace ProjetoNotas.WebUi.Services
                     return false;
                 }
                 NDisciplina.Nome = Disciplina.Nome;
-               
+
                 await _disciplinaRepository.UpdateAsync(NDisciplina);
                 return true;
             }
             catch (Exception)
             {
-                 throw new Exception("Falha interna no servidor");
+                throw new Exception("Falha interna no servidor");
             }
         }
-
         public async Task<bool> DeleteDisciplinaAsync(int id)
         {
             try
@@ -84,7 +76,7 @@ namespace ProjetoNotas.WebUi.Services
                     return false;
                 }
                 await _disciplinaRepository.DeleteAsync(Disciplina);
-                
+
                 return true;
             }
             catch (Exception)

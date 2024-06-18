@@ -21,7 +21,6 @@ namespace ProjetoNotas.Attributes
                 };
                 return;
             }
-
             if (!Configuration.ApiKey.Equals(extractedApiKey))
             {
                 context.Result = new ContentResult()
@@ -29,12 +28,8 @@ namespace ProjetoNotas.Attributes
                     StatusCode = 403,
                     Content = "Acesso não autorizado"
                 };
-            
             }
-
             await next();
-            
-           
         }
     }
 }

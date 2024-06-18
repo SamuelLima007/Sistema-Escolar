@@ -14,15 +14,10 @@ namespace ProjetoNotas.WebUi.Services
     public class AdministradorService : IAdministradorService
     {
         private readonly IAdministradorRepository _administradorRepository;
-    
-
         public AdministradorService(IAdministradorRepository administradorRepository)
         {
             _administradorRepository = administradorRepository;
-           
         }
-
-
         public async Task<Administrador> GetAdministradorByIdAsync(int id)
         {
             try
@@ -34,13 +29,11 @@ namespace ProjetoNotas.WebUi.Services
                 }
                 return Administrador;
             }
-             catch (Exception)
-        {
-            throw new Exception("Falha interna no servidor");
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
         }
-           
-        }
-
         public async Task<Administrador> AddAdministradorAsync(EscolaDataContext context, CreateAdministradorViewModel model)
         {
             // if (!ModelState.IsValid)
@@ -50,16 +43,15 @@ namespace ProjetoNotas.WebUi.Services
             var administrador = new Administrador()
             {
                 Nome = model.Nome,
-               
+
                 Email = model.Email,
                 Senha = PasswordHasher.Hash(model.Senha),
-        
+
                 Role = model.Roles
             };
             await _administradorRepository.AddAsync(administrador);
             return administrador;
         }
-
         public async Task<bool> UpdateAdministradorAsync(int id, Administrador Administrador)
         {
             try
@@ -77,10 +69,9 @@ namespace ProjetoNotas.WebUi.Services
             }
             catch (Exception)
             {
-                 throw new Exception("Falha interna no servidor");
+                throw new Exception("Falha interna no servidor");
             }
         }
-
         public async Task<bool> DeleteAdministradorAsync(int id)
         {
             try
@@ -91,7 +82,7 @@ namespace ProjetoNotas.WebUi.Services
                     return false;
                 }
                 await _administradorRepository.DeleteAsync(administrador);
-                
+
                 return true;
             }
             catch (Exception)

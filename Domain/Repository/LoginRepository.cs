@@ -12,14 +12,11 @@ namespace ProjetoNotas.Repository
 {
     public class LoginRepository
     {
-
         private readonly EscolaDataContext _context;
-
         public LoginRepository(EscolaDataContext context)
         {
             _context = context;
         }
-
         public async Task<dynamic> LoginAlunoAsync(string email, string senha)
         {
             var user = await _context.Alunos.FirstOrDefaultAsync(x => x.Email == email);
@@ -33,15 +30,12 @@ namespace ProjetoNotas.Repository
                     return null;
                 }
                 return user;
-
             }
             return null;
-
         }
         public async Task<dynamic> LoginAdminAsync(string email, string senha)
         {
             var user = await _context.Administradores.FirstOrDefaultAsync(x => x.Email == email);
-
             if (user != null)
             {
                 var isvalid = PasswordHasher.Verify(user.Senha, senha);
@@ -51,15 +45,12 @@ namespace ProjetoNotas.Repository
                     return null;
                 }
                 return user;
-
             }
             return null;
-
         }
         public async Task<dynamic> LoginProfessorAsync(string email, string senha)
         {
             var user = await _context.Professores.FirstOrDefaultAsync(x => x.Email == email);
-
             if (user != null)
             {
                 var isvalid = PasswordHasher.Verify(user.Senha, senha);
@@ -69,10 +60,8 @@ namespace ProjetoNotas.Repository
                     return null;
                 }
                 return user;
-
             }
             return null;
-
         }
     }
 }

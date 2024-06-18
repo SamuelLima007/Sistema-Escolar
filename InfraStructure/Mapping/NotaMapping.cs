@@ -13,12 +13,9 @@ namespace ProjetoNotas.InfraStructure.Mapping
         public void Configure(EntityTypeBuilder<Nota> builder)
         {
             builder.ToTable("Nota");
-
             builder.HasKey(x => x.NotaId);
-
             builder.Property(x => x.NotaId)
             .ValueGeneratedOnAdd().UseIdentityColumn(); ;
-
 
             builder.Property(x => x.Valor)
             .IsRequired()
@@ -32,17 +29,13 @@ namespace ProjetoNotas.InfraStructure.Mapping
             .HasForeignKey(x => x.Disciplina_Id)
             .OnDelete(DeleteBehavior.NoAction);
 
-      
+            builder.HasOne(x => x.Aluno)
+            .WithMany(x => x.Notas)
+            .HasForeignKey(n => n.Aluno_Id);
 
-            builder
-               .HasOne(x => x.Aluno)
-               .WithMany(x => x.Notas)
-               .HasForeignKey(n => n.Aluno_Id);
-
-            builder
-               .HasOne(x => x.Disciplina)
-               .WithMany(x => x.Notas)
-               .HasForeignKey(x => x.Disciplina_Id);
+            builder.HasOne(x => x.Disciplina)
+             .WithMany(x => x.Notas)
+            .HasForeignKey(x => x.Disciplina_Id);
         }
     }
 }

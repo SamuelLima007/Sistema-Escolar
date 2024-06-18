@@ -12,22 +12,17 @@ namespace ProjetoNotas.InfraStructure.Mapping
     {
         public void Configure(EntityTypeBuilder<Disciplina> builder)
         {
-             builder.ToTable("Disciplina");
-
-             builder.HasKey(x => x.DisciplinaId);
-
+            builder.ToTable("Disciplina");
+            builder.HasKey(x => x.DisciplinaId);
             builder.Property(x => x.DisciplinaId)
             .ValueGeneratedOnAdd().UseIdentityColumn();
 
-             builder.Property(x => x.Nome)
-            .IsRequired()
-            .HasColumnType("VARCHAR")
-            .HasColumnName("Nome")
-            .HasMaxLength(30);
+            builder.Property(x => x.Nome)
+           .IsRequired()
+           .HasColumnType("VARCHAR")
+           .HasColumnName("Nome")
+           .HasMaxLength(30);
             builder.HasIndex(x => x.Nome).IsUnique();
-
-            }
-
-            
+        }
     }
 }

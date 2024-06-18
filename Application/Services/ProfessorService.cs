@@ -16,14 +16,11 @@ namespace ProjetoNotas.WebUi.Services
     public class ProfessorService : IProfessorService
     {
         private readonly IProfessorRepository _professorRepository;
-       
-
         public ProfessorService(IProfessorRepository professorRepository)
         {
             _professorRepository = professorRepository;
-            
-        }
 
+        }
         public async Task<Professor> GetProfessorByIdAsync(int id)
         {
             try
@@ -40,14 +37,12 @@ namespace ProjetoNotas.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-
         public async Task<Professor> AddProfessorAsync(EscolaDataContext context, CreateProfessorViewModel model)
         {
             // if (!ModelState.IsValid)
             // {
             //     return _controller.BadRequest("validacao errada");
             // }
-
             try
             {
                 var Nprofessor = new Professor()
@@ -67,10 +62,7 @@ namespace ProjetoNotas.WebUi.Services
             {
                 throw new Exception("Falha interna no servidor");
             }
-
-
         }
-
         public async Task<bool> UpdateProfessorAsync(int id, CreateProfessorViewModel professor)
         {
             try
@@ -90,7 +82,6 @@ namespace ProjetoNotas.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-
         public async Task<bool> DeleteProfessorAsync(int id)
         {
             try

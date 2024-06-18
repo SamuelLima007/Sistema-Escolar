@@ -11,13 +11,8 @@ namespace ProjetoNotas.Models
         public int ClasseId { get; set; }
         public string? Serie { get; set; }
         public string? Turma { get; set; }
-
         public IList<Professor> Professores { get; set; } = new List<Professor>();
-
         public IList<Aluno> Alunos { get; set; } = new List<Aluno>();
-
         public IList<Disciplina> Disciplinas { get; set; } = new List<Disciplina>();
-
-        
     }
 }

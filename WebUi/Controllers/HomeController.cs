@@ -9,15 +9,11 @@ using ProjetoNotas.Attributes;
 namespace ProjetoNotas.Controllers
 {
     [ApiController]
-   
- 
-
     public class HomeController : ControllerBase
     {
         [HttpGet("/")]
         public IActionResult Get()
         {
-
             try
             {
                 return Ok("Hello World!");
@@ -27,6 +23,5 @@ namespace ProjetoNotas.Controllers
                 return StatusCode(500, "Falha interna no servidor");
             }
         }
-        
     }
 }

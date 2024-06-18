@@ -10,9 +10,7 @@ namespace ProjetoNotas.ViewModels
     {
         [Required(ErrorMessage = "A serie é obrigatória")]
         public string? Serie { get; set; }
-
         [Required(ErrorMessage = "A turma é obrigatória")]
         public string? Turma { get; set; }
-
     }
 }

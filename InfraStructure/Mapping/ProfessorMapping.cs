@@ -13,12 +13,9 @@ namespace ProjetoNotas.Mapping
         public void Configure(EntityTypeBuilder<Professor> builder)
         {
             builder.ToTable("Professor");
-
             builder.HasKey(x => x.ProfessorId);
-
             builder.Property(x => x.ProfessorId)
             .ValueGeneratedOnAdd().UseIdentityColumn(); ;
-
 
             builder.Property(x => x.Nome)
             .IsRequired()
@@ -44,9 +41,6 @@ namespace ProjetoNotas.Mapping
             .HasColumnType("VARCHAR")
             .HasColumnName("Senha")
             .HasMaxLength(30);
-
-
-
         }
     }
 }

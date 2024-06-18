@@ -10,12 +10,7 @@ namespace ProjetoNotas.Domain.Models
     {
         public int DisciplinaId { get; set; }
         public string Nome { get; set; }
-
         public IList<Aluno> Alunos { get; set; } = new List<Aluno>();
         public IList<Nota> Notas { get; set; } = new List<Nota>();
-
-
-
-
     }
 }

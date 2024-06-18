@@ -8,27 +8,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
-
 using ProjetoNotas.Models;
 using ProjetoNotas.ViewModels;
 using SecureIdentity.Password;
-
-
 namespace ProjetoNotas.WebUi.Services
 {
     public class AlunoService : IAlunoService
     {
-
         private readonly IAlunoRepository _alunoRepository;
-    
-
         public AlunoService(IAlunoRepository alunoRepository)
         {
             _alunoRepository = alunoRepository;
-           
+
         }
-
-
         public async Task<Aluno> GetAlunoByIdAsync(int id)
         {
             try
@@ -40,13 +32,12 @@ namespace ProjetoNotas.WebUi.Services
                 }
                 return aluno;
             }
-             catch (Exception)
-        {
-            throw new Exception("Falha interna no servidor");
-        }
-           
-        }
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
 
+        }
         public async Task<Aluno> AddAlunoAsync(EscolaDataContext context, CreateAlunoViewModel model)
         {
             // if (!ModelState.IsValid)
@@ -65,7 +56,6 @@ namespace ProjetoNotas.WebUi.Services
             await _alunoRepository.AddAsync(aluno);
             return aluno;
         }
-
         public async Task<bool> UpdateAlunoAsync(int id, Aluno aluno)
         {
             try
@@ -82,10 +72,9 @@ namespace ProjetoNotas.WebUi.Services
             }
             catch (Exception)
             {
-                 throw new Exception("Falha interna no servidor");
+                throw new Exception("Falha interna no servidor");
             }
         }
-
         public async Task<bool> DeleteAlunoAsync(int id)
         {
             try
@@ -96,7 +85,7 @@ namespace ProjetoNotas.WebUi.Services
                     return false;
                 }
                 await _alunoRepository.DeleteAsync(aluno);
-                
+
                 return true;
             }
             catch (Exception)
@@ -104,7 +93,5 @@ namespace ProjetoNotas.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-
-        
     }
 }

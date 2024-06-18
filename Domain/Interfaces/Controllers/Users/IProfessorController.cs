@@ -11,19 +11,9 @@ namespace ProjetoNotas.InfraStructure.Interfaces
 {
     public interface IProfessorController
     {
-         public Task<IActionResult> GetProfessorAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
-        
-
-       
-
+        public Task<IActionResult> GetProfessorAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
         Task<IActionResult> AddProfessorAsync([FromServices] EscolaDataContext context, [FromBody] CreateProfessorViewModel model);
-        
-
-      
         Task<IActionResult> UpdateProfessorAsync([FromServices] EscolaDataContext context, [FromRoute] int id, [FromBody] Professor professor);
-       
-
-       
         Task<IActionResult> DeleteProfessorAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
     }
 }

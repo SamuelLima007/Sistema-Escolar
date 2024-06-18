@@ -12,18 +12,8 @@ namespace ProjetoNotas.InfraStructure.Interfaces
     public interface IClasseController
     {
         public Task<IActionResult> GetClasseByIdAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
-        
-
-       
-
         Task<IActionResult> AddClasseAsync([FromServices] EscolaDataContext context, [FromBody] CreateClasseViewModel model);
-        
-
-      
         Task<IActionResult> UpdateClasseAsync([FromServices] EscolaDataContext context, [FromRoute] int id, [FromBody] Classe classe);
-       
-
-       
         Task<IActionResult> DeleteClasseAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
     }
 }
