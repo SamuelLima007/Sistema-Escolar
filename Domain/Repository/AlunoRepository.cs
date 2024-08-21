@@ -23,8 +23,19 @@ namespace ProjetoNotas.Repository
         }
         public async Task AddAsync(Aluno aluno)
         {
-            await _context.Alunos.AddAsync(aluno);
-            await _context.SaveChangesAsync();
+            try
+            {
+
+                await _context.Alunos.AddAsync(aluno);
+                await _context.SaveChangesAsync();
+
+            }
+            catch (DbUpdateException ex)
+            {
+                // Verifique a InnerException para obter detalhes
+                Console.WriteLine($"Erro ao salvar no banco de dados: {ex.InnerException?.Message}");
+                throw; // Re-lança a exceção para continuar a propagar o erro
+            }
         }
         public async Task UpdateAsync(Aluno aluno)
         {

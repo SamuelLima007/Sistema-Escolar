@@ -12,7 +12,7 @@ namespace ProjetoNotas.Domain.Interfaces
     public interface IAlunoService
     {
         Task<Aluno> GetAlunoByIdAsync(int id);
-        Task<Aluno> AddAlunoAsync(EscolaDataContext context, CreateAlunoViewModel aluno);
+        Task<Aluno> AddAlunoAsync(CreateAlunoViewModel aluno);
         Task<bool> UpdateAlunoAsync(int id, Aluno aluno);
         Task<bool> DeleteAlunoAsync(int id);
     }

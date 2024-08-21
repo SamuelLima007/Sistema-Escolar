@@ -14,7 +14,7 @@ using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.Controllers
 {
     [ApiController]
- 
+
     [Authorize(Roles = "Admin")]
 
     public class ProfessorController : ControllerBase, IProfessorController
@@ -46,19 +46,13 @@ namespace ProjetoNotas.Controllers
         {
             try
             {
-
                 var professor = new Professor()
                 {
-
                     Nome = model.Nome,
                     Idade = model.Idade,
                     Email = model.Email,
                     Senha = model.Senha,
                     Classes = model.Classe
-
-
-
-
                 };
                 await context.Professores.AddAsync(professor);
                 await context.SaveChangesAsync();
@@ -68,9 +62,7 @@ namespace ProjetoNotas.Controllers
             {
                 return StatusCode(500, "Falha interna no servidor");
             }
-
         }
-
 
         [HttpPut("v1/professores/{id:int}")]
         public async Task<IActionResult> UpdateProfessorAsync([FromServices] EscolaDataContext context, [FromRoute] int id, [FromBody] Professor professor)

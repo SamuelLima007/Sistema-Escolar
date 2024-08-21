@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escola Modelo</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&display=swap">
+  <style>
+    /* Estilos globais */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f9f9f9;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    .nav {
+      background-color: #444;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .nav li {
+      margin-right: 20px;
+    }
+
+    .nav a {
+      color: #fff;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .nav a:hover {
+      color: #ccc;
+    }
+
+    .main {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .main section {
+      flex-basis: 30%;
+      margin: 20px;
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .main section h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .main section p {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      clear: both;
+    }
+
+    .footer p {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    /* Estilos específicos */
+    .banner {
+      background-image: url('banner.jpg');
+      background-size: cover;
+      background-position: center;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .news {
+      background-color: #f7f7f7;
+      padding: 20px;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .news h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    .news ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .news li {
+      margin-bottom: 20px;
+    }
+
+    .news a {
+      color: #337ab7;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .news a:hover {
+      color: #23527c;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .gallery img {
+      width: 30%;
+      margin: 10px;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery img:hover {
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h1>Escola Modelo</h1>
+      <p>Uma escola de excelência em ensino e aprendizado</p>
+    </header>
+    <nav class="nav">
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Sobre</a></li>
+        <li><a href="#">Cursos</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </nav>
+    <main class="main">
+      <section class="banner">
+        <h2>Bem-vindo à Escola Modelo!</h2>
+      </section>
+      <section class="news">
+        <h2>Notícias</h2>
+        <ul>
+          <li><a href="#">Nova turma de inglês iniciada</a></li>
+          <li><a href="#">Alunos da escola participam de competição de matemática</a></li>
+          <li><a href="#">Escola Modelo é premiada como melhor escola do ano</a></li>
+        </ul>
+      </section>
+      <section class="gallery">
+        <h2>Galeria de Fotos</h2>
+        <img src="foto1.jpg" alt="Foto 1">
+        <img src="foto2.jpg" alt="Foto 2">
+        <img src="foto3.jpg" alt="Foto 3">
+      </section>
+    </main>
+    <footer class="footer">
+      <p>&copy; 2023 Escola Modelo. Todos os direitos reservados.</p>
+    </footer>
+  </div>
+</body>
+
+</html>

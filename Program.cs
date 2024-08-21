@@ -35,6 +35,7 @@ void ConfigureAuthentication(WebApplicationBuilder builder)
              };
          });
 }
+
 void ConfigureServices(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<EscolaDataContext>();
@@ -56,7 +57,19 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IDisciplinaRepository, DisciplinaRepository>();
     builder.Services.AddScoped<LoginRepository>();
     builder.Services.AddScoped<LoginController>();
+    builder.Services.AddScoped<InicioViewController>();
+    builder.Services.AddRazorPages();
+    builder.Services.AddControllersWithViews();
+
+    builder.Services.AddCors(options =>
+       {
+           options.AddPolicy("CorsPolicy",
+               builder => builder.AllowAnyOrigin()
+                                 .AllowAnyMethod()
+                                 .AllowAnyHeader());
+       });
 }
+
 void ConfigureMvc(WebApplicationBuilder builder)
 {
 
@@ -65,7 +78,9 @@ void ConfigureMvc(WebApplicationBuilder builder)
         options.SuppressModelStateInvalidFilter = true;
     });
 
+    builder.Services.AddHttpClient();
 }
+
 var app = builder.Build();
 app.MapControllers();
 app.UseRouting();

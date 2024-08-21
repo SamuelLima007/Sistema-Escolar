@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace ProjetoNotas.Models
     public class Aluno : User
     {
         public int AlunoId { get; set; }
+
+        [MaxLength(2, ErrorMessage = "Apenas 2 caracteres")]
         public int Idade { get; set; }
         public int Classe_Id { get; set; }
         public Classe? Classe { get; set; }

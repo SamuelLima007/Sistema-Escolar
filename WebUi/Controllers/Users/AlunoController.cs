@@ -10,8 +10,8 @@ using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
-    
-   
+
+
     [ApiKey]
     public class AlunoController : ControllerBase, IAlunoController
     {
@@ -24,7 +24,7 @@ namespace ProjetoNotas.WebUi.Controllers
 
 
         [HttpGet("v1/getaluno/{id}")]
-       
+
         public async Task<ActionResult<Aluno>> GetAlunoByIdAsync(int id)
         {
             var aluno = await _alunoService.GetAlunoByIdAsync(id);
@@ -38,7 +38,8 @@ namespace ProjetoNotas.WebUi.Controllers
         [HttpPost("v1/addaluno")]
         public async Task<ActionResult<Aluno>> AddAlunoAsync([FromServices] EscolaDataContext context, [FromBody] CreateAlunoViewModel model)
         {
-            var aluno = await _alunoService.AddAlunoAsync(context, model);
+
+            var aluno = await _alunoService.AddAlunoAsync(model);
             return Ok();
         }
 

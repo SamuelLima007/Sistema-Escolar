@@ -16,9 +16,12 @@ namespace ProjetoNotas.WebUi.Services
     public class AlunoService : IAlunoService
     {
         private readonly IAlunoRepository _alunoRepository;
-        public AlunoService(IAlunoRepository alunoRepository)
+
+        public readonly EscolaDataContext _context;
+        public AlunoService(IAlunoRepository alunoRepository, EscolaDataContext context)
         {
             _alunoRepository = alunoRepository;
+            _context = context;
 
         }
         public async Task<Aluno> GetAlunoByIdAsync(int id)
@@ -38,19 +41,25 @@ namespace ProjetoNotas.WebUi.Services
             }
 
         }
-        public async Task<Aluno> AddAlunoAsync(EscolaDataContext context, CreateAlunoViewModel model)
+        public async Task<Aluno> AddAlunoAsync(CreateAlunoViewModel model)
         {
             // if (!ModelState.IsValid)
             // {
             //     return _controller.BadRequest("validacao errada");
             // }
+            var classe = await _context.Classes.FirstOrDefaultAsync();
+            if (classe == null)
+            {
+                throw new InvalidOperationException("Classe não encontrada.");
+            }
+
             var aluno = new Aluno()
             {
                 Nome = model.Nome,
                 Idade = model.Idade,
                 Email = model.Email,
                 Senha = PasswordHasher.Hash(model.Senha),
-                Classe = await context.Classes.FirstOrDefaultAsync(x => x.Serie == model.Classe.Serie && x.Turma == model.Classe.Turma),
+                Classe = classe,
                 Role = model.Roles
             };
             await _alunoRepository.AddAsync(aluno);

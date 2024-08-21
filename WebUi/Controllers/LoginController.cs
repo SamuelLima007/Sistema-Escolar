@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Models;
@@ -28,21 +29,16 @@ namespace ProjetoNotas.WebUi.Controllers
             _tokenservice = tokenservice;
         }
 
-        [HttpPost("login/Aluno")]
-        public async Task<ActionResult<dynamic>> LoginAlunoAsync([FromBody] UserLoginViewModel user)
+        [HttpPost("Login/Aluno")]
+        public async Task<ActionResult> LoginAlunoAsync(UserLoginViewModel user)
         {
             var aluno = await _loginrepository.LoginAlunoAsync(user.Email, user.Senha);
             if (aluno == null)
             {
-                return BadRequest("Usuario ou senha estão incorretos");
+                return null;
             }
             var token = _tokenservice.GenerateToken(aluno);
-            aluno.Senha = "";
-            return new
-            {
-                usuario = aluno,
-                token = token
-            };
+            return Ok(token);
         }
 
         [HttpPost("login/Professor")]
@@ -78,5 +74,6 @@ namespace ProjetoNotas.WebUi.Controllers
                 token = token
             };
         }
+
     }
 }
