@@ -19,7 +19,7 @@ namespace ProjetoNotas.Data
         public DbSet<Nota> Notas { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlServer(@"Server=DESKTOP-9UR5MQ6\SQLEXPRESS;Database=ProjetoEscola;Trusted_Connection=true;TrustServerCertificate=Yes;Encrypt=true;Integrated Security=true");
+            options.UseSqlServer(@"");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
