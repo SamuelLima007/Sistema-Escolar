@@ -1,18 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.Extensions.Logging;
 using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Domain.Models;
 using ProjetoNotas.Domain.ViewModels;
-using ProjetoNotas.Models;
 using ProjetoNotas.Repository;
-using ProjetoNotas.WebUi.Services;
+
 
 namespace ProjetoNotas.WebUi.Controllers
 {
@@ -30,15 +22,25 @@ namespace ProjetoNotas.WebUi.Controllers
         }
 
         [HttpPost("Login/Aluno")]
-        public async Task<ActionResult> LoginAlunoAsync(UserLoginViewModel user)
+        public async Task<ActionResult> LoginAlunoAsync([FromBody] UserLoginViewModel user)
         {
-            var aluno = await _loginrepository.LoginAlunoAsync(user.Email, user.Senha);
-            if (aluno == null)
+            try
             {
-                return null;
+                var aluno = await _loginrepository.LoginAlunoAsync(user.Email, user.Senha);
+                if (aluno == null)
+                {
+                    return NotFound("Aluno não encontrado");
+                }
+
+                var token = _tokenservice.GenerateToken(aluno);
+                return Ok(token);
+
             }
-            var token = _tokenservice.GenerateToken(aluno);
-            return Ok(token);
+            catch (Exception)
+            {
+
+                return StatusCode(500, "Erro interno do servidor");
+            }
         }
 
         [HttpPost("login/Professor")]

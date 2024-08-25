@@ -37,7 +37,6 @@ namespace ProjetoNotas.InfraStructure.Mapping
             .HasColumnType("VARCHAR")
             .HasColumnName("Roles")
             .HasMaxLength(20);
-
         }
     }
 }

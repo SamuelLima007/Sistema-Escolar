@@ -19,7 +19,6 @@ namespace ProjetoNotas.Repository
         public async Task<Administrador> GetByIdAsync(int id)
         {
             return await _context.Administradores.FirstOrDefaultAsync(x => x.AdministradorId == id);
-
         }
         public async Task AddAsync(Administrador administrador)
         {

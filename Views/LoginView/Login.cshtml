@@ -167,9 +167,6 @@
         <input type="password" placeholder="Senha" name="Senha" id="password" required>
 
         @if (TempData["FailureMessage"] != null)
-
-
-
         {
             <div class="alert alert-success" style="text-align: center; margin-top: 25px;">@TempData["FailureMessage"]</div>
             <style>
@@ -178,7 +175,6 @@
                 }
             </style>
             TempData.Remove("FailureMessage");
-
         }
 
         <button>Log In</button>

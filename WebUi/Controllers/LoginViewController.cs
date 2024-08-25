@@ -27,14 +27,15 @@ namespace ProjetoNotas.WebUi.Controllers
         [HttpGet("TLogin/aluno")]
         public async Task<ActionResult> Logar()
         {
-            var user = new UserLoginViewModel();
-            return View("Login", user);
+            return View("Login", new UserLoginViewModel());
         }
 
         [HttpPost("TLogin/Aluno")]
         public async Task<ActionResult> LoginAlunoAsync(UserLoginViewModel aluno)
         {
             var Autenticado = await _logincontroller.LoginAlunoAsync(aluno);
+
+
 
             if (Autenticado != null)
             {
