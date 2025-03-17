@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ProjetoNotas.Data;
 
 namespace ProjetoNotas.Attributes
 {
@@ -12,7 +13,7 @@ namespace ProjetoNotas.Attributes
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            if (!context.HttpContext.Request.Query.TryGetValue(Configuration.ApiKeyName, out var extractedApiKey))
+            if (!context.HttpContext.Request.Query.TryGetValue(Configuration.ApiKey, out var extractedApiKey))
             {
                 context.Result = new ContentResult()
                 {

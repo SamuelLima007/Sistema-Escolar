@@ -18,7 +18,7 @@ ConfigureMvc(builder);
 ConfigureServices(builder);
 void ConfigureAuthentication(WebApplicationBuilder builder)
 {
-    var key = Encoding.ASCII.GetBytes(Configuration.Key);
+    var key = Encoding.ASCII.GetBytes(Configuration.ApiKey);
 
     builder.Services.AddAuthentication(x =>
      {
