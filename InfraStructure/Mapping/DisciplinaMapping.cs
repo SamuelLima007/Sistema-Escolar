@@ -19,7 +19,7 @@ namespace ProjetoNotas.InfraStructure.Mapping
 
             builder.Property(x => x.Nome)
            .IsRequired()
-           .HasColumnType("VARCHAR")
+           .HasColumnType("Text")
            .HasColumnName("Nome")
            .HasMaxLength(30);
             builder.HasIndex(x => x.Nome).IsUnique();

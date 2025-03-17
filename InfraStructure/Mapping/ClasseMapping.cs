@@ -20,13 +20,13 @@ namespace ProjetoNotas.Mapping
 
             builder.Property(x => x.Serie)
             .IsRequired()
-            .HasColumnType("VARCHAR")
+            .HasColumnType("Text")
             .HasColumnName("Serie")
             .HasMaxLength(30);
 
             builder.Property(x => x.Turma)
             .IsRequired()
-            .HasColumnType("VARCHAR")
+            .HasColumnType("Text")
             .HasColumnName("Turma")
             .HasMaxLength(2);
 

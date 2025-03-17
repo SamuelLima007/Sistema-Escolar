@@ -20,7 +20,7 @@ namespace ProjetoNotas.Mapping
 
             builder.Property(x => x.Nome)
             .IsRequired()
-            .HasColumnType("VARCHAR")
+            .HasColumnType("Text")
             .HasColumnName("Nome")
             .HasMaxLength(30);
 
@@ -32,20 +32,20 @@ namespace ProjetoNotas.Mapping
 
             builder.Property(x => x.Email)
             .IsRequired()
-            .HasColumnType("VARCHAR")
+            .HasColumnType("Text")
             .HasColumnName("Email")
             .HasMaxLength(100);
             builder.HasIndex(x => x.Email).IsUnique();
 
             builder.Property(x => x.Senha)
             .IsRequired()
-            .HasColumnType("NVARCHAR")
+            .HasColumnType("NText")
             .HasColumnName("Senha")
             .HasMaxLength(150);
 
             builder.Property(x => x.Role)
             .IsRequired()
-            .HasColumnType("VARCHAR")
+            .HasColumnType("Text")
             .HasColumnName("Roles")
             .HasMaxLength(20);
 
