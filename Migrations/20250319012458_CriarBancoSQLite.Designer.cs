@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoNotas.Data;
 
@@ -11,24 +12,22 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    partial class EscolaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250319012458_CriarBancoSQLite")]
+    partial class CriarBancoSQLite
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
             modelBuilder.Entity("AlunoDisciplina", b =>
                 {
                     b.Property<int>("AlunoId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("DisciplinaId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("AlunoId", "DisciplinaId");
 
@@ -40,10 +39,10 @@ namespace ProjetoNotas.Migrations
             modelBuilder.Entity("ClasseProfessor", b =>
                 {
                     b.Property<int>("ClasseId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProfessorId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ClasseId", "ProfessorId");
 
@@ -56,24 +55,23 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("AdministradorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AdministradorId"));
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("AdministradorId");
 
@@ -84,17 +82,18 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("DisciplinaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisciplinaId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ClasseId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Nome");
 
                     b.HasKey("DisciplinaId");
@@ -111,17 +110,18 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("NotaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotaId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Aluno_Id")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Disciplina_Id")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Valor")
+                    b.Property<double>("Valor")
                         .HasMaxLength(4)
                         .HasColumnType("decimal(2, 2)")
                         .HasColumnName("Valor");
@@ -139,17 +139,18 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("AlunoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlunoId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Classe_Id")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Email");
 
                     b.Property<int>("Idade")
@@ -160,19 +161,19 @@ namespace ProjetoNotas.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Nome");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Roles");
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("NVARCHAR")
+                        .HasColumnType("NText")
                         .HasColumnName("Senha");
 
                     b.HasKey("AlunoId");
@@ -189,20 +190,21 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("ClasseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClasseId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Serie")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Serie");
 
                     b.Property<string>("Turma")
                         .IsRequired()
                         .HasMaxLength(2)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Turma");
 
                     b.HasKey("ClasseId");
@@ -214,34 +216,36 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("ProfessorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfessorId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Email");
 
                     b.Property<int>("Idade")
                         .HasMaxLength(2)
-                        .HasColumnType("INT")
+                        .HasColumnType("Text")
                         .HasColumnName("Idade");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Nome");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Senha");
 
                     b.HasKey("ProfessorId");

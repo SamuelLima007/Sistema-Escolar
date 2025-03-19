@@ -48,10 +48,7 @@ namespace ProjetoNotas.WebUi.Services
             //     return _controller.BadRequest("validacao errada");
             // }
             var classe = await _context.Classes.FirstOrDefaultAsync();
-            if (classe == null)
-            {
-                throw new InvalidOperationException("Classe não encontrada.");
-            }
+           
 
             var aluno = new Aluno()
             {
@@ -59,9 +56,10 @@ namespace ProjetoNotas.WebUi.Services
                 Idade = model.Idade,
                 Email = model.Email,
                 Senha = PasswordHasher.Hash(model.Senha),
-                Classe = classe,
+                
                 Role = model.Roles
             };
+           
             await _alunoRepository.AddAsync(aluno);
             return aluno;
         }

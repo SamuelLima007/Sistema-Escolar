@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoNotas.Data;
 
@@ -12,26 +11,20 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    [Migration("20240615165926_v1")]
-    partial class v1
+    partial class EscolaDataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.5")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
-
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
             modelBuilder.Entity("AlunoDisciplina", b =>
                 {
                     b.Property<int>("AlunoId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("DisciplinaId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("AlunoId", "DisciplinaId");
 
@@ -43,10 +36,10 @@ namespace ProjetoNotas.Migrations
             modelBuilder.Entity("ClasseProfessor", b =>
                 {
                     b.Property<int>("ClasseId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProfessorId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("ClasseId", "ProfessorId");
 
@@ -55,21 +48,49 @@ namespace ProjetoNotas.Migrations
                     b.ToTable("ClasseProfessor");
                 });
 
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Administrador", b =>
+                {
+                    b.Property<int>("AdministradorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AdministradorId");
+
+                    b.ToTable("Administradores");
+                });
+
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Disciplina", b =>
                 {
                     b.Property<int>("DisciplinaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DisciplinaId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("ClasseId")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Nome");
 
                     b.HasKey("DisciplinaId");
@@ -86,19 +107,25 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("NotaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NotaId"));
+                    b.Property<int>("Aluno_Id")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("Disciplina_Id")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("Valor")
+                    b.Property<double>("Valor")
                         .HasMaxLength(4)
                         .HasColumnType("decimal(2, 2)")
                         .HasColumnName("Valor");
 
                     b.HasKey("NotaId");
+
+                    b.HasIndex("Aluno_Id");
 
                     b.HasIndex("Disciplina_Id");
 
@@ -109,17 +136,18 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("AlunoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlunoId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("Classe_Id")
-                        .HasColumnType("int");
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Email");
 
                     b.Property<int>("Idade")
@@ -130,19 +158,19 @@ namespace ProjetoNotas.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Nome");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasMaxLength(20)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Roles");
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(150)
-                        .HasColumnType("NVARCHAR")
+                        .HasColumnType("NText")
                         .HasColumnName("Senha");
 
                     b.HasKey("AlunoId");
@@ -159,20 +187,21 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("ClasseId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClasseId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Serie")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Serie");
 
                     b.Property<string>("Turma")
                         .IsRequired()
                         .HasMaxLength(2)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Turma");
 
                     b.HasKey("ClasseId");
@@ -184,34 +213,36 @@ namespace ProjetoNotas.Migrations
                 {
                     b.Property<int>("ProfessorId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ProfessorId"));
+                        .HasColumnType("INTEGER")
+                        .HasAnnotation("SqlServer:IdentityIncrement", 1)
+                        .HasAnnotation("SqlServer:IdentitySeed", 1L)
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Email");
 
                     b.Property<int>("Idade")
                         .HasMaxLength(2)
-                        .HasColumnType("INT")
+                        .HasColumnType("Text")
                         .HasColumnName("Idade");
 
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Nome");
 
                     b.Property<string>("Role")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Senha")
                         .IsRequired()
                         .HasMaxLength(30)
-                        .HasColumnType("VARCHAR")
+                        .HasColumnType("Text")
                         .HasColumnName("Senha");
 
                     b.HasKey("ProfessorId");
@@ -227,14 +258,14 @@ namespace ProjetoNotas.Migrations
                     b.HasOne("ProjetoNotas.Models.Aluno", null)
                         .WithMany()
                         .HasForeignKey("AlunoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_AlunoDisciplina_AlunoId");
 
                     b.HasOne("ProjetoNotas.Domain.Models.Disciplina", null)
                         .WithMany()
                         .HasForeignKey("DisciplinaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_AlunoDisciplina_DisciplinaId");
                 });
@@ -265,12 +296,20 @@ namespace ProjetoNotas.Migrations
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Nota", b =>
                 {
+                    b.HasOne("ProjetoNotas.Models.Aluno", "Aluno")
+                        .WithMany("Notas")
+                        .HasForeignKey("Aluno_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ProjetoNotas.Domain.Models.Disciplina", "Disciplina")
                         .WithMany("Notas")
                         .HasForeignKey("Disciplina_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_NOTA");
+
+                    b.Navigation("Aluno");
 
                     b.Navigation("Disciplina");
                 });
@@ -288,6 +327,11 @@ namespace ProjetoNotas.Migrations
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Disciplina", b =>
+                {
+                    b.Navigation("Notas");
+                });
+
+            modelBuilder.Entity("ProjetoNotas.Models.Aluno", b =>
                 {
                     b.Navigation("Notas");
                 });

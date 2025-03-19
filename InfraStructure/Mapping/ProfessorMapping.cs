@@ -25,7 +25,7 @@ namespace ProjetoNotas.Mapping
 
             builder.Property(x => x.Idade)
             .IsRequired()
-            .HasColumnType("INT")
+            .HasColumnType("Text")
             .HasColumnName("Idade")
             .HasMaxLength(2);
 
