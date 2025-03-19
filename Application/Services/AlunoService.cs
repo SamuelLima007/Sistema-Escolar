@@ -56,7 +56,7 @@ namespace ProjetoNotas.WebUi.Services
                 Idade = model.Idade,
                 Email = model.Email,
                 Senha = PasswordHasher.Hash(model.Senha),
-                
+                Classe = classe,
                 Role = model.Roles
             };
            
