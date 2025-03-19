@@ -29,7 +29,7 @@ namespace ProjetoNotas.WebUi.Controllers
                 var aluno = await _loginrepository.LoginAlunoAsync(user.Email, user.Senha);
                 if (aluno == null)
                 {
-                    return NotFound("Aluno não encontrado");
+                    return null;
                 }
 
                 var token = _tokenservice.GenerateToken(aluno);
