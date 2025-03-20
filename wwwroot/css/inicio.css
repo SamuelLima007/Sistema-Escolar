@@ -1,0 +1,39 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/images/fundo.jpeg");
+}
+
+.options {
+  display: flex;
+  gap: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 80);
+  height: 120px;
+}
+
+.link {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  color: #32cd32;
+}
+
+.logo {
+  width: 200px;
+  height: 120px;
+}
