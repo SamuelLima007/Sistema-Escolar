@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProjetoNotas.Domain.ViewModels;
 using ProjetoNotas.Repository;
+using ProjetoNotas.ViewModels;
 
 namespace ProjetoNotas.WebUi.Controllers
 {
@@ -17,9 +18,10 @@ namespace ProjetoNotas.WebUi.Controllers
     public class InicioViewController : Controller
     {
         [HttpGet("Inicio")]
-        public async Task<ActionResult> Inicio()
+        public async Task<ActionResult> Inicio(UserLoginViewModel aluno)
         {
-            return View("/Views/Home/Inicio.cshtml");
+            
+            return View("/Views/Home/Inicio.cshtml", aluno);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ProjetoNotas.Data
         public DbSet<Nota> Notas { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite(@"Data Source=banquinhoGeo");
+            options.UseSqlite(@"Data Source=banquinho");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.ViewModels;
+using ProjetoNotas.Models;
 using ProjetoNotas.Repository;
 
 

@@ -8,6 +8,9 @@ namespace ProjetoNotas.Domain.ViewModels
 {
     public class UserLoginViewModel
     {
+
+        public string Nome { get; set; }
+        
         [EmailAddress(ErrorMessage = "E-mail inválido")]
         public string Email { get; set; }
         [Required(ErrorMessage = "A senha é obrigatória")]

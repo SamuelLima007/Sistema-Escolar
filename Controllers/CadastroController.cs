@@ -15,13 +15,13 @@ using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.Controllers
 {
 
-    public class HomeController : Controller
+    public class CadastroController : Controller
     {
         private readonly IAlunoService _alunoService;
         private readonly EscolaDataContext _context;
 
 
-        public HomeController(IAlunoService alunoService, EscolaDataContext context)
+        public CadastroController(IAlunoService alunoService, EscolaDataContext context)
         {
             _alunoService = alunoService;
             _context = context;
@@ -31,7 +31,7 @@ namespace ProjetoNotas.Controllers
         [HttpGet("/")]
         public IActionResult Get()
         {
-            return View("Index", new CreateAlunoViewModel());
+            return View("/Views/Home/Cadastro.cshtml", new CreateAlunoViewModel());
         }
 
         [HttpPost("/")]
@@ -40,7 +40,7 @@ namespace ProjetoNotas.Controllers
             if (model.Senha.Length < 8)
             {
                 TempData["FailureMessage"] = "Erro: Senha deve conter 8 dígitos!";
-                return View("Index");
+                return View("/Views/Home/Cadastro.cshtml");
             }
 
             if (model != null)
@@ -49,15 +49,15 @@ namespace ProjetoNotas.Controllers
                 if (aluno != null)
                 {
                     TempData["FailureMessage"] = "Erro: Email já cadastrado!";
-                    return View("Index");
+                    return View("/Views/Home/Cadastro.cshtml");
                 }
                 await _alunoService.AddAlunoAsync(model);
                 TempData["SuccessMessage"] = "Cadastro realizado com sucesso!";
-                return View("Index");
+                return View("/Views/Home/Cadastro.cshtml");
             }
 
-            TempData["FailureMessage"] = "Houve um erro no cadastro!";
-            return View("Index");
+            TempData["FailureMessage"] = "Houve um erro no Cadastro!";
+            return View("/Views/Home/Cadastro.cshtml");
         }
     }
 }

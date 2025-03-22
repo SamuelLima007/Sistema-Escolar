@@ -1,16 +1,22 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const modal = document.getElementById("modal");
-  const closeBtn = document.querySelector(".close-btn");
+var janela = document.querySelector(".janela-modal"); // Seleciona o modal corretamente
+var botao = document.querySelector(".btn"); // Seleciona o botão de fechar
+var body = document.querySelector("body"); // Seleciona o body
 
-  modal.style.display = "block";
+// Função para abrir o modal e aplicar o efeito de transparência
+function abrirmodal() {
+  janela.style.display = "flex"; // Mostra o modal
+  body.classList.add("background-transparente"); // Adiciona o efeito de transparência
+}
 
-  closeBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
+// Função para fechar o modal e remover o efeito de transparência
+function fecharmodal() {
+  janela.style.display = "none"; // Esconde o modal
+  body.classList.remove("background-transparente"); // Remove o efeito de transparência
+}
 
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-});
+// Adiciona o evento de clique ao botão de fechar
+
+botao.addEventListener("click", fecharmodal);
+
+// Abre o modal automaticamente ao carregar a página
+document.addEventListener("DOMContentLoaded", abrirmodal);
