@@ -30,6 +30,12 @@ namespace ProjetoNotas.Mapping
             .HasColumnName("Idade")
             .HasMaxLength(2);
 
+            builder.Property(a => a.FotoPerfil)
+            .HasColumnType("Text")
+            .HasColumnName("FotoPerfil")
+            .HasMaxLength(255);
+    
+        
             builder.Property(x => x.Email)
             .IsRequired()
             .HasColumnType("Text")

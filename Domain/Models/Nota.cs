@@ -10,6 +10,7 @@ namespace ProjetoNotas.Domain.Models
     {
         public int NotaId { get; set; }
         public double Valor { get; set; }
+        
         public int Disciplina_Id { get; set; }
         public Disciplina Disciplina { get; set; }
         public Aluno Aluno { get; set; }

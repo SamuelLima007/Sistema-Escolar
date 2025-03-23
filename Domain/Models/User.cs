@@ -10,6 +10,9 @@ namespace ProjetoNotas.Domain.Models
     {
         public string Nome { get; set; }
 
+        public string? FotoPerfil { get; set; }
+        
+
         [EmailAddress]
         public string Email { get; set; }
 

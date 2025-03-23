@@ -12,6 +12,8 @@ namespace ProjetoNotas.Models
     {
         public int AlunoId { get; set; }
 
+        
+
         [MaxLength(2, ErrorMessage = "Apenas 2 caracteres")]
         public int Idade { get; set; }
         public int Classe_Id { get; set; }
