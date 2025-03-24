@@ -1,0 +1,70 @@
+@{
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="/css/Register.css">
+
+<div class="background">
+    <div class="shape"></div>
+    <div class="shape"></div>
+</div>
+<form asp-controller="Home" asp-action="Registro" method="Post">
+    <h3>Cadastre-se</h3>
+
+    <label asp-for="Name">Name</label>
+    <input type="text" asp-for="Name" name="Name" placeholder="Name" required>
+    <span asp-validation-for="Name" class="text-danger"></span><br><br>
+
+    <label asp-for="Age">Idade</label>
+    <input type="number" asp-for="Age" id="Age" name="Age" placeholder="Age" required>
+    <span asp-validation-for="Age" name="Age" class="text-danger"></span><br><br>
+
+    <label asp-for="Email">Email</label>
+    <input type="email" asp-for="Email" name="Email" placeholder="Email" required>
+    <span asp-validation-for="Email" class="text-danger"></span><br><br>
+
+    <label asp-for="Password">Senha</label>
+    <input type="password" asp-for="Password" name="Password" placeholder="Password" required>
+    <span asp-validation-for="Password" name="Password" class="text-danger"></span><br><br>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success" style="text-align: center;">@TempData["SuccessMessage"]</div>
+        <style>
+            form {
+                height: 750px;
+            }
+        </style>
+        TempData.Remove("SuccessMessage");
+
+    }
+    @if (TempData["FailureMessage"] != null)
+    {
+        <div class="alert alert-success" style="text-align: center;">@TempData["FailureMessage"]</div>
+        <style>
+            form {
+                height: 750px;
+            }
+        </style>
+        TempData.Remove("FailureMessage");
+    }
+    <button type="submit">Cadastrar Aluno</button>
+    <p style="text-align: center;">Já possui uma conta? <a href="./TLogin/student">Fazer Login</a></p>
+</form>
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const AgeInput = document.getElementById("Age");
+            if (AgeInput) {
+                AgeInput.addEventListener("input", function () {
+                    if (this.value.length > 2) {
+                        this.value = this.value.slice(0, 2);
+                    }
+                });
+            }
+        });
+    </script>
+}

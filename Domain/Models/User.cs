@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProjetoNotas.Domain.Models
+namespace ProjetoScores.Domain.Models
 {
     public class User
     {
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
         public string? FotoPerfil { get; set; }
         
@@ -16,9 +16,9 @@ namespace ProjetoNotas.Domain.Models
         [EmailAddress]
         public string Email { get; set; }
 
-        [MinLength(8, ErrorMessage = "A Senha deve conter no minímo 8 caracteres")]
+        [MinLength(8, ErrorMessage = "A Password deve conter no minímo 8 caracteres")]
 
-        public string Senha { get; set; }
+        public string Password { get; set; }
 
         public virtual string Role { get; set; }
 

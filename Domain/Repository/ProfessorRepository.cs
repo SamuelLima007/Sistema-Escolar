@@ -3,36 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjetoNotas.Data;
-using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Models;
+using ProjetoScores.Data;
+using ProjetoScores.Domain.Interfaces;
+using ProjetoScores.Models;
 
-namespace ProjetoNotas.Repository
+namespace ProjetoScores.Repository
 {
-    public class ProfessorRepository : IProfessorRepository
+    public class TeacherRepository : ITeacherRepository
     {
         private readonly EscolaDataContext _context;
-        public ProfessorRepository(EscolaDataContext context)
+        public TeacherRepository(EscolaDataContext context)
         {
             _context = context;
         }
-        public async Task AddAsync(Professor professor)
+        public async Task AddAsync(Teacher teacher)
         {
-            await _context.Professores.AddAsync(professor);
+            await _context.Teacheres.AddAsync(teacher);
             await _context.SaveChangesAsync();
         }
-        public async Task DeleteAsync(Professor professor)
+        public async Task DeleteAsync(Teacher teacher)
         {
-            _context.Professores.Remove(professor);
+            _context.Teacheres.Remove(teacher);
             await _context.SaveChangesAsync();
         }
-        public async Task<Professor> GetByIdAsync(int id)
+        public async Task<Teacher> GetByIdAsync(int id)
         {
-            return await _context.Professores.FirstOrDefaultAsync(x => x.ProfessorId == id);
+            return await _context.Teacheres.FirstOrDefaultAsync(x => x.TeacherId == id);
         }
-        public async Task UpdateAsync(Professor professor)
+        public async Task UpdateAsync(Teacher teacher)
         {
-            _context.Professores.Update(professor);
+            _context.Teacheres.Update(teacher);
             await _context.SaveChangesAsync();
         }
     }

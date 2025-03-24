@@ -1,13 +1,13 @@
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Domain.ViewModels;
-using ProjetoNotas.Models;
-using ProjetoNotas.Repository;
+using ProjetoScores.Domain.Interfaces;
+using ProjetoScores.Domain.ViewModels;
+using ProjetoScores.Models;
+using ProjetoScores.Repository;
 
 
-namespace ProjetoNotas.WebUi.Controllers
+namespace ProjetoScores.WebUi.Controllers
 {
     [ApiController]
     [AllowAnonymous]
@@ -22,18 +22,18 @@ namespace ProjetoNotas.WebUi.Controllers
             _tokenservice = tokenservice;
         }
 
-        [HttpPost("Login/Aluno")]
-        public async Task<ActionResult> LoginAlunoAsync([FromBody] UserLoginViewModel user)
+        [HttpPost("Login/Student")]
+        public async Task<ActionResult> LoginStudentAsync([FromBody] UserLoginViewModel user)
         {
             try
             {
-                var aluno = await _loginrepository.LoginAlunoAsync(user.Email, user.Senha);
-                if (aluno == null)
+                var student = await _loginrepository.LoginStudentAsync(user.Email, user.Password);
+                if (student == null)
                 {
                     return null;
                 }
 
-                var token = _tokenservice.GenerateToken(aluno);
+                var token = _tokenservice.GenerateToken(student);
                 return Ok(token);
 
             }
@@ -44,36 +44,36 @@ namespace ProjetoNotas.WebUi.Controllers
             }
         }
 
-        [HttpPost("login/Professor")]
-        public async Task<ActionResult<dynamic>> LoginProfessorAsync([FromBody] UserLoginViewModel user)
+        [HttpPost("login/Teacher")]
+        public async Task<ActionResult<dynamic>> LoginTeacherAsync([FromBody] UserLoginViewModel user)
         {
-            var professor = await _loginrepository.LoginProfessorAsync(user.Email, user.Senha);
-            if (professor == null)
+            var teacher = await _loginrepository.LoginTeacherAsync(user.Email, user.Password);
+            if (teacher == null)
             {
-                return BadRequest("Usuario ou senha estão incorretos");
+                return BadRequest("Usuario ou password estão incorretos");
             }
-            var token = _tokenservice.GenerateToken(professor);
-            professor.Senha = "";
+            var token = _tokenservice.GenerateToken(teacher);
+            teacher.Password = "";
             return new
             {
-                professor = professor,
+                teacher = teacher,
                 token = token
             };
         }
 
         [HttpPost("login/Admin")]
-        public async Task<ActionResult<dynamic>> LoginAdministradorAsync([FromBody] UserLoginViewModel user)
+        public async Task<ActionResult<dynamic>> LoginAdministratorAsync([FromBody] UserLoginViewModel user)
         {
-            var administrador = await _loginrepository.LoginAdminAsync(user.Email, user.Senha);
-            if (administrador == null)
+            var administrator = await _loginrepository.LoginAdminAsync(user.Email, user.Password);
+            if (administrator == null)
             {
-                return BadRequest("Usuario ou senha estão incorretos");
+                return BadRequest("Usuario ou password estão incorretos");
             }
-            var token = _tokenservice.GenerateToken(administrador);
-            administrador.Senha = "";
+            var token = _tokenservice.GenerateToken(administrator);
+            administrator.Password = "";
             return new
             {
-                administrador = administrador,
+                administrator = administrator,
                 token = token
             };
         }

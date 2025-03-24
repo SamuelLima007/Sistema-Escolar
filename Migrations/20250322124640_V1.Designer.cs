@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjetoNotas.Data;
+using ProjetoScores.Data;
 
 #nullable disable
 
-namespace ProjetoNotas.Migrations
+namespace ProjetoScores.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
     [Migration("20250322124640_V1")]
@@ -21,39 +21,39 @@ namespace ProjetoNotas.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
-            modelBuilder.Entity("AlunoDisciplina", b =>
+            modelBuilder.Entity("StudentSubject", b =>
                 {
-                    b.Property<int>("AlunoId")
+                    b.Property<int>("StudentId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("DisciplinaId")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AlunoId", "DisciplinaId");
+                    b.HasKey("StudentId", "SubjectId");
 
-                    b.HasIndex("DisciplinaId");
+                    b.HasIndex("SubjectId");
 
-                    b.ToTable("AlunoDisciplina");
+                    b.ToTable("StudentSubject");
                 });
 
-            modelBuilder.Entity("ClasseProfessor", b =>
+            modelBuilder.Entity("ClassTeacher", b =>
                 {
-                    b.Property<int>("ClasseId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProfessorId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ClasseId", "ProfessorId");
+                    b.HasKey("ClassId", "TeacherId");
 
-                    b.HasIndex("ProfessorId");
+                    b.HasIndex("TeacherId");
 
-                    b.ToTable("ClasseProfessor");
+                    b.ToTable("ClassTeacher");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Administrador", b =>
+            modelBuilder.Entity("ProjetoScores.Domain.Models.Administrator", b =>
                 {
-                    b.Property<int>("AdministradorId")
+                    b.Property<int>("AdministratorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -61,7 +61,7 @@ namespace ProjetoNotas.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -69,82 +69,82 @@ namespace ProjetoNotas.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Senha")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AdministradorId");
+                    b.HasKey("AdministratorId");
 
-                    b.ToTable("Administradores");
+                    b.ToTable("Administratores");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Disciplina", b =>
+            modelBuilder.Entity("ProjetoScores.Domain.Models.Subject", b =>
                 {
-                    b.Property<int>("DisciplinaId")
+                    b.Property<int>("SubjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1L)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("ClasseId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("Text")
-                        .HasColumnName("Nome");
+                        .HasColumnName("Name");
 
-                    b.HasKey("DisciplinaId");
+                    b.HasKey("SubjectId");
 
-                    b.HasIndex("ClasseId");
+                    b.HasIndex("ClassId");
 
-                    b.HasIndex("Nome")
+                    b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Disciplina", (string)null);
+                    b.ToTable("Subject", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Nota", b =>
+            modelBuilder.Entity("ProjetoScores.Domain.Models.Score", b =>
                 {
-                    b.Property<int>("NotaId")
+                    b.Property<int>("ScoreId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1L)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Aluno_Id")
+                    b.Property<int>("Student_Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Disciplina_Id")
+                    b.Property<int>("Subject_Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<double>("Valor")
+                    b.Property<double>("Value")
                         .HasMaxLength(4)
                         .HasColumnType("decimal(2, 2)")
-                        .HasColumnName("Valor");
+                        .HasColumnName("Value");
 
-                    b.HasKey("NotaId");
+                    b.HasKey("ScoreId");
 
-                    b.HasIndex("Aluno_Id");
+                    b.HasIndex("Student_Id");
 
-                    b.HasIndex("Disciplina_Id");
+                    b.HasIndex("Subject_Id");
 
-                    b.ToTable("Nota", (string)null);
+                    b.ToTable("Score", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Models.Aluno", b =>
+            modelBuilder.Entity("ProjetoScores.Models.Student", b =>
                 {
-                    b.Property<int>("AlunoId")
+                    b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1L)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Classe_Id")
+                    b.Property<int>("Class_Id")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
@@ -153,16 +153,16 @@ namespace ProjetoNotas.Migrations
                         .HasColumnType("Text")
                         .HasColumnName("Email");
 
-                    b.Property<int>("Idade")
+                    b.Property<int>("Age")
                         .HasMaxLength(2)
                         .HasColumnType("INT")
-                        .HasColumnName("Idade");
+                        .HasColumnName("Age");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("Text")
-                        .HasColumnName("Nome");
+                        .HasColumnName("Name");
 
                     b.Property<string>("Role")
                         .IsRequired()
@@ -170,51 +170,51 @@ namespace ProjetoNotas.Migrations
                         .HasColumnType("Text")
                         .HasColumnName("Roles");
 
-                    b.Property<string>("Senha")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("NText")
-                        .HasColumnName("Senha");
+                        .HasColumnName("Password");
 
-                    b.HasKey("AlunoId");
+                    b.HasKey("StudentId");
 
-                    b.HasIndex("Classe_Id");
+                    b.HasIndex("Class_Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Aluno", (string)null);
+                    b.ToTable("Student", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Models.Classe", b =>
+            modelBuilder.Entity("ProjetoScores.Models.Class", b =>
                 {
-                    b.Property<int>("ClasseId")
+                    b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
                         .HasAnnotation("SqlServer:IdentitySeed", 1L)
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Serie")
+                    b.Property<string>("Grade")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("Text")
-                        .HasColumnName("Serie");
+                        .HasColumnName("Grade");
 
-                    b.Property<string>("Turma")
+                    b.Property<string>("Section")
                         .IsRequired()
                         .HasMaxLength(2)
                         .HasColumnType("Text")
-                        .HasColumnName("Turma");
+                        .HasColumnName("Section");
 
-                    b.HasKey("ClasseId");
+                    b.HasKey("ClassId");
 
-                    b.ToTable("Classe", (string)null);
+                    b.ToTable("Class", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Models.Professor", b =>
+            modelBuilder.Entity("ProjetoScores.Models.Teacher", b =>
                 {
-                    b.Property<int>("ProfessorId")
+                    b.Property<int>("TeacherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
                         .HasAnnotation("SqlServer:IdentityIncrement", 1)
@@ -227,123 +227,123 @@ namespace ProjetoNotas.Migrations
                         .HasColumnType("Text")
                         .HasColumnName("Email");
 
-                    b.Property<int>("Idade")
+                    b.Property<int>("Age")
                         .HasMaxLength(2)
                         .HasColumnType("Text")
-                        .HasColumnName("Idade");
+                        .HasColumnName("Age");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("Text")
-                        .HasColumnName("Nome");
+                        .HasColumnName("Name");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Senha")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("Text")
-                        .HasColumnName("Senha");
+                        .HasColumnName("Password");
 
-                    b.HasKey("ProfessorId");
+                    b.HasKey("TeacherId");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Professor", (string)null);
+                    b.ToTable("Teacher", (string)null);
                 });
 
-            modelBuilder.Entity("AlunoDisciplina", b =>
+            modelBuilder.Entity("StudentSubject", b =>
                 {
-                    b.HasOne("ProjetoNotas.Models.Aluno", null)
+                    b.HasOne("ProjetoScores.Models.Student", null)
                         .WithMany()
-                        .HasForeignKey("AlunoId")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
-                        .HasConstraintName("FK_AlunoDisciplina_AlunoId");
+                        .HasConstraintName("FK_StudentSubject_StudentId");
 
-                    b.HasOne("ProjetoNotas.Domain.Models.Disciplina", null)
+                    b.HasOne("ProjetoScores.Domain.Models.Subject", null)
                         .WithMany()
-                        .HasForeignKey("DisciplinaId")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
-                        .HasConstraintName("FK_AlunoDisciplina_DisciplinaId");
+                        .HasConstraintName("FK_StudentSubject_SubjectId");
                 });
 
-            modelBuilder.Entity("ClasseProfessor", b =>
+            modelBuilder.Entity("ClassTeacher", b =>
                 {
-                    b.HasOne("ProjetoNotas.Models.Classe", null)
+                    b.HasOne("ProjetoScores.Models.Class", null)
                         .WithMany()
-                        .HasForeignKey("ClasseId")
+                        .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
-                        .HasConstraintName("FK_ClasseProfessor_ClasseId");
+                        .HasConstraintName("FK_ClassTeacher_ClassId");
 
-                    b.HasOne("ProjetoNotas.Models.Professor", null)
+                    b.HasOne("ProjetoScores.Models.Teacher", null)
                         .WithMany()
-                        .HasForeignKey("ProfessorId")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
-                        .HasConstraintName("FK_ClasseProfessor_ProfessorId");
+                        .HasConstraintName("FK_ClassTeacher_TeacherId");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Disciplina", b =>
+            modelBuilder.Entity("ProjetoScores.Domain.Models.Subject", b =>
                 {
-                    b.HasOne("ProjetoNotas.Models.Classe", null)
-                        .WithMany("Disciplinas")
-                        .HasForeignKey("ClasseId");
+                    b.HasOne("ProjetoScores.Models.Class", null)
+                        .WithMany("Subjects")
+                        .HasForeignKey("ClassId");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Nota", b =>
+            modelBuilder.Entity("ProjetoScores.Domain.Models.Score", b =>
                 {
-                    b.HasOne("ProjetoNotas.Models.Aluno", "Aluno")
-                        .WithMany("Notas")
-                        .HasForeignKey("Aluno_Id")
+                    b.HasOne("ProjetoScores.Models.Student", "Student")
+                        .WithMany("Scores")
+                        .HasForeignKey("Student_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjetoNotas.Domain.Models.Disciplina", "Disciplina")
-                        .WithMany("Notas")
-                        .HasForeignKey("Disciplina_Id")
+                    b.HasOne("ProjetoScores.Domain.Models.Subject", "Subject")
+                        .WithMany("Scores")
+                        .HasForeignKey("Subject_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_NOTA");
 
-                    b.Navigation("Aluno");
+                    b.Navigation("Student");
 
-                    b.Navigation("Disciplina");
+                    b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Models.Aluno", b =>
+            modelBuilder.Entity("ProjetoScores.Models.Student", b =>
                 {
-                    b.HasOne("ProjetoNotas.Models.Classe", "Classe")
-                        .WithMany("Alunos")
-                        .HasForeignKey("Classe_Id")
+                    b.HasOne("ProjetoScores.Models.Class", "Class")
+                        .WithMany("Students")
+                        .HasForeignKey("Class_Id")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_ALUNO");
 
-                    b.Navigation("Classe");
+                    b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Disciplina", b =>
+            modelBuilder.Entity("ProjetoScores.Domain.Models.Subject", b =>
                 {
-                    b.Navigation("Notas");
+                    b.Navigation("Scores");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Models.Aluno", b =>
+            modelBuilder.Entity("ProjetoScores.Models.Student", b =>
                 {
-                    b.Navigation("Notas");
+                    b.Navigation("Scores");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Models.Classe", b =>
+            modelBuilder.Entity("ProjetoScores.Models.Class", b =>
                 {
-                    b.Navigation("Alunos");
+                    b.Navigation("Students");
 
-                    b.Navigation("Disciplinas");
+                    b.Navigation("Subjects");
                 });
 #pragma warning restore 612, 618
         }

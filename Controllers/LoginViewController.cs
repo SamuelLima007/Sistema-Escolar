@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ProjetoNotas.Data;
-using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Domain.ViewModels;
-using ProjetoNotas.Repository;
-using ProjetoNotas.WebUi.Services;
+using ProjetoScores.Data;
+using ProjetoScores.Domain.Interfaces;
+using ProjetoScores.Domain.ViewModels;
+using ProjetoScores.Repository;
+using ProjetoScores.WebUi.Services;
 
-namespace ProjetoNotas.WebUi.Controllers
+namespace ProjetoScores.WebUi.Controllers
 {
 
     public class LoginViewController : Controller
@@ -34,29 +34,29 @@ namespace ProjetoNotas.WebUi.Controllers
 
         }
 
-        [HttpGet("TLogin/aluno")]
+        [HttpGet("TLogin/student")]
         public async Task<ActionResult> Logar()
         {
             return View("Login", new UserLoginViewModel());
         }
 
-        [HttpPost("TLogin/Aluno")]
-        public async Task<ActionResult> LoginAlunoAsync(UserLoginViewModel aluno)
+        [HttpPost("TLogin/Student")]
+        public async Task<ActionResult> LoginStudentAsync(UserLoginViewModel student)
         {
            
             
-            var Autenticado = await _logincontroller.LoginAlunoAsync(aluno);
+            var Autenticado = await _logincontroller.LoginStudentAsync(student);
 
             if (Autenticado != null)
             {
-               var user = _context.Alunos.FirstOrDefault(x => x.Email == aluno.Email);
-               aluno.Nome = user.Nome;
+               var user = _context.Students.FirstOrDefault(x => x.Email == student.Email);
+               student.Name = user.Name;
               
 
-                return await _inicioviewcontroller.Inicio(aluno);
+                return await _inicioviewcontroller.Inicio(student);
             }
 
-            TempData["FailureMessage"] = "Erro: Usuario ou senha estão incorretos!";
+            TempData["FailureMessage"] = "Erro: Usuario ou password estão incorretos!";
 
             return View("Login");
         }

@@ -6,11 +6,12 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
-using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Domain.Models;
-using ProjetoNotas.Models;
+using ProjetoNotas;
+using ProjetoScores.Domain.Interfaces;
+using ProjetoScores.Domain.Models;
+using ProjetoScores.Models;
 
-namespace ProjetoNotas.WebUi.Services
+namespace ProjetoScores.WebUi.Services
 {
     public class TokenService : ITokenService
     {
@@ -23,7 +24,7 @@ namespace ProjetoNotas.WebUi.Services
             {
                 Subject = new ClaimsIdentity(new[]
             {
-            new Claim(ClaimTypes.Name, user.Nome),
+            new Claim(ClaimTypes.Name, user.Name),
 
            new Claim(ClaimTypes.Role, user.Role)
           }),

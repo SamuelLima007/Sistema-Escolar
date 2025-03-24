@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ProjetoNotas.Migrations
+namespace ProjetoScores.Migrations
 {
     /// <inheritdoc />
     public partial class CriarBancoSQLite : Migration
@@ -11,209 +11,209 @@ namespace ProjetoNotas.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Administradores",
+                name: "Administratores",
                 columns: table => new
                 {
-                    AdministradorId = table.Column<int>(type: "INTEGER", nullable: false)
+                    AdministratorId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Role = table.Column<string>(type: "TEXT", nullable: false),
-                    Nome = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Senha = table.Column<string>(type: "TEXT", nullable: false)
+                    Password = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Administradores", x => x.AdministradorId);
+                    table.PrimaryKey("PK_Administratores", x => x.AdministratorId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Classe",
+                name: "Class",
                 columns: table => new
                 {
-                    ClasseId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ClassId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Serie = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
-                    Turma = table.Column<string>(type: "Text", maxLength: 2, nullable: false)
+                    Grade = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
+                    Section = table.Column<string>(type: "Text", maxLength: 2, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Classe", x => x.ClasseId);
+                    table.PrimaryKey("PK_Class", x => x.ClassId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Professor",
+                name: "Teacher",
                 columns: table => new
                 {
-                    ProfessorId = table.Column<int>(type: "INTEGER", nullable: false)
+                    TeacherId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
-                    Idade = table.Column<int>(type: "Text", maxLength: 2, nullable: false),
+                    Name = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
+                    Age = table.Column<int>(type: "Text", maxLength: 2, nullable: false),
                     Email = table.Column<string>(type: "Text", maxLength: 100, nullable: false),
-                    Senha = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
+                    Password = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
                     Role = table.Column<string>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Professor", x => x.ProfessorId);
+                    table.PrimaryKey("PK_Teacher", x => x.TeacherId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Aluno",
+                name: "Student",
                 columns: table => new
                 {
-                    AlunoId = table.Column<int>(type: "INTEGER", nullable: false)
+                    StudentId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Idade = table.Column<int>(type: "INT", maxLength: 2, nullable: false),
-                    Classe_Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Age = table.Column<int>(type: "INT", maxLength: 2, nullable: false),
+                    Class_Id = table.Column<int>(type: "INTEGER", nullable: false),
                     Roles = table.Column<string>(type: "Text", maxLength: 20, nullable: false),
-                    Nome = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
+                    Name = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
                     Email = table.Column<string>(type: "Text", maxLength: 100, nullable: false),
-                    Senha = table.Column<string>(type: "NText", maxLength: 150, nullable: false)
+                    Password = table.Column<string>(type: "NText", maxLength: 150, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Aluno", x => x.AlunoId);
+                    table.PrimaryKey("PK_Student", x => x.StudentId);
                     table.ForeignKey(
                         name: "FK_ALUNO",
-                        column: x => x.Classe_Id,
-                        principalTable: "Classe",
-                        principalColumn: "ClasseId");
+                        column: x => x.Class_Id,
+                        principalTable: "Class",
+                        principalColumn: "ClassId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Disciplina",
+                name: "Subject",
                 columns: table => new
                 {
-                    DisciplinaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    SubjectId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
-                    ClasseId = table.Column<int>(type: "INTEGER", nullable: true)
+                    Name = table.Column<string>(type: "Text", maxLength: 30, nullable: false),
+                    ClassId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Disciplina", x => x.DisciplinaId);
+                    table.PrimaryKey("PK_Subject", x => x.SubjectId);
                     table.ForeignKey(
-                        name: "FK_Disciplina_Classe_ClasseId",
-                        column: x => x.ClasseId,
-                        principalTable: "Classe",
-                        principalColumn: "ClasseId");
+                        name: "FK_Subject_Class_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "ClassId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClasseProfessor",
+                name: "ClassTeacher",
                 columns: table => new
                 {
-                    ClasseId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProfessorId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ClassId = table.Column<int>(type: "INTEGER", nullable: false),
+                    TeacherId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClasseProfessor", x => new { x.ClasseId, x.ProfessorId });
+                    table.PrimaryKey("PK_ClassTeacher", x => new { x.ClassId, x.TeacherId });
                     table.ForeignKey(
-                        name: "FK_ClasseProfessor_ClasseId",
-                        column: x => x.ClasseId,
-                        principalTable: "Classe",
-                        principalColumn: "ClasseId");
+                        name: "FK_ClassTeacher_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "ClassId");
                     table.ForeignKey(
-                        name: "FK_ClasseProfessor_ProfessorId",
-                        column: x => x.ProfessorId,
-                        principalTable: "Professor",
-                        principalColumn: "ProfessorId");
+                        name: "FK_ClassTeacher_TeacherId",
+                        column: x => x.TeacherId,
+                        principalTable: "Teacher",
+                        principalColumn: "TeacherId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "AlunoDisciplina",
+                name: "StudentSubject",
                 columns: table => new
                 {
-                    AlunoId = table.Column<int>(type: "INTEGER", nullable: false),
-                    DisciplinaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    StudentId = table.Column<int>(type: "INTEGER", nullable: false),
+                    SubjectId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AlunoDisciplina", x => new { x.AlunoId, x.DisciplinaId });
+                    table.PrimaryKey("PK_StudentSubject", x => new { x.StudentId, x.SubjectId });
                     table.ForeignKey(
-                        name: "FK_AlunoDisciplina_AlunoId",
-                        column: x => x.AlunoId,
-                        principalTable: "Aluno",
-                        principalColumn: "AlunoId");
+                        name: "FK_StudentSubject_StudentId",
+                        column: x => x.StudentId,
+                        principalTable: "Student",
+                        principalColumn: "StudentId");
                     table.ForeignKey(
-                        name: "FK_AlunoDisciplina_DisciplinaId",
-                        column: x => x.DisciplinaId,
-                        principalTable: "Disciplina",
-                        principalColumn: "DisciplinaId");
+                        name: "FK_StudentSubject_SubjectId",
+                        column: x => x.SubjectId,
+                        principalTable: "Subject",
+                        principalColumn: "SubjectId");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Nota",
+                name: "Score",
                 columns: table => new
                 {
-                    NotaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ScoreId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Valor = table.Column<double>(type: "decimal(2, 2)", maxLength: 4, nullable: false),
-                    Disciplina_Id = table.Column<int>(type: "INTEGER", nullable: false),
-                    Aluno_Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Value = table.Column<double>(type: "decimal(2, 2)", maxLength: 4, nullable: false),
+                    Subject_Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Student_Id = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Nota", x => x.NotaId);
+                    table.PrimaryKey("PK_Score", x => x.ScoreId);
                     table.ForeignKey(
                         name: "FK_NOTA",
-                        column: x => x.Disciplina_Id,
-                        principalTable: "Disciplina",
-                        principalColumn: "DisciplinaId");
+                        column: x => x.Subject_Id,
+                        principalTable: "Subject",
+                        principalColumn: "SubjectId");
                     table.ForeignKey(
-                        name: "FK_Nota_Aluno_Aluno_Id",
-                        column: x => x.Aluno_Id,
-                        principalTable: "Aluno",
-                        principalColumn: "AlunoId",
+                        name: "FK_Score_Student_Student_Id",
+                        column: x => x.Student_Id,
+                        principalTable: "Student",
+                        principalColumn: "StudentId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Aluno_Classe_Id",
-                table: "Aluno",
-                column: "Classe_Id");
+                name: "IX_Student_Class_Id",
+                table: "Student",
+                column: "Class_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Aluno_Email",
-                table: "Aluno",
+                name: "IX_Student_Email",
+                table: "Student",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AlunoDisciplina_DisciplinaId",
-                table: "AlunoDisciplina",
-                column: "DisciplinaId");
+                name: "IX_StudentSubject_SubjectId",
+                table: "StudentSubject",
+                column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClasseProfessor_ProfessorId",
-                table: "ClasseProfessor",
-                column: "ProfessorId");
+                name: "IX_ClassTeacher_TeacherId",
+                table: "ClassTeacher",
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Disciplina_ClasseId",
-                table: "Disciplina",
-                column: "ClasseId");
+                name: "IX_Subject_ClassId",
+                table: "Subject",
+                column: "ClassId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Disciplina_Nome",
-                table: "Disciplina",
-                column: "Nome",
+                name: "IX_Subject_Name",
+                table: "Subject",
+                column: "Name",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nota_Aluno_Id",
-                table: "Nota",
-                column: "Aluno_Id");
+                name: "IX_Score_Student_Id",
+                table: "Score",
+                column: "Student_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Nota_Disciplina_Id",
-                table: "Nota",
-                column: "Disciplina_Id");
+                name: "IX_Score_Subject_Id",
+                table: "Score",
+                column: "Subject_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Professor_Email",
-                table: "Professor",
+                name: "IX_Teacher_Email",
+                table: "Teacher",
                 column: "Email",
                 unique: true);
         }
@@ -222,28 +222,28 @@ namespace ProjetoNotas.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Administradores");
+                name: "Administratores");
 
             migrationBuilder.DropTable(
-                name: "AlunoDisciplina");
+                name: "StudentSubject");
 
             migrationBuilder.DropTable(
-                name: "ClasseProfessor");
+                name: "ClassTeacher");
 
             migrationBuilder.DropTable(
-                name: "Nota");
+                name: "Score");
 
             migrationBuilder.DropTable(
-                name: "Professor");
+                name: "Teacher");
 
             migrationBuilder.DropTable(
-                name: "Disciplina");
+                name: "Subject");
 
             migrationBuilder.DropTable(
-                name: "Aluno");
+                name: "Student");
 
             migrationBuilder.DropTable(
-                name: "Classe");
+                name: "Class");
         }
     }
 }

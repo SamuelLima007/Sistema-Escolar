@@ -1,0 +1,222 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("/images/fundo.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/Montserrat-Regular.ttf");
+}
+
+.options {
+  display: flex;
+  gap: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0.4px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: monospace;
+  background-color: rgba(0, 0, 0, 80);
+  height: 120px;
+}
+
+.link {
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.link:hover {
+  color: #32cd32;
+  transform: scale(1, 1.1);
+}
+
+.logo {
+  width: 200px;
+  height: 115px;
+}
+
+.modal.window {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  color: red;
+  width: 800px;
+  height: 200px;
+  border-radius: 100px;
+  font-family: monospace;
+  animation: entrada 1.5s linear;
+  position: absolute;
+  top: 26%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.window {
+  font-weight: bold;
+  color: black;
+  font-size: 20px;
+  letter-spacing: 0.1px;
+  text-align: center;
+}
+
+.user-name {
+  display: inline-block;
+  margin-left: -10px;
+  animation: arcoIris 5s linear infinite;
+}
+
+@keyframes arcoIris {
+  0% {
+    color: red;
+  }
+  25% {
+    color: orange;
+  }
+  50% {
+    color: yellow;
+  }
+  75% {
+    color: green;
+  }
+  100% {
+    color: blue;
+  }
+}
+
+@keyframes entrada {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+.btn {
+  display: flex;
+  color: red;
+  background-color: none;
+  border: none;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 25px;
+  position: absolute;
+  top: 10px;
+  right: 60px;
+  bottom: 80%;
+  width: 3%;
+  cursor: pointer;
+}
+
+.btn:hover {
+  transform: scale(1, 1.1);
+}
+
+.background-transparente::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.profile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #ddd;
+}
+
+#datetime {
+  font-size: 14px;
+  color: gray;
+}
+
+.reminders {
+  margin-top: 20px;
+}
+
+.reminder {
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.reminder button {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.add-reminder {
+  margin-top: 10px;
+  display: flex;
+  gap: 5px;
+}
+
+.add-reminder input {
+  flex: 1;
+  padding: 5px;
+}
+
+.add-reminder button {
+  background: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.dashboard {
+  display: flex;
+  position: absolute;
+  width: 60%;
+  height: 600px;
+  background-color: white;
+  justify-content: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: Montserrat;
+}
+
+.dashboard-Header {
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 25px;
+  text-align: center;
+  width: 100%;
+  height: 13%;
+  border: color(white);
+  background-color: #4a90e2;
+  color: black;
+}
+
+.dashboard-main {
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+}

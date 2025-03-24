@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ProjetoNotas.Migrations
+namespace ProjetoScores.Migrations
 {
     /// <inheritdoc />
     public partial class Att : Migration
@@ -12,20 +12,20 @@ namespace ProjetoNotas.Migrations
         {
             migrationBuilder.AddColumn<string>(
                 name: "FotoPerfil",
-                table: "Professor",
+                table: "Teacher",
                 type: "TEXT",
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "FotoPerfil",
-                table: "Aluno",
+                table: "Student",
                 type: "Text",
                 maxLength: 255,
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
                 name: "FotoPerfil",
-                table: "Administradores",
+                table: "Administratores",
                 type: "TEXT",
                 nullable: true);
         }
@@ -35,15 +35,15 @@ namespace ProjetoNotas.Migrations
         {
             migrationBuilder.DropColumn(
                 name: "FotoPerfil",
-                table: "Professor");
+                table: "Teacher");
 
             migrationBuilder.DropColumn(
                 name: "FotoPerfil",
-                table: "Aluno");
+                table: "Student");
 
             migrationBuilder.DropColumn(
                 name: "FotoPerfil",
-                table: "Administradores");
+                table: "Administratores");
         }
     }
 }

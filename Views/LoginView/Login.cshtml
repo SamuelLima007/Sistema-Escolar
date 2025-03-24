@@ -18,18 +18,19 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form asp-controller="LoginView" asp-action="LoginAlunoAsync" method="Post">
+    <form asp-controller="LoginView" asp-action="LoginStudentAsync" method="Post">
         <h3>Login</h3>
 
-        <label for="username">Usuario</label>
+        <label for="username">Email</label>
         <input type="text" name="Email" placeholder="Email" name="Email" name id="username" required>
 
-        <label for="Senha">Senha</label>
-        <input type="password" placeholder="Senha" name="Senha" id="password" required>
+        <label for="Password">Senha</label>
+        <input type="password" placeholder="Password" name="Password" id="password" required>
 
         @if (TempData["FailureMessage"] != null)
         {
-            <div class="alert alert-success" style="text-align: center; margin-top: 25px;">@TempData["FailureMessage"]</div>
+            <div class="alert alert-success" style="text-align: center; margin-top: 25px;">@TempData["FailureMessage"]
+            </div>
             <style>
                 form {
                     height: 620px;
