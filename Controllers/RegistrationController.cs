@@ -31,7 +31,7 @@ namespace ProjetoScores.Controllers
         [HttpGet("/")]
         public IActionResult Get()
         {
-            return View("/Views/Home/Register.cshtml", new CreateStudentViewModel());
+            return View("/Views/Home/Cadastro.cshtml", new CreateStudentViewModel());
         }
 
         [HttpPost("/")]

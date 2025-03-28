@@ -32,9 +32,9 @@ namespace ProjetoScores.Repository
             }
             catch (DbUpdateException ex)
             {
-                // Verifique a InnerException para obter detalhes
+              
                 Console.WriteLine($"Erro ao salvar no banco de dados: {ex.InnerException?.Message}");
-                throw; // Re-lança a exceção para continuar a propagar o erro
+                throw; 
             }
         }
         public async Task UpdateAsync(Student student)
