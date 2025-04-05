@@ -24,7 +24,7 @@ namespace ProjetoNotas.WebUi.Services
                 var Subject = await _subjectRepository.GetByIdAsync(id);
                 if (Subject == null)
                 {
-                    return null;
+                  return null;
                 }
                 return Subject;
             }
