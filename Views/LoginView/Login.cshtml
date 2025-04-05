@@ -18,7 +18,7 @@
         <div class="shape"></div>
         <div class="shape"></div>
     </div>
-    <form asp-controller="LoginView" asp-action="LoginStudentAsync" method="Post">
+    <form asp-controller="Account" asp-action="LoginAsync" method="Post">
         <h3>Login</h3>
 
         <label for="username">Email</label>
@@ -36,7 +36,7 @@
                     height: 620px;
                 }
             </style>
-            TempData.Remove("FailureMessage");
+
         }
 
         <button>Log In</button>

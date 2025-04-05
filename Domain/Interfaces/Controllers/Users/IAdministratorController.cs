@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Domain.ViewModels;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Domain.ViewModels;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.Domain.Interfaces
+namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IAdministratorController
     {
         Task<ActionResult<Administrator>> GetAdministratorByIdAsync(int id);
-        Task<ActionResult<Administrator>> AddAdministratorAsync([FromServices] EscolaDataContext context,[FromBody] CreateAdministratorViewModel model);
-        Task<ActionResult<bool>> UpdateAdministratorAsync(int id, [FromBody] Administrator administrator);
+        Task<ActionResult<Administrator>> AddAdministratorAsync([FromBody] CreateAdministratorViewModel model);
+        Task<ActionResult<bool>> UpdateAdministratorAsync(int id, [FromBody] CreateAdministratorViewModel administrator);
         Task<ActionResult<bool>> DeleteAdministratorAsync(int id);
     }
 }

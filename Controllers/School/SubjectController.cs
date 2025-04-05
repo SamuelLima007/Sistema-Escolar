@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoScores.Attributes;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Domain.ViewModels;
+using ProjetoNotas.Attributes;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Domain.ViewModels;
 
-namespace ProjetoScores.WebUi.Controllers
+namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
     [Authorize(Roles = "Admin")]
@@ -34,30 +34,28 @@ namespace ProjetoScores.WebUi.Controllers
         }
 
         [HttpPost("v1/addsubject")]
-        public async Task<ActionResult<Subject>> AddSubjectAsync([FromServices] EscolaDataContext context, [FromBody] CreateSubjectViewModel model)
+        public async Task<ActionResult<Subject>> AddSubjectAsync([FromBody] CreateSubjectViewModel model)
         {
-            var subject = await _subjectService.AddSubjectAsync(context, model);
+            var subject = await _subjectService.AddSubjectAsync(model);
             return CreatedAtAction(nameof(GetSubjectByIdAsync), new { id = subject.SubjectId }, subject);
         }
 
         [HttpPut("v1/updatesubject/{id}")]
-        public async Task<ActionResult<bool>> UpdateSubjectAsync(int id, [FromBody] Subject subject)
+        public async Task<ActionResult<bool>> UpdateSubjectAsync(int id, [FromBody] CreateSubjectViewModel subject)
         {
-            if (!await _subjectService.UpdateSubjectAsync(id, subject))
-            {
-                return NotFound();
-            }
-            return Ok(true);
+           var Updated = await _subjectService.UpdateSubjectAsync(id, subject);
+            if (Updated == false) return NotFound();
+
+            return NoContent();
         }
 
         [HttpDelete("v1/deletesubject/{id}")]
         public async Task<ActionResult<bool>> DeleteSubjectAsync(int id)
         {
-            if (!await _subjectService.DeleteSubjectAsync(id))
-            {
-                return NotFound();
-            }
-            return Ok(true);
+             var Deleted = await _subjectService.DeleteSubjectAsync(id);
+            if (Deleted == false) return NotFound();
+                
+            return NoContent();
         }
     }
 }

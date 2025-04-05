@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Models;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Models;
 
-namespace ProjetoScores.Repository
+namespace ProjetoNotas.Repository
 {
     public class TeacherRepository : ITeacherRepository
     {
@@ -18,21 +18,21 @@ namespace ProjetoScores.Repository
         }
         public async Task AddAsync(Teacher teacher)
         {
-            await _context.Teacheres.AddAsync(teacher);
+            await _context.Teachers.AddAsync(teacher);
             await _context.SaveChangesAsync();
         }
         public async Task DeleteAsync(Teacher teacher)
         {
-            _context.Teacheres.Remove(teacher);
+            _context.Teachers.Remove(teacher);
             await _context.SaveChangesAsync();
         }
         public async Task<Teacher> GetByIdAsync(int id)
         {
-            return await _context.Teacheres.FirstOrDefaultAsync(x => x.TeacherId == id);
+            return await _context.Teachers.FirstOrDefaultAsync(x => x.TeacherId == id);
         }
         public async Task UpdateAsync(Teacher teacher)
         {
-            _context.Teacheres.Update(teacher);
+            _context.Teachers.Update(teacher);
             await _context.SaveChangesAsync();
         }
     }

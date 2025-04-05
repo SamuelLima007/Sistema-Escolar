@@ -5,20 +5,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 using SecureIdentity.Password;
 
-namespace ProjetoScores.WebUi.Services
+namespace ProjetoNotas.WebUi.Services
 {
     public class TeacherService : ITeacherService
     {
         private readonly ITeacherRepository _teacherRepository;
-        public TeacherService(ITeacherRepository teacherRepository)
+        private readonly IClassRepository _classRepository;
+        public TeacherService(ITeacherRepository teacherRepository, IClassRepository classRepository)
         {
             _teacherRepository = teacherRepository;
+            _classRepository = classRepository;
 
         }
         public async Task<Teacher> GetTeacherByIdAsync(int id)
@@ -37,32 +39,33 @@ namespace ProjetoScores.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<Teacher> AddTeacherAsync(EscolaDataContext context, CreateTeacherViewModel model)
-        {
-            // if (!ModelState.IsValid)
-            // {
-            //     return _controller.BadRequest("validacao errada");
-            // }
-            try
-            {
-                var Nteacher = new Teacher()
-                {
-                    Name = model.Name,
-                    Age = model.Age,
-                    Email = model.Email,
-                    Password = PasswordHasher.Hash(model.Password),
-                    Classs = await context.Classs.Where(classentity => model.Class.Any(x => x.Grade == classentity.Grade && x.Section == classentity.Section)).ToListAsync(),
-                    Role = model.Roles
-                };
-                await _teacherRepository.AddAsync(Nteacher);
-                return Nteacher;
-            }
+        public async Task<Teacher> AddTeacherAsync(CreateTeacherViewModel model, int id)
+{
+    try
+    {
 
-            catch (Exception)
-            {
-                throw new Exception("Falha interna no servidor");
-            }
-        }
+        var classentity = await _classRepository.GetByIdAsync(id);
+       
+          var classes = new List<Class>();
+          classes.Add(classentity);
+        var newTeacher = new Teacher()
+        {
+            Name = model.Name,
+            Age = model.Age,
+            Email = model.Email,
+            Password = PasswordHasher.Hash(model.Password),
+            Classs = classes, 
+            Role = model.Roles
+        };
+
+        await _teacherRepository.AddAsync(newTeacher);
+        return newTeacher;
+    }
+    catch (Exception ex)
+    {
+        throw new Exception("Falha ao adicionar o professor.", ex);
+    }
+}
         public async Task<bool> UpdateTeacherAsync(int id, CreateTeacherViewModel teacher)
         {
             try

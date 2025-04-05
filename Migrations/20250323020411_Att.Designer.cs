@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjetoScores.Data;
+using ProjetoNotas.Data;
 
 #nullable disable
 
-namespace ProjetoScores.Migrations
+namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
     [Migration("20250323020411_Att")]
@@ -51,7 +51,7 @@ namespace ProjetoScores.Migrations
                     b.ToTable("ClassTeacher");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Domain.Models.Administrator", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Administrator", b =>
                 {
                     b.Property<int>("AdministratorId")
                         .ValueGeneratedOnAdd()
@@ -81,7 +81,7 @@ namespace ProjetoScores.Migrations
                     b.ToTable("Administratores");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Domain.Models.Subject", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
                 {
                     b.Property<int>("SubjectId")
                         .ValueGeneratedOnAdd()
@@ -109,7 +109,7 @@ namespace ProjetoScores.Migrations
                     b.ToTable("Subject", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoScores.Domain.Models.Score", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Score", b =>
                 {
                     b.Property<int>("ScoreId")
                         .ValueGeneratedOnAdd()
@@ -138,7 +138,7 @@ namespace ProjetoScores.Migrations
                     b.ToTable("Score", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoScores.Models.Student", b =>
+            modelBuilder.Entity("ProjetoNotas.Models.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
@@ -194,7 +194,7 @@ namespace ProjetoScores.Migrations
                     b.ToTable("Student", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoScores.Models.Class", b =>
+            modelBuilder.Entity("ProjetoNotas.Models.Class", b =>
                 {
                     b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
@@ -220,7 +220,7 @@ namespace ProjetoScores.Migrations
                     b.ToTable("Class", (string)null);
                 });
 
-            modelBuilder.Entity("ProjetoScores.Models.Teacher", b =>
+            modelBuilder.Entity("ProjetoNotas.Models.Teacher", b =>
                 {
                     b.Property<int>("TeacherId")
                         .ValueGeneratedOnAdd()
@@ -269,14 +269,14 @@ namespace ProjetoScores.Migrations
 
             modelBuilder.Entity("StudentSubject", b =>
                 {
-                    b.HasOne("ProjetoScores.Models.Student", null)
+                    b.HasOne("ProjetoNotas.Models.Student", null)
                         .WithMany()
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_StudentSubject_StudentId");
 
-                    b.HasOne("ProjetoScores.Domain.Models.Subject", null)
+                    b.HasOne("ProjetoNotas.Domain.Models.Subject", null)
                         .WithMany()
                         .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -286,14 +286,14 @@ namespace ProjetoScores.Migrations
 
             modelBuilder.Entity("ClassTeacher", b =>
                 {
-                    b.HasOne("ProjetoScores.Models.Class", null)
+                    b.HasOne("ProjetoNotas.Models.Class", null)
                         .WithMany()
                         .HasForeignKey("ClassId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("FK_ClassTeacher_ClassId");
 
-                    b.HasOne("ProjetoScores.Models.Teacher", null)
+                    b.HasOne("ProjetoNotas.Models.Teacher", null)
                         .WithMany()
                         .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -301,22 +301,22 @@ namespace ProjetoScores.Migrations
                         .HasConstraintName("FK_ClassTeacher_TeacherId");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Domain.Models.Subject", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
                 {
-                    b.HasOne("ProjetoScores.Models.Class", null)
+                    b.HasOne("ProjetoNotas.Models.Class", null)
                         .WithMany("Subjects")
                         .HasForeignKey("ClassId");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Domain.Models.Score", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Score", b =>
                 {
-                    b.HasOne("ProjetoScores.Models.Student", "Student")
+                    b.HasOne("ProjetoNotas.Models.Student", "Student")
                         .WithMany("Scores")
                         .HasForeignKey("Student_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ProjetoScores.Domain.Models.Subject", "Subject")
+                    b.HasOne("ProjetoNotas.Domain.Models.Subject", "Subject")
                         .WithMany("Scores")
                         .HasForeignKey("Subject_Id")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -328,9 +328,9 @@ namespace ProjetoScores.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Models.Student", b =>
+            modelBuilder.Entity("ProjetoNotas.Models.Student", b =>
                 {
-                    b.HasOne("ProjetoScores.Models.Class", "Class")
+                    b.HasOne("ProjetoNotas.Models.Class", "Class")
                         .WithMany("Students")
                         .HasForeignKey("Class_Id")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -340,17 +340,17 @@ namespace ProjetoScores.Migrations
                     b.Navigation("Class");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Domain.Models.Subject", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
                 {
                     b.Navigation("Scores");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Models.Student", b =>
+            modelBuilder.Entity("ProjetoNotas.Models.Student", b =>
                 {
                     b.Navigation("Scores");
                 });
 
-            modelBuilder.Entity("ProjetoScores.Models.Class", b =>
+            modelBuilder.Entity("ProjetoNotas.Models.Class", b =>
                 {
                     b.Navigation("Students");
 

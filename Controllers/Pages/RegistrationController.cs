@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ProjetoScores.Attributes;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Domain.ViewModels;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Attributes;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.ViewModels;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.Controllers
+namespace ProjetoNotas.Controllers
 {
 
     public class CadastroController : Controller
@@ -31,7 +31,7 @@ namespace ProjetoScores.Controllers
         [HttpGet("/")]
         public IActionResult Get()
         {
-            return View("/Views/Home/Cadastro.cshtml", new CreateStudentViewModel());
+            return View("/Views/Home/Register.cshtml", new CreateStudentViewModel());
         }
 
         [HttpPost("/")]

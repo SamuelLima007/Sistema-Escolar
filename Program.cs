@@ -3,14 +3,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using ProjetoNotas;
-using ProjetoScores;
-using ProjetoScores.Controllers;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.InfraStructure.Interfaces;
-using ProjetoScores.Repository;
-using ProjetoScores.WebUi.Controllers;
-using ProjetoScores.WebUi.Services;
+using ProjetoNotas;
+using ProjetoNotas.Application.Services;
+using ProjetoNotas.Controllers;
+using ProjetoNotas.Controllers.School;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Interfaces.Controllers.School;
+using ProjetoNotas.Domain.Interfaces.Repositoryes.School;
+using ProjetoNotas.Domain.Interfaces.Services.School;
+using ProjetoNotas.Domain.Repository;
+using ProjetoNotas.InfraStructure.Interfaces;
+using ProjetoNotas.Repository;
+using ProjetoNotas.WebUi.Controllers;
+using ProjetoNotas.WebUi.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,25 +46,30 @@ void ConfigureAuthentication(WebApplicationBuilder builder)
 void ConfigureServices(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<EscolaDataContext>();
-    builder.Services.AddScoped<IStudentController, StudentController>();
-    builder.Services.AddScoped<ITeacherController, TeacherController>();
-    builder.Services.AddScoped<IClassController, ClassController>();
-    builder.Services.AddScoped<IAdministratorController, AdministratorController>();
-    builder.Services.AddScoped<ISubjectController, SubjectController>();
+  
     builder.Services.AddScoped<IStudentService, StudentService>();
-    builder.Services.AddScoped<ITeacherService, TeacherService>();
-    builder.Services.AddScoped<IClassService, ClassService>();
-    builder.Services.AddScoped<IAdministratorService, AdministratorService>();
-    builder.Services.AddScoped<ISubjectService, SubjectService>();
-    builder.Services.AddScoped<ITokenService, TokenService>();
     builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+
+    builder.Services.AddScoped<ITeacherService, TeacherService>();
     builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
+    
+    builder.Services.AddScoped<IClassService, ClassService>();
     builder.Services.AddScoped<IClassRepository, ClassRepository>();
+
+    builder.Services.AddScoped<IAdministratorService, AdministratorService>();
     builder.Services.AddScoped<IAdministratorRepository, AdministratorRepository>();
+
+    builder.Services.AddScoped<ISubjectService, SubjectService>();
     builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-    builder.Services.AddScoped<LoginRepository>();
-    builder.Services.AddScoped<LoginController>();
-    builder.Services.AddScoped<InicioViewController>();
+    
+    builder.Services.AddScoped<IMyTaskService, MyTaskService>();
+    builder.Services.AddScoped<IMyTaskRepository, MyTaskRepository>();
+
+    builder.Services.AddScoped<IAccountService, AccountService>();
+    builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+    
+    builder.Services.AddScoped<ITokenService, TokenService>();
+   
     builder.Services.AddRazorPages();
     builder.Services.AddControllersWithViews();
 

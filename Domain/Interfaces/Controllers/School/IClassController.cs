@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoScores.Data;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.InfraStructure.Interfaces
+namespace ProjetoNotas.InfraStructure.Interfaces
 {
     public interface IClassController
     {
-        public Task<IActionResult> GetClassByIdAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
-        Task<IActionResult> AddClassAsync([FromServices] EscolaDataContext context, [FromBody] CreateClassViewModel model);
-        Task<IActionResult> UpdateClassAsync([FromServices] EscolaDataContext context, [FromRoute] int id, [FromBody] Class classentity);
-        Task<IActionResult> DeleteClassAsync([FromServices] EscolaDataContext context, [FromRoute] int id);
+        Task<IActionResult> GetClassByIdAsync([FromRoute] int id);
+        Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model);
+        Task<IActionResult> UpdateClassAsync([FromRoute] int id, [FromBody] Class classentity);
+        Task<IActionResult> DeleteClassAsync([FromRoute] int id);
     }
 }

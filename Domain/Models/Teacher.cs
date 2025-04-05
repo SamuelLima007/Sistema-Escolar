@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjetoScores.Domain.Models;
+using ProjetoNotas.Domain.Models;
 
-namespace ProjetoScores.Models
+namespace ProjetoNotas.Models
 {
     public class Teacher : User
     {

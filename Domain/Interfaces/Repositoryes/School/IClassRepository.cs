@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjetoScores.Models;
+using ProjetoNotas.Models;
 
-namespace ProjetoScores.Domain.Interfaces
+namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IClassRepository
     {

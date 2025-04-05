@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjetoScores.Domain.Models;
+using ProjetoNotas.Domain.Models;
 
-namespace ProjetoScores.Models
+namespace ProjetoNotas.Models
 {
     public class Student : User
     {

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjetoScores.Models;
+using ProjetoNotas.Models;
 
-namespace ProjetoScores.Mapping
+namespace ProjetoNotas.Mapping
 {
     public class TeacherMapping : IEntityTypeConfiguration<Teacher>
     {

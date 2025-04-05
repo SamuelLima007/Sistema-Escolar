@@ -7,18 +7,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ProjetoScores.Domain.ViewModels;
-using ProjetoScores.Repository;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Domain.ViewModels;
+using ProjetoNotas.Repository;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.WebUi.Controllers
+namespace ProjetoNotas.WebUi.Controllers
 {
 
 
-    public class InicioViewController : Controller
+    public class HomeController : Controller
     {
-        [HttpGet("Inicio")]
-        public async Task<ActionResult> Inicio(UserLoginViewModel student)
+        [HttpGet("Homepage")]
+        public async Task<ActionResult> Homepage(UserLoginViewModel student)
         {
             
             return View("/Views/Home/Home.cshtml", student);

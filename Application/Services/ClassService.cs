@@ -1,19 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
-namespace ProjetoScores.WebUi.Services
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
+namespace ProjetoNotas.WebUi.Services
 {
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;
-        public ClassService(IClassRepository studentRepository)
+        public ClassService(IClassRepository classRepository)
         {
-            _classRepository = studentRepository;
+            _classRepository = classRepository;
         }
         public async Task<Class> GetClassByIdAsync(int id)
         {
@@ -31,7 +27,7 @@ namespace ProjetoScores.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<Class> AddClassAsync(EscolaDataContext context, CreateClassViewModel model)
+        public async Task<Class> AddClassAsync(CreateClassViewModel model)
         {
             // if (!ModelState.IsValid)
             // {

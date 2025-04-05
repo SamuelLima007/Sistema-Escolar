@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Models;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Models;
 
-namespace ProjetoScores.Repository
+namespace ProjetoNotas.Repository
 {
     public class StudentRepository : IStudentRepository
     {
@@ -23,19 +23,9 @@ namespace ProjetoScores.Repository
         }
         public async Task AddAsync(Student student)
         {
-            try
-            {
-
                 await _context.Students.AddAsync(student);
                 await _context.SaveChangesAsync();
 
-            }
-            catch (DbUpdateException ex)
-            {
-              
-                Console.WriteLine($"Erro ao salvar no banco de dados: {ex.InnerException?.Message}");
-                throw; 
-            }
         }
         public async Task UpdateAsync(Student student)
         {

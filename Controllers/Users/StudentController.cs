@@ -1,13 +1,13 @@
 // StudentController.cs
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoScores.Attributes;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Attributes;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.WebUi.Controllers
+namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
 
@@ -36,32 +36,30 @@ namespace ProjetoScores.WebUi.Controllers
         }
 
         [HttpPost("v1/addstudent")]
-        public async Task<ActionResult<Student>> AddStudentAsync([FromServices] EscolaDataContext context, [FromBody] CreateStudentViewModel model)
+        public async Task<ActionResult<Student>> AddStudentAsync([FromBody] CreateStudentViewModel model)
         {
 
             var student = await _studentService.AddStudentAsync(model);
-            return Ok();
+            return Ok(student);
         }
 
 
         [HttpPut("v1/updatestudent/{id}")]
-        public async Task<ActionResult<bool>> UpdateStudentAsync(int id, [FromBody] Student student)
+        public async Task<ActionResult<bool>> UpdateStudentAsync(int id, [FromBody] CreateStudentViewModel student)
         {
-            if (!await _studentService.UpdateStudentAsync(id, student))
-            {
-                return NotFound();
-            }
-            return Ok(true);
+            var Updated = await _studentService.UpdateStudentAsync(id, student);
+            if (Updated == false) return NotFound();
+
+            return NoContent();
         }
 
         [HttpDelete("v1/deletestudent/{id}")]
         public async Task<ActionResult<bool>> DeleteStudentAsync(int id)
         {
-            if (!await _studentService.DeleteStudentAsync(id))
-            {
-                return NotFound();
-            }
-            return Ok(true);
+            var Deleted = await _studentService.DeleteStudentAsync(id);
+            if (Deleted == false) return NotFound();
+                
+            return NoContent();
         }
     }
 }

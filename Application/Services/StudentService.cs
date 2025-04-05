@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 using SecureIdentity.Password;
-namespace ProjetoScores.WebUi.Services
+namespace ProjetoNotas.WebUi.Services
 {
     public class StudentService : IStudentService
     {
@@ -59,11 +59,19 @@ namespace ProjetoScores.WebUi.Services
                 Class = classentity,
                 Role = model.Roles
             };
-           
+            try
+            {
             await _studentRepository.AddAsync(student);
             return student;
+             }
+            catch (DbUpdateException ex)
+            {
+              
+                Console.WriteLine($"Erro ao salvar no banco de dados: {ex.InnerException?.Message}");
+                throw; 
+            }
         }
-        public async Task<bool> UpdateStudentAsync(int id, Student student)
+        public async Task<bool> UpdateStudentAsync(int id, CreateStudentViewModel student)
         {
             try
             {

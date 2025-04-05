@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjetoScores.Attributes;
-using ProjetoScores.Data;
-using ProjetoScores.InfraStructure.Interfaces;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Attributes;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.InfraStructure.Interfaces;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.Controllers
+namespace ProjetoNotas.Controllers
 {
     [ApiController]
 
@@ -19,96 +20,50 @@ namespace ProjetoScores.Controllers
 
     public class TeacherController : ControllerBase, ITeacherController
     {
+        private readonly ITeacherService _teacherservice;
+
+        public TeacherController (ITeacherService teacherservice)
+        {
+            _teacherservice = teacherservice;
+        }
+       
 
         [HttpGet("v1/")]
-        public async Task<IActionResult> GetTeacherAsync([FromServices] EscolaDataContext context, [FromRoute] int id)
+        public async Task<IActionResult> GetTeacherAsync([FromRoute] int id)
         {
-            try
+           
+            var teacher = await _teacherservice.GetTeacherByIdAsync(id);
+            if (teacher == null)
             {
-                var teacher = await context.Teacheres.FirstOrDefaultAsync(x => x.TeacherId == id);
-
-                if (teacher == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(teacher);
+                return NotFound();
             }
-            catch (Exception)
-            {
-                return StatusCode(500, "Falha interna no servidor");
-            }
+            return Ok(teacher);
         }
 
         [HttpPost("v1/teacheres/c")]
 
-        public async Task<IActionResult> AddTeacherAsync([FromServices] EscolaDataContext context, [FromBody] CreateTeacherViewModel model)
+        public async Task<IActionResult> AddTeacherAsync([FromBody] CreateTeacherViewModel model, int id)
         {
-            try
-            {
-                var teacher = new Teacher()
-                {
-                    Name = model.Name,
-                    Age = model.Age,
-                    Email = model.Email,
-                    Password = model.Password,
-                    Classs = model.Class
-                };
-                await context.Teacheres.AddAsync(teacher);
-                await context.SaveChangesAsync();
-                return Created($"v1/teacheres{teacher.TeacherId}", await context.SaveChangesAsync());
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Falha interna no servidor");
-            }
+            var teacher = await _teacherservice.AddTeacherAsync(model, id);
+            return Ok(teacher);
         }
 
         [HttpPut("v1/teacheres/{id:int}")]
-        public async Task<IActionResult> UpdateTeacherAsync([FromServices] EscolaDataContext context, [FromRoute] int id, [FromBody] Teacher teacher)
+        public async Task<IActionResult> UpdateTeacherAsync([FromRoute] int id, [FromBody] CreateTeacherViewModel teacher)
         {
-            try
-            {
-                var Nteacher = await context.Teacheres.FirstOrDefaultAsync(x => x.TeacherId == id);
-                if (Nteacher == null)
-                {
-                    return NotFound();
-                }
+           var Updated = await _teacherservice.UpdateTeacherAsync(id, teacher);
+            if (Updated == false) return NotFound();
 
-                Nteacher.Name = teacher.Name;
-                Nteacher.Age = teacher.Age;
-
-
-                context.Teacheres.Update(Nteacher);
-                await context.SaveChangesAsync();
-                return Ok(Nteacher);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Falha interna no servidor");
-            }
+            return NoContent();
         }
 
         [HttpDelete("v1/teacheres/{id:int}")]
-        public async Task<IActionResult> DeleteTeacherAsync([FromServices] EscolaDataContext context, [FromRoute] int id)
+        public async Task<IActionResult> DeleteTeacherAsync([FromRoute] int id)
         {
-            try
-            {
-                var teacher = await context.Teacheres.FirstOrDefaultAsync(x => x.TeacherId == id);
-                if (teacher == null)
-                {
-                    return NotFound();
-                }
-                context.Teacheres.Remove(teacher);
-                await context.SaveChangesAsync();
-
-
-                return Ok(teacher);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500, "Falha interna no servidor");
-            }
+            var Deleted = await _teacherservice.DeleteTeacherAsync(id);
+            if (Deleted == false) return NotFound();
+                
+            return NoContent();
         }
 
     }

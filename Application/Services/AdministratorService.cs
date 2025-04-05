@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Domain.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Domain.ViewModels;
 using SecureIdentity.Password;
 
-namespace ProjetoScores.WebUi.Services
+namespace ProjetoNotas.WebUi.Services
 {
     public class AdministratorService : IAdministratorService
     {
@@ -34,7 +29,7 @@ namespace ProjetoScores.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<Administrator> AddAdministratorAsync(EscolaDataContext context, CreateAdministratorViewModel model)
+        public async Task<Administrator> AddAdministratorAsync(CreateAdministratorViewModel model)
         {
             // if (!ModelState.IsValid)
             // {
@@ -52,7 +47,7 @@ namespace ProjetoScores.WebUi.Services
             await _administratorRepository.AddAsync(administrator);
             return administrator;
         }
-        public async Task<bool> UpdateAdministratorAsync(int id, Administrator Administrator)
+        public async Task<bool> UpdateAdministratorAsync(int id, CreateAdministratorViewModel Administrator)
         {
             try
             {

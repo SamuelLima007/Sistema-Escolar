@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace ProjetoScores.Migrations
+namespace ProjetoNotas.Migrations
 {
     /// <inheritdoc />
     public partial class V4 : Migration

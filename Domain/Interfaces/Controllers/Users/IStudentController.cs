@@ -1,16 +1,16 @@
 // IStudentController.cs
 using Microsoft.AspNetCore.Mvc;
-using ProjetoScores.Data;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.Domain.Interfaces
+namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IStudentController
     {
         Task<ActionResult<Student>> GetStudentByIdAsync(int id);
-        Task<ActionResult<Student>> AddStudentAsync([FromServices] EscolaDataContext context,[FromBody] CreateStudentViewModel model);
-        Task<ActionResult<bool>> UpdateStudentAsync(int id, [FromBody] Student student);
+        Task<ActionResult<Student>> AddStudentAsync([FromBody] CreateStudentViewModel model);
+        Task<ActionResult<bool>> UpdateStudentAsync(int id, [FromBody] CreateStudentViewModel student);
         Task<ActionResult<bool>> DeleteStudentAsync(int id);
     }
 }

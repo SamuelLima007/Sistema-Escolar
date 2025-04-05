@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjetoScores.Domain.Models;
+using ProjetoNotas.Domain.Models;
 
-namespace ProjetoScores.InfraStructure.Mapping
+namespace ProjetoNotas.InfraStructure.Mapping
 {
     public class ScoreMapping : IEntityTypeConfiguration<Score>
     {

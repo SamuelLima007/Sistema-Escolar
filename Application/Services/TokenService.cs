@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 using ProjetoNotas;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Models;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Models;
 
-namespace ProjetoScores.WebUi.Services
+namespace ProjetoNotas.WebUi.Services
 {
     public class TokenService : ITokenService
     {

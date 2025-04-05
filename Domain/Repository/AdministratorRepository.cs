@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Domain.Models;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Models;
 
-namespace ProjetoScores.Repository
+namespace ProjetoNotas.Repository
 {
     public class AdministratorRepository : IAdministratorRepository
     {
@@ -18,21 +18,21 @@ namespace ProjetoScores.Repository
         }
         public async Task<Administrator> GetByIdAsync(int id)
         {
-            return await _context.Administratores.FirstOrDefaultAsync(x => x.AdministratorId == id);
+            return await _context.Administrators.FirstOrDefaultAsync(x => x.AdministratorId == id);
         }
         public async Task AddAsync(Administrator administrator)
         {
-            await _context.Administratores.AddAsync(administrator);
+            await _context.Administrators.AddAsync(administrator);
             await _context.SaveChangesAsync();
         }
         public async Task UpdateAsync(Administrator administrator)
         {
-            _context.Administratores.Update(administrator);
+            _context.Administrators.Update(administrator);
             await _context.SaveChangesAsync();
         }
         public async Task DeleteAsync(Administrator administrator)
         {
-            _context.Administratores.Remove(administrator);
+            _context.Administrators.Remove(administrator);
             await _context.SaveChangesAsync();
         }
     }

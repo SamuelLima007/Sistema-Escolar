@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjetoScores.Data;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.Domain.Interfaces
+namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IClassService
     {
         Task<Class> GetClassByIdAsync(int id);
-        Task<Class> AddClassAsync(EscolaDataContext context, CreateClassViewModel student);
+        Task<Class> AddClassAsync(CreateClassViewModel student);
         Task<bool> UpdateClassAsync(int id, Class classentity);
         Task<bool> DeleteClassAsync(int id);
     }

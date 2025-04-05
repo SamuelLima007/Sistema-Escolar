@@ -2,19 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Domain.ViewModels;
-using ProjetoScores.Models;
-using ProjetoScores.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Domain.ViewModels;
+using ProjetoNotas.Models;
+using ProjetoNotas.ViewModels;
 
-namespace ProjetoScores.Domain.Interfaces
+namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IAdministratorService
     {
         Task<Administrator> GetAdministratorByIdAsync(int id);
-        Task<Administrator> AddAdministratorAsync(EscolaDataContext context, CreateAdministratorViewModel administrator);
-        Task<bool> UpdateAdministratorAsync(int id, Administrator administrator);
+        Task<Administrator> AddAdministratorAsync(CreateAdministratorViewModel administrator);
+        Task<bool> UpdateAdministratorAsync(int id, CreateAdministratorViewModel administrator);
         Task<bool> DeleteAdministratorAsync(int id);
     }
 }

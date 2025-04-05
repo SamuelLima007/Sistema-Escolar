@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using ProjetoScores.Data;
-using ProjetoScores.Domain.Interfaces;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Domain.ViewModels;
+using ProjetoNotas.Data;
+using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Domain.ViewModels;
 
-namespace ProjetoScores.WebUi.Services
+namespace ProjetoNotas.WebUi.Services
 {
     public class SubjectService : ISubjectService
     {
@@ -33,21 +33,26 @@ namespace ProjetoScores.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<Subject> AddSubjectAsync(EscolaDataContext context, CreateSubjectViewModel model)
+        public async Task<Subject> AddSubjectAsync(CreateSubjectViewModel model)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return _controller.BadRequest("validacao errada");
-            // }
+          
+          try
+           {
             var Subject = new Subject()
             {
                 Name = model.Name,
-
+            
             };
             await _subjectRepository.AddAsync(Subject);
             return Subject;
+             }
+          catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
+
         }
-        public async Task<bool> UpdateSubjectAsync(int id, Subject Subject)
+        public async Task<bool> UpdateSubjectAsync(int id, CreateSubjectViewModel subject)
         {
             try
             {
@@ -56,7 +61,7 @@ namespace ProjetoScores.WebUi.Services
                 {
                     return false;
                 }
-                NSubject.Name = Subject.Name;
+                NSubject.Name = subject.Name;
 
                 await _subjectRepository.UpdateAsync(NSubject);
                 return true;
@@ -83,6 +88,8 @@ namespace ProjetoScores.WebUi.Services
             {
                 throw new Exception("Falha interna no servidor");
             }
+
+            
         }
     }
 }

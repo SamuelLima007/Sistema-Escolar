@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ProjetoScores.Domain.Models;
-using ProjetoScores.Models;
+using ProjetoNotas.Domain.Models;
+using ProjetoNotas.Models;
 
-namespace ProjetoScores.Mapping
+namespace ProjetoNotas.Mapping
 {
     public class ClassMapping : IEntityTypeConfiguration<Class>
     {
