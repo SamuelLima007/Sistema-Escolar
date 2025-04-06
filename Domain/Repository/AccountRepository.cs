@@ -35,5 +35,12 @@ namespace ProjetoNotas.Repository
         {
            return await _context.Teachers.FirstOrDefaultAsync(x => x.Email == email);
         }
+
+        public async Task<bool> IsEmailRegisteredAsync(string email)
+         {
+           return await _context.Students.AnyAsync(x => x.Email == email) ||
+           await _context.Administrators.AnyAsync(x => x.Email == email) ||
+           await _context.Teachers.AnyAsync(x => x.Email == email);
+         }
     }
 }

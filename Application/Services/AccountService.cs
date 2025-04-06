@@ -13,11 +13,11 @@ namespace ProjetoNotas.Application.Services
     {
 
        
-        private readonly IAccountRepository _loginRepository;
-        public AccountService(IAccountRepository loginRepository)
+        private readonly IAccountRepository _accountRepository;
+        public AccountService(IAccountRepository accountRepository)
         {
            
-            _loginRepository = loginRepository;
+            _accountRepository = accountRepository;
         }
         public async Task<T> ValidateLogin<T>(string username, string password, UserType userType) where T : User
         {
@@ -27,17 +27,17 @@ namespace ProjetoNotas.Application.Services
             switch (userType)
         {
             case UserType.Administrator:
-                 user = await _loginRepository.LoginAdminAsync(username, password);
+                 user = await _accountRepository.LoginAdminAsync(username, password);
                  break;
                 
 
             case UserType.Teacher:
-                user = await _loginRepository.LoginTeacherAsync(username, password);
+                user = await _accountRepository.LoginTeacherAsync(username, password);
                 break;
                 
 
             case UserType.Student:
-                user = await _loginRepository.LoginStudentAsync(username, password);
+                user = await _accountRepository.LoginStudentAsync(username, password);
                break;
 
             default:
@@ -62,6 +62,11 @@ namespace ProjetoNotas.Application.Services
         //     return null;
 
             
+        }
+
+        public async Task<bool> IsEmailRegisteredAsync(string email)
+        {
+           return await _accountRepository.IsEmailRegisteredAsync(email);
         }
 
         public bool LogoutAsync()

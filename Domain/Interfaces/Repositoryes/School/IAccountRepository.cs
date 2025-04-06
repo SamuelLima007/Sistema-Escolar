@@ -12,6 +12,7 @@ namespace ProjetoNotas.Domain.Interfaces.Repositoryes.School
         Task<Student> LoginStudentAsync(string username, string password);
         Task<Administrator> LoginAdminAsync(string username, string password);
         Task<Teacher> LoginTeacherAsync(string username, string password);
+        Task<bool> IsEmailRegisteredAsync(string email);
 
     }
 }
