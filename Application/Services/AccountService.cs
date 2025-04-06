@@ -71,7 +71,7 @@ namespace ProjetoNotas.Application.Services
 
         public bool LogoutAsync()
         {
-            // Simulate logout logic. In a real application, you would clear session data or tokens.
+           
            return false;
         }
     
