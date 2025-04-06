@@ -53,11 +53,14 @@ namespace ProjetoNotas.Application.Services
                 }
                 return user as T;
             }         
+            return null;
         }
+
         public async Task<bool> IsEmailRegisteredAsync(string email)
         {
            return await _accountRepository.IsEmailRegisteredAsync(email);
         }
+
         public bool LogoutAsync()
         {
            
