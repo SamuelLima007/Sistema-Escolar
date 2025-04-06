@@ -19,19 +19,19 @@ namespace ProjetoNotas.Repository
         {
             _context = context;
         }
-        public async Task<Student> LoginStudentAsync(string email, string password)
+        public async Task<Student> LoginStudentAsync(string email)
         {
             return await _context.Students.FirstOrDefaultAsync(x => x.Email == email);
 
            
         }
-        public async Task<Administrator> LoginAdminAsync(string email, string password)
+        public async Task<Administrator> LoginAdminAsync(string email)
         {
 
              return await _context.Administrators.FirstOrDefaultAsync(x => x.Email == email);
          
         }
-        public async Task<Teacher> LoginTeacherAsync(string email, string password)
+        public async Task<Teacher> LoginTeacherAsync(string email)
         {
            return await _context.Teachers.FirstOrDefaultAsync(x => x.Email == email);
         }

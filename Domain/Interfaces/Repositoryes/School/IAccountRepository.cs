@@ -9,9 +9,9 @@ namespace ProjetoNotas.Domain.Interfaces.Repositoryes.School
 {
     public interface IAccountRepository
     {
-        Task<Student> LoginStudentAsync(string username, string password);
-        Task<Administrator> LoginAdminAsync(string username, string password);
-        Task<Teacher> LoginTeacherAsync(string username, string password);
+        Task<Student> LoginStudentAsync(string email);
+        Task<Administrator> LoginAdminAsync(string email);
+        Task<Teacher> LoginTeacherAsync(string email);
         Task<bool> IsEmailRegisteredAsync(string email);
 
     }
