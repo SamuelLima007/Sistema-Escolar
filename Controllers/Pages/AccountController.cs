@@ -17,14 +17,14 @@ namespace ProjetoNotas.WebUi.Controllers
     [AllowAnonymous]
     public class AccountController : Controller
     {
-        private readonly IAccountService _Accountservice;
+        private readonly IAccountService _accountservice;
         private readonly ITokenService _tokenservice;
 
         private readonly IStudentService _studentService;
 
-        public AccountController(IAccountService Accountservice, ITokenService tokenservice, IStudentService studentService)
+        public AccountController(IAccountService accountservice, ITokenService tokenservice, IStudentService studentService)
         {
-            _Accountservice = Accountservice;
+            _accountservice = accountservice;
             _tokenservice = tokenservice;
             _studentService = studentService;
         }
@@ -39,17 +39,10 @@ namespace ProjetoNotas.WebUi.Controllers
         [HttpPost("/")]
         public async Task<IActionResult> Register([FromForm]CreateStudentViewModel model)
         {
-            if (model.Password.Length < 8)
-            {
-                TempData["FailureMessage"] = "Erro: Password deve conter 8 dígitos!";
-                return View("/Views/Home/Register.cshtml");
-            }
-           
-
             if (model != null)
             {
                 
-                if (await _Accountservice.IsEmailRegisteredAsync(model.Email))
+                if (await _accountservice.IsEmailRegisteredAsync(model.Email))
                    {
                        TempData["FailureMessage"] = "Erro: Email já cadastrado!";
                        return View("/Views/Home/Register.cshtml");
@@ -72,7 +65,7 @@ namespace ProjetoNotas.WebUi.Controllers
         public async Task<ActionResult> LoginAsync([FromForm]UserLoginViewModel user, UserType userType)
         {
     
-                var User = await _Accountservice.ValidateLogin<User>(user.Email, user.Password, userType);
+                var User = await _accountservice.ValidateLogin<User>(user.Email, user.Password, userType);
                 if (User == null)
             {
                 TempData["FailureMessage"] = "Erro: Usuario ou password estão incorretos!";

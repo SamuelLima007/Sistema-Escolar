@@ -31,17 +31,11 @@ namespace ProjetoNotas.WebUi.Services
         }
         public async Task<Administrator> AddAdministratorAsync(CreateAdministratorViewModel model)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return _controller.BadRequest("validacao errada");
-            // }
             var administrator = new Administrator()
             {
                 Name = model.Name,
-
                 Email = model.Email,
                 Password = PasswordHasher.Hash(model.Password),
-
                 Role = model.Roles
             };
             await _administratorRepository.AddAsync(administrator);
