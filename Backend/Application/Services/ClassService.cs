@@ -29,10 +29,7 @@ namespace ProjetoNotas.WebUi.Services
         }
         public async Task<Class> AddClassAsync(CreateClassViewModel model)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return _controller.BadRequest("validacao errada");
-            // }
+       
             var classentity = new Class()
             {
                 Grade = model.Grade,
