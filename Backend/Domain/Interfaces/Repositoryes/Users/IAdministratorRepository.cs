@@ -8,6 +8,8 @@ namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IAdministratorRepository
     {
+
+        Task<List<Administrator>> GetAll();
         Task<Administrator> GetByIdAsync(int id);
         Task AddAsync(Administrator administrator);
         Task UpdateAsync(Administrator administrator);

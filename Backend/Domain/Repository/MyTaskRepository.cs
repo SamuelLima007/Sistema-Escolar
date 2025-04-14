@@ -16,6 +16,11 @@ namespace ProjetoNotas.Domain.Repository
         {
             _context = context;
         }
+
+        public async Task<List<MyTask>> GetAll()
+        {
+            return await _context.MyTasks.ToListAsync();
+        }
         public async Task AddAsync(MyTask myTask)
         {
             await _context.MyTasks.AddAsync(myTask);

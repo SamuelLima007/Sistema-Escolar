@@ -16,6 +16,11 @@ namespace ProjetoNotas.Repository
         {
             _context = context;
         }
+              
+        public async Task<List<Administrator>> GetAll()
+        {
+            return await _context.Administrators.ToListAsync();
+        }
         public async Task<Administrator> GetByIdAsync(int id)
         {
             return await _context.Administrators.FirstOrDefaultAsync(x => x.AdministratorId == id);

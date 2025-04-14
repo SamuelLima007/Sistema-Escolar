@@ -8,6 +8,8 @@ namespace ProjetoNotas.Domain.Interfaces
 {
     public interface ISubjectRepository
     {
+
+        Task<List<Subject>> GetAll();
         Task<Subject> GetByIdAsync(int id);
         Task AddAsync(Subject subject);
         Task UpdateAsync(Subject subject);

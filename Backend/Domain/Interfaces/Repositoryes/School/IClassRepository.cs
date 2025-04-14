@@ -8,6 +8,8 @@ namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IClassRepository
     {
+
+        Task<List<Class>> GetAll();
         Task<Class> GetByIdAsync(int id);
         Task AddAsync(Class classentity);
         Task UpdateAsync(Class classentity);
