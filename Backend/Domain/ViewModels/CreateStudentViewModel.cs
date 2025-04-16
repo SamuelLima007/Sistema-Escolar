@@ -12,15 +12,11 @@ namespace ProjetoNotas.ViewModels
     {
     
         public string? Name { get; set; }
-      
         public int Age { get; set; }
-      
         public string? Email { get; set; }
-       
         public string? Password { get; set; }
         public Class? Class { get; set; }
         public string? Roles { get; set; } = "Student";
-
         public UserType UserType { get; set; } = UserType.Student;
     }
 }

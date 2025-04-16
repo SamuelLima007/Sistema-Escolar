@@ -91,7 +91,6 @@ void ConfigureMvc(WebApplicationBuilder builder)
 
     builder.Services.AddHttpClient();
 }
-
 var app = builder.Build();
 app.UseCors("AllowAll");
 app.MapControllers();
