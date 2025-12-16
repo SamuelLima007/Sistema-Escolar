@@ -30,12 +30,10 @@ namespace ProjetoNotas.Application.Services
                  user = await _accountRepository.LoginAdminAsync(email);
                  break;
                 
-
             case UserType.Teacher:
                 user = await _accountRepository.LoginTeacherAsync(email);
                 break;
                 
-
             case UserType.Student:
                 user = await _accountRepository.LoginStudentAsync(email);
                break;
