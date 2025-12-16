@@ -28,7 +28,7 @@ namespace ProjetoNotas.InfraStructure.Mapping
 
             builder.Property(x => x.Password)
             .IsRequired()
-            .HasColumnType("NText")
+            .HasColumnType("Text")
             .HasColumnName("Password")
             .HasMaxLength(150);
 

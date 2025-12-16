@@ -22,7 +22,7 @@ namespace ProjetoNotas.Data
         public DbSet<MyTask> MyTasks { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            options.UseSqlite(@"Data Source=banquinho");
+            options.UseNpgsql("Host=localhost;Port=5432;Database=Sistema_escolar;Username=postgres;Password=1234");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
