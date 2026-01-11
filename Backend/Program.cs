@@ -18,14 +18,18 @@ using ProjetoNotas.Repository;
 using ProjetoNotas.WebUi.Controllers;
 using ProjetoNotas.WebUi.Services;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
+DotNetEnv.Env.Load();
+
 ConfigureAuthentication(builder);
 ConfigureMvc(builder);
 ConfigureServices(builder);
 void ConfigureAuthentication(WebApplicationBuilder builder)
 {
-    var key = Encoding.ASCII.GetBytes(Configuration.ApiKey);
+    var apikey = Environment.GetEnvironmentVariable("API_KEY");
+    var key = Encoding.ASCII.GetBytes(apikey);
 
     builder.Services.AddAuthentication(x =>
      {
@@ -46,30 +50,36 @@ void ConfigureAuthentication(WebApplicationBuilder builder)
 void ConfigureServices(WebApplicationBuilder builder)
 {
     builder.Services.AddDbContext<EscolaDataContext>();
-  
-    builder.Services.AddScoped<IStudentService, StudentService>();
-    builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
-    builder.Services.AddScoped<ITeacherService, TeacherService>();
-    builder.Services.AddScoped<ITeacherRepository, TeacherRepository>();
-    
+
+
     builder.Services.AddScoped<IClassService, ClassService>();
     builder.Services.AddScoped<IClassRepository, ClassRepository>();
 
-    builder.Services.AddScoped<IAdministratorService, AdministratorService>();
-    builder.Services.AddScoped<IAdministratorRepository, AdministratorRepository>();
+    builder.Services.AddScoped<IUserService, UserService>();
+    builder.Services.AddScoped<IUserRepository, UserRepository>();
 
     builder.Services.AddScoped<ISubjectService, SubjectService>();
     builder.Services.AddScoped<ISubjectRepository, SubjectRepository>();
-    
+
     builder.Services.AddScoped<IMyTaskService, MyTaskService>();
     builder.Services.AddScoped<IMyTaskRepository, MyTaskRepository>();
 
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddScoped<IAccountRepository, AccountRepository>();
-    
+
     builder.Services.AddScoped<ITokenService, TokenService>();
-   
+
+    builder.Services
+    .AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(
+            new JsonStringEnumConverter()
+        );
+    });
+
+
 
 
     builder.Services.AddCors(options =>

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjetoNotas.Data;
@@ -11,9 +12,11 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    partial class EscolaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20260111145832_V1")]
+    partial class V1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,6 +38,11 @@ namespace ProjetoNotas.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
+                    b.Property<string>("Section")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("character varying(2)");
+
                     b.HasKey("ClassId");
 
                     b.ToTable("Class", (string)null);
@@ -42,11 +50,11 @@ namespace ProjetoNotas.Migrations
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.MyTask", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("MyTaskId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("MyTaskId"));
 
                     b.Property<int>("ClassId")
                         .HasColumnType("integer");
@@ -67,7 +75,7 @@ namespace ProjetoNotas.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("MyTaskId");
 
                     b.HasIndex("ClassId");
 
@@ -109,9 +117,6 @@ namespace ProjetoNotas.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectId"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()

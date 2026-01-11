@@ -32,7 +32,7 @@ namespace ProjetoNotas.Controllers.School
         {
          
             var Nmytask = await _mytaskService.AddMyTaskAsync(mytask);
-            return CreatedAtAction(nameof(AddMyTaskAsync), new { id = Nmytask.MyTaskId }, Nmytask);
+            return CreatedAtAction(nameof(AddMyTaskAsync), new { id = Nmytask.Id }, Nmytask);
         }
 
         [HttpPut("{id}")]

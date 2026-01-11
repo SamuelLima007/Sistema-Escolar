@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using ProjetoNotas;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Models;
-using ProjetoNotas.Models;
+
 
 namespace ProjetoNotas.WebUi.Services
 {
@@ -17,16 +17,18 @@ namespace ProjetoNotas.WebUi.Services
     {
         public string GenerateToken(User user)
         {
+            var apikey = Environment.GetEnvironmentVariable("API_KEY");
+
             user.Role = user.Role;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Configuration.Key);
+            var key = Encoding.ASCII.GetBytes(apikey);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
             {
             new Claim(ClaimTypes.Name, user.Name),
 
-           new Claim(ClaimTypes.Role, user.Role)
+           new Claim(ClaimTypes.Role, user.Role.ToString())
           }),
 
                 Expires = DateTime.UtcNow.AddHours(2),

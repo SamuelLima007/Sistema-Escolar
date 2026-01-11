@@ -1,12 +1,12 @@
 # Sistema Escolar
 
-Este projeto é um sistema de gerenciamento de students, teacheres e turmas que permite registrar, visualizar e gerenciar informações relacionadas aos students, teacheres e turmas de uma instituição educacional.
+Este projeto é um sistema de gerenciamento de users, teacheres e turmas que permite registrar, visualizar e gerenciar informações relacionadas aos users, teacheres e turmas de uma instituição educacional.
 
 ## FuncionalAges
 
-Registro de novos students, teacheres e turmas com informações detalhadas.
-Visualização e edição de dados dos students, teacheres e turmas cadastrados.
-Busca por student, teacher ou turma.
+Registro de novos users, teacheres e turmas com informações detalhadas.
+Visualização e edição de dados dos users, teacheres e turmas cadastrados.
+Busca por user, teacher ou turma.
 Instalação
 
 ### Para utilizar este projeto localmente, siga os passos abaixo:

@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjetoNotas.Attributes;
+
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
+using ProjetoNotas.Domain.Models;
 using ProjetoNotas.InfraStructure.Interfaces;
-using ProjetoNotas.Models;
+
 using ProjetoNotas.ViewModels;
 
 namespace ProjetoNotas.Controllers
@@ -24,12 +25,12 @@ namespace ProjetoNotas.Controllers
         }
 
 
-     
+
         [Authorize(Roles = "Admin")]
         [HttpGet("v1/getclass/{id}")]
         public async Task<IActionResult> GetClassByIdAsync(int id)
         {
-           var classentity = await _classService.GetClassByIdAsync(id);
+            var classentity = await _classService.GetClassByIdAsync(id);
             if (classentity == null)
                 return NotFound();
 
@@ -37,10 +38,12 @@ namespace ProjetoNotas.Controllers
         }
 
         [HttpPost("v1/addclass")]
-        public async Task<IActionResult> AddClassAsync(CreateClassViewModel model)
+        public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
-           var classentity = await _classService.AddClassAsync(model);
-            return CreatedAtAction(nameof(AddClassAsync), new { id = classentity.ClassId }, classentity);
+            Console.WriteLine(model);
+            var classentity = await _classService.AddClassAsync(model);
+
+            return Ok();
         }
 
         [HttpPut("v1/updateclass/{id}")]
@@ -57,7 +60,7 @@ namespace ProjetoNotas.Controllers
         {
             var Deleted = await _classService.DeleteClassAsync(id);
             if (Deleted == false) return NotFound();
-                
+
             return NoContent();
         }
     }

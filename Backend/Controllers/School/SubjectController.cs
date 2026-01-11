@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoNotas.Attributes;
+
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Models;

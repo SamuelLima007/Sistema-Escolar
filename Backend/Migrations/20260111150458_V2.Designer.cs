@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProjetoNotas.Data;
@@ -11,9 +12,11 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    partial class EscolaDataContextModelSnapshot : ModelSnapshot
+    [Migration("20260111150458_V2")]
+    partial class V2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

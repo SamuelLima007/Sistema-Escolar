@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNotas.Data;
-using ProjetoNotas.Models;
+using ProjetoNotas.Domain.Models;
 using ProjetoNotas.ViewModels;
 
 namespace ProjetoNotas.InfraStructure.Interfaces

@@ -1,6 +1,7 @@
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Models;
+using ProjetoNotas.Domain.Models;
+
 using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.WebUi.Services
 {
@@ -29,15 +30,20 @@ namespace ProjetoNotas.WebUi.Services
         }
         public async Task<Class> AddClassAsync(CreateClassViewModel model)
         {
-       
-            var classentity = new Class()
+            if (model != null)
             {
-                Grade = model.Grade,
-                Section = model.Section,
 
-            };
-            await _classRepository.AddAsync(classentity);
-            return classentity;
+                var classentity = new Class()
+                {
+                    Grade = model.Grade,
+
+
+                };
+                await _classRepository.AddAsync(classentity);
+                return classentity;
+            }
+            Console.WriteLine(model);
+            return null;
         }
         public async Task<bool> UpdateClassAsync(int id, Class classentity)
         {
@@ -49,7 +55,7 @@ namespace ProjetoNotas.WebUi.Services
                     return false;
                 }
                 Nclass.Grade = classentity.Grade;
-                Nclass.Section = classentity.Section;
+
                 await _classRepository.UpdateAsync(Nclass);
                 return true;
             }

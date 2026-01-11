@@ -6,7 +6,7 @@ namespace ProjetoNotas.Domain.Interfaces.Services.School
 {
     public interface IAccountService
     {
-        Task<T> ValidateLogin<T>(string username, string password, UserType userType) where T: User;
+        Task<string> ValidateLogin(string username, string password, UserType userType);
         bool LogoutAsync();
 
         Task<bool> IsEmailRegisteredAsync(string email);

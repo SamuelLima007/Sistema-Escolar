@@ -8,32 +8,33 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Models;
+using ProjetoNotas.Domain.Models;
+
 using ProjetoNotas.ViewModels;
 using SecureIdentity.Password;
 namespace ProjetoNotas.WebUi.Services
 {
-    public class StudentService : IStudentService
+    public class UserService : IUserService
     {
-        private readonly IStudentRepository _studentRepository;
+        private readonly IUserRepository _userRepository;
 
         public readonly EscolaDataContext _context;
-        public StudentService(IStudentRepository studentRepository, EscolaDataContext context)
+        public UserService(IUserRepository userRepository, EscolaDataContext context)
         {
-            _studentRepository = studentRepository;
+            _userRepository = userRepository;
             _context = context;
 
         }
-        public async Task<Student> GetStudentByIdAsync(int id)
+        public async Task<User> GetUserByIdAsync(int id)
         {
             try
             {
-                var student = await _studentRepository.GetByIdAsync(id);
-                if (student == null)
+                var user = await _userRepository.GetByIdAsync(id);
+                if (user == null)
                 {
                     return null;
                 }
-                return student;
+                return user;
             }
             catch (Exception)
             {
@@ -41,48 +42,45 @@ namespace ProjetoNotas.WebUi.Services
             }
 
         }
-        public async Task<Student> AddStudentAsync(CreateStudentViewModel model)
+        public async Task<User> AddUserAsync(CreateUserViewModel model)
         {
             // if (!ModelState.IsValid)
             // {
             //     return _controller.BadRequest("validacao errada");
             // }
             var classentity = await _context.Classs.FirstOrDefaultAsync();
-           
 
-            var student = new Student()
+            var user = new User()
             {
                 Name = model.Name,
-                Age = model.Age,
                 Email = model.Email,
                 Password = PasswordHasher.Hash(model.Password),
-                Class = classentity,
-                Role = model.Roles
+
+                Role = model.Role
             };
             try
             {
-            await _studentRepository.AddAsync(student);
-            return student;
-             }
+                await _userRepository.AddAsync(user);
+                return user;
+            }
             catch (DbUpdateException ex)
             {
-              
+
                 Console.WriteLine($"Erro ao salvar no banco de dados: {ex.InnerException?.Message}");
-                throw; 
+                throw;
             }
         }
-        public async Task<bool> UpdateStudentAsync(int id, CreateStudentViewModel student)
+        public async Task<bool> UpdateUserAsync(int id, CreateUserViewModel user)
         {
             try
             {
-                var Nstudent = await _studentRepository.GetByIdAsync(id);
-                if (Nstudent == null)
+                var Nuser = await _userRepository.GetByIdAsync(id);
+                if (Nuser == null)
                 {
                     return false;
                 }
-                Nstudent.Name = student.Name;
-                Nstudent.Age = student.Age;
-                await _studentRepository.UpdateAsync(Nstudent);
+                Nuser.Name = user.Name;
+                await _userRepository.UpdateAsync(Nuser);
                 return true;
             }
             catch (Exception)
@@ -90,16 +88,16 @@ namespace ProjetoNotas.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<bool> DeleteStudentAsync(int id)
+        public async Task<bool> DeleteUserAsync(int id)
         {
             try
             {
-                var student = await _studentRepository.GetByIdAsync(id);
-                if (student == null)
+                var user = await _userRepository.GetByIdAsync(id);
+                if (user == null)
                 {
                     return false;
                 }
-                await _studentRepository.DeleteAsync(student);
+                await _userRepository.DeleteAsync(user);
 
                 return true;
             }
@@ -108,5 +106,7 @@ namespace ProjetoNotas.WebUi.Services
                 throw new Exception("Falha interna no servidor");
             }
         }
+
+
     }
 }

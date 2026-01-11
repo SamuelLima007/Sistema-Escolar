@@ -34,7 +34,7 @@ namespace ProjetoNotas.Domain.Repository
         }
         public async Task<MyTask> GetByIdAsync(int id)
         {
-            return await _context.MyTasks.FirstOrDefaultAsync(x => x.MyTaskId == id);
+            return await _context.MyTasks.FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task UpdateAsync(MyTask myTask)
         {

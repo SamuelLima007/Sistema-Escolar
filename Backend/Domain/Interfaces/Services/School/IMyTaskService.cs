@@ -11,7 +11,7 @@ namespace ProjetoNotas.Domain.Interfaces.Services.School
     public interface IMyTaskService
     {
         Task<MyTask> GetMyTaskByIdAsync(int id);
-        Task<MyTask> AddMyTaskAsync(CreateMyTaskViewModel student);
+        Task<MyTask> AddMyTaskAsync(CreateMyTaskViewModel user);
         Task<bool> UpdateMyTaskAsync(int id, CreateMyTaskViewModel myclass);
         Task<bool> DeleteMyTaskAsync(int id);
     }

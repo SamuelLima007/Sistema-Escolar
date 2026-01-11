@@ -1,9 +1,14 @@
 namespace ProjetoNotas.Domain.Enums
 {
-    public enum UserType
-    {
-      Student,
-      Teacher,
-        Administrator
-    }
+  public enum UserType
+  {
+    User,
+    Teacher,
+
+    School_Admin,
+
+    Super_Admin,
+
+
+  }
 }

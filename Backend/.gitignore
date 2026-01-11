@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 # Ignorar o arquivo configuration.cs
 Configuration.cs
+.env

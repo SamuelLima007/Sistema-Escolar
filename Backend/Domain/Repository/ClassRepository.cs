@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
-using ProjetoNotas.Models;
+using ProjetoNotas.Domain.Models;
+
 
 namespace ProjetoNotas.Repository
 {
