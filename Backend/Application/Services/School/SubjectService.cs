@@ -24,7 +24,7 @@ namespace ProjetoNotas.WebUi.Services
                 var Subject = await _subjectRepository.GetByIdAsync(id);
                 if (Subject == null)
                 {
-                  return null;
+                    return null;
                 }
                 return Subject;
             }
@@ -35,21 +35,16 @@ namespace ProjetoNotas.WebUi.Services
         }
         public async Task<Subject> AddSubjectAsync(CreateSubjectViewModel model)
         {
-          
-          try
-           {
+
+
             var Subject = new Subject()
             {
                 Name = model.Name,
-            
+
             };
             await _subjectRepository.AddAsync(Subject);
             return Subject;
-             }
-          catch (Exception)
-            {
-                throw new Exception("Falha interna no servidor");
-            }
+
 
         }
         public async Task<bool> UpdateSubjectAsync(int id, CreateSubjectViewModel subject)
@@ -73,23 +68,19 @@ namespace ProjetoNotas.WebUi.Services
         }
         public async Task<bool> DeleteSubjectAsync(int id)
         {
-            try
-            {
-                var Subject = await _subjectRepository.GetByIdAsync(id);
-                if (Subject == null)
-                {
-                    return false;
-                }
-                await _subjectRepository.DeleteAsync(Subject);
 
-                return true;
-            }
-            catch (Exception)
+            var Subject = await _subjectRepository.GetByIdAsync(id);
+            if (Subject == null)
             {
-                throw new Exception("Falha interna no servidor");
+                return false;
             }
+            await _subjectRepository.DeleteAsync(Subject);
 
-            
+            return true;
+
+
+
+
         }
     }
 }
