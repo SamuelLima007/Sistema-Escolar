@@ -26,7 +26,7 @@ namespace ProjetoNotas.Controllers
 
 
 
-        [Authorize(Roles = "Admin")]
+
         [HttpGet("v1/getclass/{id}")]
         public async Task<IActionResult> GetClassByIdAsync(int id)
         {
@@ -52,7 +52,7 @@ namespace ProjetoNotas.Controllers
             var Updated = await _classService.UpdateClassAsync(id, classentity);
             if (Updated == false) return NotFound();
 
-            return NoContent();
+            return Ok();
         }
 
         [HttpDelete("v1/deleteclass/{id:int}")]
@@ -61,7 +61,7 @@ namespace ProjetoNotas.Controllers
             var Deleted = await _classService.DeleteClassAsync(id);
             if (Deleted == false) return NotFound();
 
-            return NoContent();
+            return Ok();
         }
     }
 }

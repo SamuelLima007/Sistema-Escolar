@@ -16,7 +16,7 @@ namespace ProjetoNotas.Mapping
             builder.Property(x => x.FotoPerfil).HasMaxLength(255);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Password).IsRequired().HasMaxLength(150);
-            builder.Property(x => x.Role).IsRequired().HasMaxLength(20);
+            builder.Property(x => x.Role).IsRequired().HasMaxLength(20).HasConversion<string>();
 
             builder.HasIndex(x => x.Email).IsUnique();
 

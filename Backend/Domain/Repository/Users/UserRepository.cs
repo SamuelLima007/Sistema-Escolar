@@ -24,13 +24,15 @@ namespace ProjetoNotas.Repository
         }
         public async Task<User> GetByIdAsync(int id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == 1);
+
+            return user;
 
         }
         public async Task AddAsync(User user)
         {
-                await _context.Users.AddAsync(user);
-                await _context.SaveChangesAsync();
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
 
         }
         public async Task UpdateAsync(User user)

@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -18,8 +17,7 @@ namespace ProjetoNotas.Migrations
                 {
                     ClassId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Grade = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    Section = table.Column<string>(type: "character varying(2)", maxLength: 2, nullable: false)
+                    Grade = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,17 +64,17 @@ namespace ProjetoNotas.Migrations
                 name: "Task",
                 columns: table => new
                 {
-                    MyTaskId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    DueDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DueDate = table.Column<string>(type: "character varying(48)", nullable: false),
                     SubjectId = table.Column<int>(type: "integer", nullable: false),
                     ClassId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Task", x => x.MyTaskId);
+                    table.PrimaryKey("PK_Task", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Task_Class_ClassId",
                         column: x => x.ClassId,

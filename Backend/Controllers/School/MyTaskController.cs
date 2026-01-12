@@ -7,7 +7,7 @@ using ProjetoNotas.Domain.ViewModels;
 namespace ProjetoNotas.Controllers.School
 {
     [ApiController]
-    [Route("v1/mytasks")]
+
     public class MyTaskController : ControllerBase, IMyTaskController
     {
         private readonly IMyTaskService _mytaskService;
@@ -17,7 +17,7 @@ namespace ProjetoNotas.Controllers.School
             _mytaskService = mytaskService;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("v1/{id}")]
         public async Task<ActionResult<MyTask>> GetMyTaskByIdAsync(int id)
         {
             var myTask = await _mytaskService.GetMyTaskByIdAsync(id);
@@ -27,30 +27,30 @@ namespace ProjetoNotas.Controllers.School
             return Ok(myTask);
         }
 
-        [HttpPost]
+        [HttpPost("v1/addtask")]
         public async Task<ActionResult> AddMyTaskAsync([FromBody] CreateMyTaskViewModel mytask)
         {
-         
-            var Nmytask = await _mytaskService.AddMyTaskAsync(mytask);
-            return CreatedAtAction(nameof(AddMyTaskAsync), new { id = Nmytask.Id }, Nmytask);
+
+            var task = await _mytaskService.AddMyTaskAsync(mytask);
+            return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("v1/updatetask/{id}")]
         public async Task<ActionResult> UpdateMyTaskAsync(int id, [FromBody] CreateMyTaskViewModel mytask)
         {
             var Updated = await _mytaskService.UpdateMyTaskAsync(id, mytask);
             if (Updated == false) return NotFound();
 
-            return NoContent();
+            return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("v1/deletetask/{id}")]
         public async Task<ActionResult> DeleteMyTaskAsync(int id)
         {
             var Deleted = await _mytaskService.DeleteMyTaskAsync(id);
             if (Deleted == false) return NotFound();
-                
-            return NoContent();
+
+            return Ok();
         }
     }
 }

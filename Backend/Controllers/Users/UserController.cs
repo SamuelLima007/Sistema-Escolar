@@ -6,7 +6,7 @@ using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Interfaces.Services.School;
 using ProjetoNotas.Domain.Models;
-
+using ProjetoNotas.Domain.ViewModels;
 using ProjetoNotas.ViewModels;
 
 namespace ProjetoNotas.WebUi.Controllers
@@ -26,9 +26,9 @@ namespace ProjetoNotas.WebUi.Controllers
         }
 
         [HttpPost("v1/login")]
-        public async Task<ActionResult> Login([FromBody] CreateUserViewModel model)
+        public async Task<ActionResult> Login([FromBody] UserLoginViewModel model)
         {
-            var token = await _accountService.ValidateLogin(model.Email, model.Password, model.Role);
+            var token = await _accountService.ValidateLogin(model.Email, model.Password);
             if (token != null)
             {
                 return Ok(token);
@@ -38,7 +38,7 @@ namespace ProjetoNotas.WebUi.Controllers
         }
 
         [HttpGet("v1/getuser/{id}")]
-        public async Task<ActionResult<User>> GetUserByIdAsync(int id)
+        public async Task<ActionResult<User>> GetUserByIdAsync([FromRoute] int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
             if (user == null)
@@ -58,24 +58,26 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             catch
             {
-                Console.WriteLine("----------------");
 
-                Console.WriteLine(model.Email);
-
-
-                Console.WriteLine("----------------");
 
                 return BadRequest();
             }
 
         }
         [HttpPut("v1/updateuser/{id}")]
-        public async Task<ActionResult<bool>> UpdateUserAsync(int id, [FromBody] CreateUserViewModel user)
+        public async Task<ActionResult<bool>> UpdateUserAsync([FromRoute] int id, [FromBody] CreateUserViewModel user)
         {
-            var Updated = await _userService.UpdateUserAsync(id, user);
-            if (Updated == false) return NotFound();
 
-            return NoContent();
+            try
+            {
+                await _userService.UpdateUserAsync(id, user);
+                return Ok();
+            }
+            catch
+            {
+                return NoContent();
+            }
+
         }
 
         [HttpDelete("v1/deleteuser/{id}")]
@@ -84,7 +86,7 @@ namespace ProjetoNotas.WebUi.Controllers
             var Deleted = await _userService.DeleteUserAsync(id);
             if (Deleted == false) return NotFound();
 
-            return NoContent();
+            return Ok();
         }
     }
 }

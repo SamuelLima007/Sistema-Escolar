@@ -14,7 +14,7 @@ namespace ProjetoNotas.InfraStructure.Mapping
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Description).IsRequired().HasMaxLength(500);
-            builder.Property(x => x.DueDate).IsRequired();
+            builder.Property(x => x.DueDate).IsRequired().HasConversion<string>();
 
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.MyTasks)

@@ -22,11 +22,12 @@ namespace ProjetoNotas.Application.Services
             _accountRepository = accountRepository;
             _tokenservice = tokenservice;
         }
-        public async Task<string> ValidateLogin(string email, string password, UserType userType)
+        public async Task<string> ValidateLogin(string email, string password)
         {
-            if (!await _accountRepository.IsEmailRegisteredAsync(email))
+            if (await _accountRepository.IsEmailRegisteredAsync(email))
             {
                 var user = await _accountRepository.LoginUserAsync(email);
+
                 var isvalid = PasswordHasher.Verify(user.Password, password);
                 if (!isvalid)
                 {

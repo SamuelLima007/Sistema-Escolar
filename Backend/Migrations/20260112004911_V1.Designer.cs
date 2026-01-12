@@ -12,8 +12,8 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    [Migration("20260111150458_V2")]
-    partial class V2
+    [Migration("20260112004911_V1")]
+    partial class V1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,8 +59,9 @@ namespace ProjetoNotas.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("timestamp with time zone");
+                    b.Property<string>("DueDate")
+                        .IsRequired()
+                        .HasColumnType("character varying(48)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -112,9 +113,6 @@ namespace ProjetoNotas.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectId"));
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .IsRequired()

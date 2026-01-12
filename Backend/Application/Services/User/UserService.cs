@@ -25,15 +25,19 @@ namespace ProjetoNotas.WebUi.Services
             _context = context;
 
         }
+
+
         public async Task<User> GetUserByIdAsync(int id)
         {
             try
             {
                 var user = await _userRepository.GetByIdAsync(id);
+                Console.WriteLine("teste");
                 if (user == null)
                 {
                     return null;
                 }
+                Console.WriteLine("teste");
                 return user;
             }
             catch (Exception)
@@ -49,13 +53,11 @@ namespace ProjetoNotas.WebUi.Services
             //     return _controller.BadRequest("validacao errada");
             // }
             var classentity = await _context.Classs.FirstOrDefaultAsync();
-
             var user = new User()
             {
                 Name = model.Name,
                 Email = model.Email,
                 Password = PasswordHasher.Hash(model.Password),
-
                 Role = model.Role
             };
             try
@@ -70,17 +72,24 @@ namespace ProjetoNotas.WebUi.Services
                 throw;
             }
         }
-        public async Task<bool> UpdateUserAsync(int id, CreateUserViewModel user)
+        public async Task<bool> UpdateUserAsync(int id, CreateUserViewModel model)
         {
             try
             {
-                var Nuser = await _userRepository.GetByIdAsync(id);
-                if (Nuser == null)
+
+                var user = await _userRepository.GetByIdAsync(id);
+
+
+                if (user == null)
                 {
                     return false;
                 }
-                Nuser.Name = user.Name;
-                await _userRepository.UpdateAsync(Nuser);
+                user.Name = string.IsNullOrWhiteSpace(model.Name) ? user.Name : model.Name;
+                user.Email = string.IsNullOrWhiteSpace(model.Email) ? user.Email : model.Email;
+                user.Password = string.IsNullOrWhiteSpace(model.Password) ? user.Password : model.Password;
+
+
+                await _userRepository.UpdateAsync(user);
                 return true;
             }
             catch (Exception)

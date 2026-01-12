@@ -10,5 +10,9 @@ namespace ProjetoNotas.Domain.ViewModels
         public string Name { get; set; }
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
+
+        public int Classid { get; set; }
+
+        public int SubjectId { get; set; }
     }
 }

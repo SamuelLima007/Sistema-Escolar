@@ -7,6 +7,7 @@ using ProjetoNotas.Domain.Models;
 using ProjetoNotas.Domain.ViewModels;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces.Services.School;
+using Microsoft.VisualBasic;
 
 namespace ProjetoNotas.Application.Services
 {
@@ -36,23 +37,19 @@ namespace ProjetoNotas.Application.Services
         }
         public async Task<MyTask> AddMyTaskAsync(CreateMyTaskViewModel model)
         {
-         
-            try
-            {
-                var Nmytask = new MyTask()
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    DueDate = model.DueDate,
-                };
-                await _mytaskRepository.AddAsync(Nmytask);
-                return Nmytask;
-            }
 
-            catch (Exception)
+            var Nmytask = new MyTask()
             {
-                throw new Exception("Falha interna no servidor");
-            }
+                Name = string.IsNullOrWhiteSpace(model.Name) ? model.Name : model.Name,
+                Description = string.IsNullOrWhiteSpace(model.Description) ? model.Description : model.Description,
+                DueDate = model.DueDate,
+                ClassId = model.Classid,
+                SubjectId = model.SubjectId
+            };
+
+            await _mytaskRepository.AddAsync(Nmytask);
+            return Nmytask;
+
         }
         public async Task<bool> UpdateMyTaskAsync(int id, CreateMyTaskViewModel mytask)
         {
@@ -63,10 +60,10 @@ namespace ProjetoNotas.Application.Services
                 {
                     return false;
                 }
-                Nmytask.Name = mytask.Name;
-                Nmytask.Description = mytask.Description;
+                Nmytask.Name = string.IsNullOrWhiteSpace(mytask.Name) ? mytask.Name : mytask.Name;
+                Nmytask.Description = string.IsNullOrWhiteSpace(mytask.Description) ? mytask.Description : mytask.Description;
                 Nmytask.DueDate = mytask.DueDate;
-                
+
                 await _mytaskRepository.UpdateAsync(Nmytask);
                 return true;
             }
