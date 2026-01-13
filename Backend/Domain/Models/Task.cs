@@ -18,5 +18,10 @@ namespace ProjetoNotas.Domain.Models
 
         public int ClassId { get; set; }
         public Class Class { get; set; }
+
+       public int TeacherId { get; set; }
+
+
+        
     }
 }

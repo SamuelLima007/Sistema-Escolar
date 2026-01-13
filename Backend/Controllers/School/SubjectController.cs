@@ -41,7 +41,7 @@ namespace ProjetoNotas.WebUi.Controllers
             return Ok();
         }
 
-        [HttpPut("/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<bool>> UpdateSubjectAsync(int id, [FromBody] CreateSubjectViewModel subject)
         {
             var Updated = await _subjectService.UpdateSubjectAsync(id, subject);

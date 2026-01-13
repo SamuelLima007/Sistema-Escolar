@@ -10,7 +10,7 @@ namespace ProjetoNotas.InfraStructure.Mapping
         {
             builder.ToTable("Subject");
 
-            builder.HasKey(x => x.SubjectId);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(30);
 

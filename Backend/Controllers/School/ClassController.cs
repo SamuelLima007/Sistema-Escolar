@@ -39,7 +39,7 @@ namespace ProjetoNotas.Controllers
             return Ok(classentity);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
 

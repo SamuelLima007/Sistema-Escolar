@@ -10,7 +10,7 @@ namespace ProjetoNotas.Mapping
         {
             builder.ToTable("Class");
 
-            builder.HasKey(x => x.ClassId);
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Grade).IsRequired().HasMaxLength(30);
             

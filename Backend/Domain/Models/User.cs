@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Backend.Domain.Models;
 using ProjetoNotas.Domain.Enums;
 
 namespace ProjetoNotas.Domain.Models
@@ -29,6 +30,6 @@ namespace ProjetoNotas.Domain.Models
 
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
         public ICollection<Class> Classes { get; set; } = new List<Class>();
-        public ICollection<MyTask> Tasks { get; set; } = new List<MyTask>();
+        public ICollection<TaskSubmission>? TasksSubmission { get; set; } = new List<TaskSubmission>();
     }
 }
