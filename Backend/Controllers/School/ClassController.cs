@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,18 +17,19 @@ using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.Controllers
 {
     [ApiController]
+    [Microsoft.AspNetCore.Mvc.RouteAttribute("classes")]
     public class ClassController : ControllerBase, IClassController
     {
         private readonly IClassService _classService;
+
+
         public ClassController(IClassService classService)
         {
             _classService = classService;
         }
 
 
-
-
-        [HttpGet("v1/getclass/{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetClassByIdAsync(int id)
         {
             var classentity = await _classService.GetClassByIdAsync(id);
@@ -37,16 +39,15 @@ namespace ProjetoNotas.Controllers
             return Ok(classentity);
         }
 
-        [HttpPost("v1/addclass")]
+        [HttpPost("add")]
         public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
-            Console.WriteLine(model);
-            var classentity = await _classService.AddClassAsync(model);
 
+            var classentity = await _classService.AddClassAsync(model);
             return Ok();
         }
 
-        [HttpPut("v1/updateclass/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateClassAsync(int id, Class classentity)
         {
             var Updated = await _classService.UpdateClassAsync(id, classentity);
@@ -55,7 +56,7 @@ namespace ProjetoNotas.Controllers
             return Ok();
         }
 
-        [HttpDelete("v1/deleteclass/{id:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteClassAsync(int id)
         {
             var Deleted = await _classService.DeleteClassAsync(id);

@@ -20,10 +20,13 @@ namespace ProjetoNotas.Mapping
 
             builder.HasIndex(x => x.Email).IsUnique();
 
-            builder.HasOne(x => x.Class)
-                .WithMany(x => x.Users)
-                .HasForeignKey(x => x.ClassId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(x => x.Classes)
+               .WithMany(x => x.Users)
+               .UsingEntity<Dictionary<string, object>>(
+                   "TeacherClass",
+                   s => s.HasOne<Class>().WithMany().HasForeignKey("ClassId"),
+                   u => u.HasOne<User>().WithMany().HasForeignKey("UserId")
+               );
 
             builder.HasMany(x => x.Subjects)
                 .WithMany(x => x.Users)

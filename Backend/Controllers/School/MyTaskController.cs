@@ -7,7 +7,7 @@ using ProjetoNotas.Domain.ViewModels;
 namespace ProjetoNotas.Controllers.School
 {
     [ApiController]
-
+    [Route("tasks")]
     public class MyTaskController : ControllerBase, IMyTaskController
     {
         private readonly IMyTaskService _mytaskService;
@@ -17,7 +17,7 @@ namespace ProjetoNotas.Controllers.School
             _mytaskService = mytaskService;
         }
 
-        [HttpGet("v1/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<MyTask>> GetMyTaskByIdAsync(int id)
         {
             var myTask = await _mytaskService.GetMyTaskByIdAsync(id);
@@ -27,7 +27,7 @@ namespace ProjetoNotas.Controllers.School
             return Ok(myTask);
         }
 
-        [HttpPost("v1/addtask")]
+        [HttpPost]
         public async Task<ActionResult> AddMyTaskAsync([FromBody] CreateMyTaskViewModel mytask)
         {
 
@@ -35,7 +35,7 @@ namespace ProjetoNotas.Controllers.School
             return Ok();
         }
 
-        [HttpPut("v1/updatetask/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult> UpdateMyTaskAsync(int id, [FromBody] CreateMyTaskViewModel mytask)
         {
             var Updated = await _mytaskService.UpdateMyTaskAsync(id, mytask);
@@ -44,7 +44,7 @@ namespace ProjetoNotas.Controllers.School
             return Ok();
         }
 
-        [HttpDelete("v1/deletetask/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMyTaskAsync(int id)
         {
             var Deleted = await _mytaskService.DeleteMyTaskAsync(id);

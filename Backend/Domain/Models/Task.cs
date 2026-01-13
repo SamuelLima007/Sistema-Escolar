@@ -7,6 +7,10 @@ namespace ProjetoNotas.Domain.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+
+        public int Unit { get; set; }
+
+        public int score { get; set; }
         public DateTime? DueDate { get; set; }
 
         public int SubjectId { get; set; }

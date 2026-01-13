@@ -12,7 +12,7 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    [Migration("20260112004911_V1")]
+    [Migration("20260112235413_V1")]
     partial class V1
     {
         /// <inheritdoc />
@@ -71,39 +71,24 @@ namespace ProjetoNotas.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Unit")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("score")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClassId");
 
                     b.HasIndex("SubjectId");
 
-                    b.ToTable("Task", (string)null);
-                });
-
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Score", b =>
-                {
-                    b.Property<int>("ScoreId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ScoreId"));
-
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<decimal>("Value")
-                        .HasColumnType("decimal(4,2)");
-
-                    b.HasKey("ScoreId");
-
-                    b.HasIndex("SubjectId");
-
                     b.HasIndex("UserId");
 
-                    b.ToTable("Score", (string)null);
+                    b.ToTable("Task", (string)null);
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
@@ -118,6 +103,10 @@ namespace ProjetoNotas.Migrations
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
+
+                    b.Property<int[]>("Scores")
+                        .IsRequired()
+                        .HasColumnType("integer[]");
 
                     b.HasKey("SubjectId");
 
@@ -162,14 +151,39 @@ namespace ProjetoNotas.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("character varying(20)");
 
-                    b.HasKey("Id");
+                    b.Property<int?>("Score1")
+                        .HasColumnType("integer");
 
-                    b.HasIndex("ClassId");
+                    b.Property<int?>("Score2")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Score3")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Score4")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("TeacherClass", b =>
+                {
+                    b.Property<int>("ClassId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ClassId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TeacherClass");
                 });
 
             modelBuilder.Entity("UserSubject", b =>
@@ -201,38 +215,28 @@ namespace ProjetoNotas.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("ProjetoNotas.Domain.Models.User", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("Class");
 
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.Score", b =>
+            modelBuilder.Entity("TeacherClass", b =>
                 {
-                    b.HasOne("ProjetoNotas.Domain.Models.Subject", "Subject")
-                        .WithMany("Scores")
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("ProjetoNotas.Domain.Models.User", "User")
-                        .WithMany("Scores")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Subject");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("ProjetoNotas.Domain.Models.User", b =>
-                {
-                    b.HasOne("ProjetoNotas.Domain.Models.Class", "Class")
-                        .WithMany("Users")
+                    b.HasOne("ProjetoNotas.Domain.Models.Class", null)
+                        .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Class");
+                    b.HasOne("ProjetoNotas.Domain.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("UserSubject", b =>
@@ -253,20 +257,16 @@ namespace ProjetoNotas.Migrations
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Class", b =>
                 {
                     b.Navigation("MyTasks");
-
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
                 {
                     b.Navigation("MyTasks");
-
-                    b.Navigation("Scores");
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.User", b =>
                 {
-                    b.Navigation("Scores");
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

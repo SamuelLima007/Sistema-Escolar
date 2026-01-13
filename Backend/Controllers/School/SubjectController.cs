@@ -13,6 +13,7 @@ using ProjetoNotas.Domain.ViewModels;
 namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
+    [Route("subjects")]
 
     public class SubjectController : ControllerBase, ISubjectController
     {
@@ -22,7 +23,7 @@ namespace ProjetoNotas.WebUi.Controllers
             _subjectService = subjectService;
         }
 
-        [HttpGet("v1/getsubject/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<Subject>> GetSubjectByIdAsync(int id)
         {
             var subject = await _subjectService.GetSubjectByIdAsync(id);
@@ -33,14 +34,14 @@ namespace ProjetoNotas.WebUi.Controllers
             return Ok(subject);
         }
 
-        [HttpPost("v1/addsubject")]
+        [HttpPost]
         public async Task<ActionResult<Subject>> AddSubjectAsync([FromBody] CreateSubjectViewModel model)
         {
             var subject = await _subjectService.AddSubjectAsync(model);
             return Ok();
         }
 
-        [HttpPut("v1/updatesubject/{id}")]
+        [HttpPut("/{id}")]
         public async Task<ActionResult<bool>> UpdateSubjectAsync(int id, [FromBody] CreateSubjectViewModel subject)
         {
             var Updated = await _subjectService.UpdateSubjectAsync(id, subject);
@@ -49,7 +50,7 @@ namespace ProjetoNotas.WebUi.Controllers
             return Ok();
         }
 
-        [HttpDelete("v1/deletesubject/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteSubjectAsync(int id)
         {
             var Deleted = await _subjectService.DeleteSubjectAsync(id);

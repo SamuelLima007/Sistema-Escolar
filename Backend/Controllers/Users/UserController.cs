@@ -1,7 +1,8 @@
 // userController.cs
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Routing;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Interfaces.Services.School;
@@ -12,7 +13,7 @@ using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
-
+    [Microsoft.AspNetCore.Mvc.RouteAttribute("users")]
 
     public class UserController : ControllerBase, IUserController
     {
@@ -37,7 +38,7 @@ namespace ProjetoNotas.WebUi.Controllers
             return BadRequest();
         }
 
-        [HttpGet("v1/getuser/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserByIdAsync([FromRoute] int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
@@ -47,7 +48,7 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             return Ok(user);
         }
-        [HttpPost("v1/adduser")]
+        [HttpPost]
         public async Task<ActionResult<User>> AddUserAsync([FromBody] CreateUserViewModel model)
         {
 
@@ -64,7 +65,7 @@ namespace ProjetoNotas.WebUi.Controllers
             }
 
         }
-        [HttpPut("v1/updateuser/{id}")]
+        [HttpPut("{id}")]
         public async Task<ActionResult<bool>> UpdateUserAsync([FromRoute] int id, [FromBody] CreateUserViewModel user)
         {
 
@@ -80,7 +81,7 @@ namespace ProjetoNotas.WebUi.Controllers
 
         }
 
-        [HttpDelete("v1/deleteuser/{id}")]
+        [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteUserAsync(int id)
         {
             var Deleted = await _userService.DeleteUserAsync(id);

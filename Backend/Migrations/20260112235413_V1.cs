@@ -30,7 +30,8 @@ namespace ProjetoNotas.Migrations
                 {
                     SubjectId = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
+                    Name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    Scores = table.Column<int[]>(type: "integer[]", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -48,16 +49,15 @@ namespace ProjetoNotas.Migrations
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    ClassId = table.Column<int>(type: "integer", nullable: true)
+                    ClassId = table.Column<int>(type: "integer", nullable: true),
+                    Score1 = table.Column<int>(type: "integer", nullable: true),
+                    Score2 = table.Column<int>(type: "integer", nullable: true),
+                    Score3 = table.Column<int>(type: "integer", nullable: true),
+                    Score4 = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Class_ClassId",
-                        column: x => x.ClassId,
-                        principalTable: "Class",
-                        principalColumn: "ClassId");
                 });
 
             migrationBuilder.CreateTable(
@@ -68,9 +68,12 @@ namespace ProjetoNotas.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    Unit = table.Column<int>(type: "integer", nullable: false),
+                    score = table.Column<int>(type: "integer", nullable: false),
                     DueDate = table.Column<string>(type: "character varying(48)", nullable: false),
                     SubjectId = table.Column<int>(type: "integer", nullable: false),
-                    ClassId = table.Column<int>(type: "integer", nullable: false)
+                    ClassId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,31 +88,35 @@ namespace ProjetoNotas.Migrations
                         column: x => x.SubjectId,
                         principalTable: "Subject",
                         principalColumn: "SubjectId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Score",
-                columns: table => new
-                {
-                    ScoreId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Value = table.Column<decimal>(type: "numeric(4,2)", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    SubjectId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Score", x => x.ScoreId);
                     table.ForeignKey(
-                        name: "FK_Score_Subject_SubjectId",
-                        column: x => x.SubjectId,
-                        principalTable: "Subject",
-                        principalColumn: "SubjectId");
-                    table.ForeignKey(
-                        name: "FK_Score_Users_UserId",
+                        name: "FK_Task_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TeacherClass",
+                columns: table => new
+                {
+                    ClassId = table.Column<int>(type: "integer", nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TeacherClass", x => new { x.ClassId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_TeacherClass_Class_ClassId",
+                        column: x => x.ClassId,
+                        principalTable: "Class",
+                        principalColumn: "ClassId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TeacherClass_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -137,16 +144,6 @@ namespace ProjetoNotas.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Score_SubjectId",
-                table: "Score",
-                column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Score_UserId",
-                table: "Score",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Subject_Name",
                 table: "Subject",
                 column: "Name",
@@ -163,9 +160,14 @@ namespace ProjetoNotas.Migrations
                 column: "SubjectId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_ClassId",
-                table: "Users",
-                column: "ClassId");
+                name: "IX_Task_UserId",
+                table: "Task",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TeacherClass_UserId",
+                table: "TeacherClass",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -183,22 +185,22 @@ namespace ProjetoNotas.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Score");
-
-            migrationBuilder.DropTable(
                 name: "Task");
 
             migrationBuilder.DropTable(
+                name: "TeacherClass");
+
+            migrationBuilder.DropTable(
                 name: "UserSubject");
+
+            migrationBuilder.DropTable(
+                name: "Class");
 
             migrationBuilder.DropTable(
                 name: "Subject");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Class");
         }
     }
 }

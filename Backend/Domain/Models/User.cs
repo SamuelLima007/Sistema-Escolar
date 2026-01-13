@@ -17,8 +17,18 @@ namespace ProjetoNotas.Domain.Models
         public UserType Role { get; set; }
 
         public int? ClassId { get; set; }
-        public Class Class { get; set; }
+
+        public int? Score1 { get; set; }
+
+        public int? Score2 { get; set; }
+
+        public int? Score3 { get; set; }
+
+        public int? Score4 { get; set; }
+
+
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
-        public ICollection<Score> Scores { get; set; } = new List<Score>();
+        public ICollection<Class> Classes { get; set; } = new List<Class>();
+        public ICollection<MyTask> Tasks { get; set; } = new List<MyTask>();
     }
 }

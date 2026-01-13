@@ -13,10 +13,10 @@ namespace ProjetoNotas.Data
 {
     public class EscolaDataContext : DbContext
     {
-    
+
         public DbSet<Class> Classs { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<Score> Scores { get; set; }
+
         public DbSet<MyTask> MyTasks { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -28,9 +28,9 @@ namespace ProjetoNotas.Data
         {
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new ClassMapping());
-              modelBuilder.ApplyConfiguration(new UserMapping());
+            modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new SubjectMapping());
-            modelBuilder.ApplyConfiguration(new ScoreMapping());
+
             modelBuilder.ApplyConfiguration(new MyTaskMapping());
         }
     }
