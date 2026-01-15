@@ -24,7 +24,7 @@ namespace ProjetoNotas.Repository
         }
         public async Task<User> GetByIdAsync(int id)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == 1);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
 
             return user;
 

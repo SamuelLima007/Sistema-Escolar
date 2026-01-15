@@ -17,7 +17,7 @@ using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.Controllers
 {
     [ApiController]
-    [Microsoft.AspNetCore.Mvc.RouteAttribute("classes")]
+    [Microsoft.AspNetCore.Mvc.RouteAttribute("class")]
     public class ClassController : ControllerBase, IClassController
     {
         private readonly IClassService _classService;
@@ -42,8 +42,8 @@ namespace ProjetoNotas.Controllers
         [HttpPost]
         public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
-
-            var classentity = await _classService.AddClassAsync(model);
+           
+           await _classService.AddClassAsync(model);
             return Ok();
         }
 

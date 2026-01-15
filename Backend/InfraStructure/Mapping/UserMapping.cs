@@ -20,21 +20,7 @@ namespace ProjetoNotas.Mapping
 
             builder.HasIndex(x => x.Email).IsUnique();
 
-            builder.HasMany(x => x.Classes)
-               .WithMany(x => x.Users)
-               .UsingEntity<Dictionary<string, object>>(
-                   "TeacherClass",
-                   s => s.HasOne<Class>().WithMany().HasForeignKey("ClassId"),
-                   u => u.HasOne<User>().WithMany().HasForeignKey("UserId")
-               );
-
-            builder.HasMany(x => x.Subjects)
-                .WithMany(x => x.Users)
-                .UsingEntity<Dictionary<string, object>>(
-                    "UserSubject",
-                    s => s.HasOne<Subject>().WithMany().HasForeignKey("SubjectId"),
-                    u => u.HasOne<User>().WithMany().HasForeignKey("UserId")
-                );
+            
         }
     }
 }

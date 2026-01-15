@@ -23,7 +23,7 @@ namespace ProjetoNotas.Repository
         }
         public async Task<Subject> GetByIdAsync(int id)
         {
-            return await _context.Subjects.FirstOrDefaultAsync(x => x.SubjectId == id);
+            return await _context.Subjects.FirstOrDefaultAsync(x => x.Id == id);
 
         }
         public async Task AddAsync(Subject subject)

@@ -14,7 +14,8 @@ namespace ProjetoNotas.InfraStructure.Mapping
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
             builder.Property(x => x.Description).IsRequired().HasMaxLength(500);
-            builder.Property(x => x.DueDate).IsRequired().HasConversion<string>();
+            builder.Property(x => x.CreationDate).IsRequired().HasConversion<string>();
+            builder.Property(x => x.ExpirationDate).IsRequired().HasConversion<string>();
 
             builder.HasOne(x => x.Subject)
                 .WithMany(x => x.MyTasks)
@@ -24,6 +25,11 @@ namespace ProjetoNotas.InfraStructure.Mapping
             builder.HasOne(x => x.Class)
                 .WithMany(x => x.MyTasks)
                 .HasForeignKey(x => x.ClassId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+                builder.HasOne(x => x.Teacher)
+                .WithMany(x => x.MyTasks)
+                .HasForeignKey(x => x.TeacherId)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

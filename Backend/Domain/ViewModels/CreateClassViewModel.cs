@@ -8,7 +8,8 @@ namespace ProjetoNotas.ViewModels
 {
     public class CreateClassViewModel
     {
-        public string? Grade { get; set; }
+        public string Grade { get; set; }
+
 
     }
 }

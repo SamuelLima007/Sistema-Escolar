@@ -42,9 +42,11 @@ namespace ProjetoNotas.Application.Services
             {
                 Name = string.IsNullOrWhiteSpace(model.Name) ? model.Name : model.Name,
                 Description = string.IsNullOrWhiteSpace(model.Description) ? model.Description : model.Description,
-                DueDate = model.DueDate,
+                CreationDate = model.CreationDate,
+                ExpirationDate = model.ExpirationDate,
                 ClassId = model.Classid,
-                SubjectId = model.SubjectId
+                SubjectId = model.SubjectId,
+                // TeacherId = Lembrar de pegar o ID no token
             };
 
             await _mytaskRepository.AddAsync(Nmytask);
@@ -62,7 +64,7 @@ namespace ProjetoNotas.Application.Services
                 }
                 Nmytask.Name = string.IsNullOrWhiteSpace(mytask.Name) ? mytask.Name : mytask.Name;
                 Nmytask.Description = string.IsNullOrWhiteSpace(mytask.Description) ? mytask.Description : mytask.Description;
-                Nmytask.DueDate = mytask.DueDate;
+                Nmytask.ExpirationDate = mytask.ExpirationDate;
 
                 await _mytaskRepository.UpdateAsync(Nmytask);
                 return true;

@@ -14,6 +14,7 @@ namespace ProjetoNotas.Mapping
 
             builder.Property(x => x.Grade).IsRequired().HasMaxLength(30);
             
+            
         }
     }
 }

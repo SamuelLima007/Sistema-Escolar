@@ -35,7 +35,7 @@ namespace ProjetoNotas.Repository
         }
         public async Task<Class> GetByIdAsync(int id)
         {
-            return await _context.Classs.FirstOrDefaultAsync(x => x.ClassId == id);
+            return await _context.Classs.FirstOrDefaultAsync(x => x.Id == id);
         }
         public async Task UpdateAsync(Class classentity)
         {

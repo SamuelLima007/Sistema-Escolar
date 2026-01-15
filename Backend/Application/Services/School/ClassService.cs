@@ -35,6 +35,7 @@ namespace ProjetoNotas.WebUi.Services
 
                 var classentity = new Class()
                 {
+                    
                     Grade = model.Grade,
 
 

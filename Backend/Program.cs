@@ -1,3 +1,9 @@
+using Backend.Application.Services.School;
+using Backend.Domain.Interfaces.Repositoryes.School;
+using Backend.Domain.Interfaces.Repositoryes.Users;
+using Backend.Domain.Interfaces.Services.School;
+using Backend.Domain.Interfaces.Services.Users;
+using Backend.Domain.Repository.School;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -67,6 +73,12 @@ void ConfigureServices(WebApplicationBuilder builder)
 
     builder.Services.AddScoped<IAccountService, AccountService>();
     builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+
+    builder.Services.AddScoped<ITeacherAssignmentService, TeacherAssignmentService>();
+    builder.Services.AddScoped<ITeacherAssignmentRepository, TeacherAssignmentRepository>();
+
+    builder.Services.AddScoped<ITaskSubmissionService, TaskSubmissionService>();
+    builder.Services.AddScoped<ITaskSubmissionRepository, TaskSubmissionRepository>();
 
     builder.Services.AddScoped<ITokenService, TokenService>();
 

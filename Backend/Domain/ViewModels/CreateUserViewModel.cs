@@ -14,7 +14,7 @@ namespace ProjetoNotas.ViewModels
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int Class_id { get; set; }
+        public int ClassId { get; set; }
         public UserType Role { get; set; }
 
     }

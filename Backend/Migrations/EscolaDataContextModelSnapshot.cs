@@ -22,20 +22,80 @@ namespace ProjetoNotas.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Backend.Domain.Models.TaskSubmission", b =>
+                {
+                    b.Property<int>("StudentId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MyTaskId")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("Score")
+                        .HasMaxLength(100)
+                        .HasColumnType("numeric");
+
+                    b.HasKey("StudentId", "MyTaskId");
+
+                    b.HasIndex("MyTaskId");
+
+                    b.HasIndex("StudentId", "MyTaskId")
+                        .IsUnique();
+
+                    b.ToTable("TaskSubmission", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Domain.Models.TeacherAssignment", b =>
+                {
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SubjectId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("TeacherId", "ClassId", "SubjectId");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("SubjectId");
+
+                    b.HasIndex("TeacherId", "ClassId", "SubjectId")
+                        .IsUnique();
+
+                    b.ToTable("TeacherAssignments", (string)null);
+                });
+
+            modelBuilder.Entity("ClassUser", b =>
+                {
+                    b.Property<int>("ClassesId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UsersId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("ClassesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ClassUser");
+                });
+
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Class", b =>
                 {
-                    b.Property<int>("ClassId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ClassId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Grade")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
-                    b.HasKey("ClassId");
+                    b.HasKey("Id");
 
                     b.ToTable("Class", (string)null);
                 });
@@ -51,12 +111,16 @@ namespace ProjetoNotas.Migrations
                     b.Property<int>("ClassId")
                         .HasColumnType("integer");
 
+                    b.Property<string>("CreationDate")
+                        .IsRequired()
+                        .HasColumnType("character varying(48)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("character varying(500)");
 
-                    b.Property<string>("DueDate")
+                    b.Property<string>("ExpirationDate")
                         .IsRequired()
                         .HasColumnType("character varying(48)");
 
@@ -68,10 +132,10 @@ namespace ProjetoNotas.Migrations
                     b.Property<int>("SubjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Unit")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("Unit")
                         .HasColumnType("integer");
 
                     b.Property<int>("score")
@@ -83,32 +147,33 @@ namespace ProjetoNotas.Migrations
 
                     b.HasIndex("SubjectId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Task", (string)null);
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
                 {
-                    b.Property<int>("SubjectId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SubjectId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
-                    b.Property<int[]>("Scores")
-                        .IsRequired()
-                        .HasColumnType("integer[]");
+                    b.Property<int?>("UserId")
+                        .HasColumnType("integer");
 
-                    b.HasKey("SubjectId");
+                    b.HasKey("Id");
 
                     b.HasIndex("Name")
                         .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Subject", (string)null);
                 });
@@ -168,34 +233,65 @@ namespace ProjetoNotas.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("TeacherClass", b =>
+            modelBuilder.Entity("Backend.Domain.Models.TaskSubmission", b =>
                 {
-                    b.Property<int>("ClassId")
-                        .HasColumnType("integer");
+                    b.HasOne("ProjetoNotas.Domain.Models.MyTask", "Task")
+                        .WithMany()
+                        .HasForeignKey("MyTaskId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.HasOne("ProjetoNotas.Domain.Models.User", "Student")
+                        .WithMany("TasksSubmission")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasKey("ClassId", "UserId");
+                    b.Navigation("Student");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("TeacherClass");
+                    b.Navigation("Task");
                 });
 
-            modelBuilder.Entity("UserSubject", b =>
+            modelBuilder.Entity("Backend.Domain.Models.TeacherAssignment", b =>
                 {
-                    b.Property<int>("SubjectId")
-                        .HasColumnType("integer");
+                    b.HasOne("ProjetoNotas.Domain.Models.Class", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.HasOne("ProjetoNotas.Domain.Models.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasKey("SubjectId", "UserId");
+                    b.HasOne("ProjetoNotas.Domain.Models.User", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.HasIndex("UserId");
+                    b.Navigation("Class");
 
-                    b.ToTable("UserSubject");
+                    b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("ClassUser", b =>
+                {
+                    b.HasOne("ProjetoNotas.Domain.Models.Class", null)
+                        .WithMany()
+                        .HasForeignKey("ClassesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoNotas.Domain.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.MyTask", b =>
@@ -212,43 +308,24 @@ namespace ProjetoNotas.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("ProjetoNotas.Domain.Models.User", null)
-                        .WithMany("Tasks")
-                        .HasForeignKey("UserId");
+                    b.HasOne("ProjetoNotas.Domain.Models.User", "Teacher")
+                        .WithMany("MyTasks")
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Class");
 
                     b.Navigation("Subject");
+
+                    b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("TeacherClass", b =>
+            modelBuilder.Entity("ProjetoNotas.Domain.Models.Subject", b =>
                 {
-                    b.HasOne("ProjetoNotas.Domain.Models.Class", null)
-                        .WithMany()
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ProjetoNotas.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("UserSubject", b =>
-                {
-                    b.HasOne("ProjetoNotas.Domain.Models.Subject", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProjetoNotas.Domain.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Subjects")
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.Class", b =>
@@ -263,7 +340,11 @@ namespace ProjetoNotas.Migrations
 
             modelBuilder.Entity("ProjetoNotas.Domain.Models.User", b =>
                 {
-                    b.Navigation("Tasks");
+                    b.Navigation("MyTasks");
+
+                    b.Navigation("Subjects");
+
+                    b.Navigation("TasksSubmission");
                 });
 #pragma warning restore 612, 618
         }

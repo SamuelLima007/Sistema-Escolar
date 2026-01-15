@@ -27,7 +27,7 @@ namespace ProjetoNotas.Domain.Models
 
         public int? Score4 { get; set; }
 
-
+        public ICollection<MyTask>? MyTasks { get; set; } = new List<MyTask>();
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
         public ICollection<Class> Classes { get; set; } = new List<Class>();
         public ICollection<TaskSubmission>? TasksSubmission { get; set; } = new List<TaskSubmission>();

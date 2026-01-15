@@ -8,6 +8,8 @@ using ProjetoNotas.InfraStructure.Mapping;
 using ProjetoNotas.Domain.Models;
 using ProjetoNotas.InfraStructure.Mapping;
 using ProjetoNotas.Mapping;
+using Backend.Domain.Models;
+using Backend.InfraStructure.Mapping;
 
 namespace ProjetoNotas.Data
 {
@@ -20,6 +22,10 @@ namespace ProjetoNotas.Data
         public DbSet<MyTask> MyTasks { get; set; }
 
         public DbSet<User> Users { get; set; }
+
+        public DbSet<TeacherAssignment> TeacherAssignments { get; set; }
+
+        public DbSet<TaskSubmission> TasksSubmission { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseNpgsql("Host=localhost;Port=5432;Database=Sistema_escolar;Username=postgres;Password=1234");
@@ -30,7 +36,8 @@ namespace ProjetoNotas.Data
             modelBuilder.ApplyConfiguration(new ClassMapping());
             modelBuilder.ApplyConfiguration(new UserMapping());
             modelBuilder.ApplyConfiguration(new SubjectMapping());
-
+            modelBuilder.ApplyConfiguration(new TeacherAssignmentMapping());
+            modelBuilder.ApplyConfiguration(new TaskSubmissionMapping());
             modelBuilder.ApplyConfiguration(new MyTaskMapping());
         }
     }

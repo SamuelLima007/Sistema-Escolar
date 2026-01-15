@@ -58,7 +58,8 @@ namespace ProjetoNotas.WebUi.Services
                 Name = model.Name,
                 Email = model.Email,
                 Password = PasswordHasher.Hash(model.Password),
-                Role = model.Role
+                Role = model.Role,
+                ClassId = model.ClassId
             };
             try
             {
