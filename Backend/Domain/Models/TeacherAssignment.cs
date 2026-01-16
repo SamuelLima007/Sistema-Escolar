@@ -8,6 +8,7 @@ namespace Backend.Domain.Models
 {
     public class TeacherAssignment
     {
+
         public int TeacherId { get; set; }
         public User Teacher { get; set; }
 

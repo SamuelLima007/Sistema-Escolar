@@ -9,7 +9,7 @@ namespace Backend.Domain.Interfaces.Controllers.Users
 {
     public interface ITeacherAssignmentController
     {
-         Task<ActionResult<TeacherAssignment>> GetTeacherAssignmentByIdAsync(TeacherAssignment model);
+        Task<ActionResult<TeacherAssignment>> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int SubjectId);
         Task<ActionResult<TeacherAssignment>> AddTeacherAssignmentAsync(TeacherAssignment model);
         Task<ActionResult<bool>> UpdateTeacherAssignmentAsync(TeacherAssignment model);
         Task<ActionResult<bool>> DeleteTeacherAssignmentAsync(TeacherAssignment model);

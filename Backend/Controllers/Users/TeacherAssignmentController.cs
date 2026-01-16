@@ -9,20 +9,20 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Users
 {
-     [ApiController]
+    [ApiController]
     [Route("teacherassignments")]
     public class TeacherAssignmentController : ControllerBase, ITeacherAssignmentController
     {
-         private readonly ITeacherAssignmentService _teacherassignmentService;
+        private readonly ITeacherAssignmentService _teacherassignmentService;
         public TeacherAssignmentController(ITeacherAssignmentService tasksubmissionService)
         {
             _teacherassignmentService = tasksubmissionService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TeacherAssignment>> GetTeacherAssignmentByIdAsync(TeacherAssignment model)
+        [HttpGet("{teacherId}/classId/SubjectId")]
+        public async Task<ActionResult<TeacherAssignment>> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int SubjectId)
         {
-            var tasksubmitted = await _teacherassignmentService.GetTeacherAssignmentByIdAsync(model);
+            var tasksubmitted = await _teacherassignmentService.GetTeacherAssignmentByIdAsync(teacherId, classId, SubjectId);
             if (tasksubmitted == null)
             {
                 return NotFound();

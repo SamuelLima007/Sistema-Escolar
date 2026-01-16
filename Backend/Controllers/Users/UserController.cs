@@ -10,7 +10,7 @@ using ProjetoNotas.Domain.Models;
 using ProjetoNotas.Domain.ViewModels;
 using ProjetoNotas.ViewModels;
 
-namespace ProjetoNotas.WebUi.Controllers
+namespace ProjetoNotas.WebUi.Conaollers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("users")]
@@ -33,7 +33,6 @@ namespace ProjetoNotas.WebUi.Controllers
             if (token != null)
             {
                 return Ok(token);
-
             }
             return BadRequest();
         }
@@ -48,6 +47,7 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             return Ok(user);
         }
+
         [HttpPost]
         public async Task<ActionResult<User>> AddUserAsync([FromBody] CreateUserViewModel model)
         {

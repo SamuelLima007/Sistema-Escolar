@@ -11,7 +11,7 @@ namespace Backend.Domain.Repository.School
 {
     public class TeacherAssignmentRepository : ITeacherAssignmentRepository
     {
-         private readonly EscolaDataContext _context;
+        private readonly EscolaDataContext _context;
         public TeacherAssignmentRepository(EscolaDataContext context)
         {
             _context = context;
@@ -32,12 +32,12 @@ namespace Backend.Domain.Repository.School
             _context.TeacherAssignments.Remove(teacherAssignment);
             await _context.SaveChangesAsync();
         }
-        public async Task<TeacherAssignment> GetByIdAsync(TeacherAssignment teacherAssignment)
+        public async Task<TeacherAssignment> GetByIdAsync(int teacherId, int classId, int subjectId)
         {
             return await _context.TeacherAssignments.FirstOrDefaultAsync
-            (x => x.TeacherId == teacherAssignment.TeacherId && 
-             x.SubjectId == teacherAssignment.SubjectId &&
-             x.ClassId == teacherAssignment.ClassId
+            (x => x.TeacherId == teacherId &&
+             x.SubjectId == subjectId &&
+             x.ClassId == classId
             );
         }
         public async Task UpdateAsync(TeacherAssignment teacherAssignment)

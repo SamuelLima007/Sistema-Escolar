@@ -13,6 +13,8 @@ namespace ProjetoNotas.Domain.ViewModels
         public DateTime? CreationDate { get; set; }
         public DateTime ExpirationDate { get; set; }
 
+        public int Score { get; set; }
+
         public int Classid { get; set; }
 
         public int SubjectId { get; set; }

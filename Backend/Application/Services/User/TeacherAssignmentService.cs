@@ -11,17 +11,17 @@ namespace Backend.Application.Services.School
 {
     public class TeacherAssignmentService : ITeacherAssignmentService
     {
-         private readonly ITeacherAssignmentRepository _teacherassignmentRepository;
+        private readonly ITeacherAssignmentRepository _teacherassignmentRepository;
         public TeacherAssignmentService(ITeacherAssignmentRepository teacherassignmentRepository)
         {
             _teacherassignmentRepository = teacherassignmentRepository;
 
         }
-        public async Task<TeacherAssignment> GetTeacherAssignmentByIdAsync(TeacherAssignment model)
+        public async Task<TeacherAssignment> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int SubjectId)
         {
             try
             {
-                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(model);
+                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(teacherId, classId, SubjectId);
                 if (teacherassignment == null)
                 {
                     return null;
@@ -44,7 +44,7 @@ namespace Backend.Application.Services.School
         {
             try
             {
-                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(model);
+                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(model.TeacherId, model.ClassId, model.SubjectId);
                 if (teacherassignment == null)
                 {
                     return false;
@@ -53,8 +53,7 @@ namespace Backend.Application.Services.School
                 teacherassignment.TeacherId = model.TeacherId;
                 teacherassignment.SubjectId = model.SubjectId;
                 teacherassignment.ClassId = model.ClassId;
-                _teacherassignmentRepository.UpdateAsync(teacherassignment);
-              
+
                 return true;
             }
             catch (Exception)

@@ -10,20 +10,21 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.School
 {
-      [ApiController]
+    [ApiController]
     [Route("taskssubmitted")]
 
     public class TaskSubmissionController : ControllerBase, ITaskSubmissionController
     {
-            private readonly ITaskSubmissionService _tasksubmissionService;
+        private readonly ITaskSubmissionService _tasksubmissionService;
         public TaskSubmissionController(ITaskSubmissionService tasksubmissionService)
         {
             _tasksubmissionService = tasksubmissionService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<TaskSubmission>> GetTaskSubmissionByIdAsync(int studentId, int taskId)
+        [HttpGet("{studentId}/{taskId}")]
+        public async Task<ActionResult<TaskSubmission>> GetTaskSubmissionByIdAsync([FromRoute] int studentId, [FromRoute] int taskId)
         {
+
             var tasksubmitted = await _tasksubmissionService.GetTaskSubmittedByIdAsync(studentId, taskId);
             if (tasksubmitted == null)
             {
@@ -39,7 +40,7 @@ namespace Backend.Controllers.School
             return Ok();
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{studentId}/{taskId}")]
         public async Task<ActionResult<bool>> UpdateTaskSubmissionAsync(int studentId, int taskId, [FromBody] CreateSubmittedTaskViewModel model)
         {
             var Updated = await _tasksubmissionService.UpdateTaskSubmittedAsync(studentId, taskId, model);
@@ -48,10 +49,10 @@ namespace Backend.Controllers.School
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteTaskSubmissionAsync(int studentId,int mytaskId)
+        [HttpDelete("{studentId}/{taskId}")]
+        public async Task<ActionResult<bool>> DeleteTaskSubmissionAsync(int studentId, int taskId)
         {
-            var Deleted = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, mytaskId);
+            var Deleted = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId);
             if (Deleted == false) return NotFound();
 
             return Ok();

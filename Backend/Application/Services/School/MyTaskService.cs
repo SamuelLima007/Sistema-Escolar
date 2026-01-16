@@ -46,7 +46,8 @@ namespace ProjetoNotas.Application.Services
                 ExpirationDate = model.ExpirationDate,
                 ClassId = model.Classid,
                 SubjectId = model.SubjectId,
-                // TeacherId = Lembrar de pegar o ID no token
+                TeacherId = (int)model.TeacherId,
+                score = model.Score
             };
 
             await _mytaskRepository.AddAsync(Nmytask);

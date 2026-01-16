@@ -12,7 +12,7 @@ using ProjetoNotas.Data;
 namespace ProjetoNotas.Migrations
 {
     [DbContext(typeof(EscolaDataContext))]
-    [Migration("20260115144247_V1")]
+    [Migration("20260115203509_V1")]
     partial class V1
     {
         /// <inheritdoc />

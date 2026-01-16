@@ -38,18 +38,18 @@ namespace Backend.Application.Services.School
 
             var Mytask = new TaskSubmission()
             {
-               StudentId = model.StudentId,
-               MyTaskId = model.MyTaskId,
-               Score = model.Score
+                StudentId = model.StudentId,
+                MyTaskId = model.MyTaskId,
+                Score = model.Score
 
-                
+
             };
 
             await _tasksubmissionRepository.AddAsync(Mytask);
             return Mytask;
 
         }
-        public async Task<bool> UpdateTaskSubmittedAsync(int studentId,int mytaskId, CreateSubmittedTaskViewModel model)
+        public async Task<bool> UpdateTaskSubmittedAsync(int studentId, int mytaskId, CreateSubmittedTaskViewModel model)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace Backend.Application.Services.School
 
                 Mytask.Score = model.Score;
                 _tasksubmissionRepository.UpdateAsync(Mytask);
-              
+
                 return true;
             }
             catch (Exception)
@@ -69,11 +69,11 @@ namespace Backend.Application.Services.School
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<bool> DeleteTaskSubmittedAsync(int studentId,int mytaskId)
+        public async Task<bool> DeleteTaskSubmittedAsync(int studentId, int mytaskId)
         {
             try
             {
-                var mytask = await _tasksubmissionRepository.GetByIdAsync(studentId, mytaskId );
+                var mytask = await _tasksubmissionRepository.GetByIdAsync(studentId, mytaskId);
                 if (mytask == null)
                 {
                     return false;
