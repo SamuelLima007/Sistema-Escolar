@@ -43,8 +43,15 @@ namespace ProjetoNotas.Controllers
         public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
            
-           await _classService.AddClassAsync(model);
-            return Ok();
+           try
+            {
+                 
+             return Ok(await _classService.AddClassAsync(model));
+           }
+           catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]

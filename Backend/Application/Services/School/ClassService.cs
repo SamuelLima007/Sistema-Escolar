@@ -32,18 +32,14 @@ namespace ProjetoNotas.WebUi.Services
         {
             if (model != null)
             {
-
                 var classentity = new Class()
                 {
-                    
                     Grade = model.Grade,
-
-
                 };
                 await _classRepository.AddAsync(classentity);
                 return classentity;
             }
-            Console.WriteLine(model);
+        
             return null;
         }
         public async Task<bool> UpdateClassAsync(int id, Class classentity)

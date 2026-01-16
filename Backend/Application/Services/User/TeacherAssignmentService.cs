@@ -40,32 +40,35 @@ namespace Backend.Application.Services.School
             return model;
 
         }
-        public async Task<bool> UpdateTeacherAssignmentAsync(TeacherAssignment model)
+        public async Task<bool> UpdateTeacherAssignmentAsync(int teacherId, int classId, int subjectId, CreateTeacherAssignmentViewModel model)
         {
-            try
-            {
-                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(model.TeacherId, model.ClassId, model.SubjectId);
+                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(teacherId, classId, subjectId);
                 if (teacherassignment == null)
                 {
                     return false;
                 }
-
-                teacherassignment.TeacherId = model.TeacherId;
-                teacherassignment.SubjectId = model.SubjectId;
-                teacherassignment.ClassId = model.ClassId;
+                 var newteacherassignment = new TeacherAssignment
+                 {
+                    TeacherId = teacherassignment.TeacherId,
+                     ClassId = teacherassignment.ClassId,
+                     SubjectId = teacherassignment.SubjectId
+                 };
+                 newteacherassignment.TeacherId = model.TeacherId ?? teacherId;
+                newteacherassignment.SubjectId = model.SubjectId ?? subjectId;
+                newteacherassignment.ClassId = model.ClassId ?? classId;
+                 await _teacherassignmentRepository.DeleteAsync(teacherassignment);
+         
+            
+                await _teacherassignmentRepository.AddAsync(newteacherassignment);
 
                 return true;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Falha interna no servidor");
-            }
+           
         }
-        public async Task<bool> DeleteTeacherAssignmentAsync(TeacherAssignment model)
+        public async Task<bool> DeleteTeacherAssignmentAsync(int teacherId, int classId, int subjectId)
         {
             try
             {
-                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(model);
+                var teacherassignment = await _teacherassignmentRepository.GetByIdAsync(teacherId,  classId,  subjectId);
                 if (teacherassignment == null)
                 {
                     return false;

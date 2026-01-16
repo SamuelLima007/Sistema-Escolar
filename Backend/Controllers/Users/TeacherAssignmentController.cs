@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Backend.Domain.Interfaces.Controllers.Users;
 using Backend.Domain.Interfaces.Services.Users;
 using Backend.Domain.Models;
+using Backend.Domain.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Users
@@ -19,10 +20,10 @@ namespace Backend.Controllers.Users
             _teacherassignmentService = tasksubmissionService;
         }
 
-        [HttpGet("{teacherId}/classId/SubjectId")]
-        public async Task<ActionResult<TeacherAssignment>> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int SubjectId)
+        [HttpGet("{teacherId}/{classId}/{subjectId}")]
+        public async Task<ActionResult<TeacherAssignment>> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int subjectId)
         {
-            var tasksubmitted = await _teacherassignmentService.GetTeacherAssignmentByIdAsync(teacherId, classId, SubjectId);
+            var tasksubmitted = await _teacherassignmentService.GetTeacherAssignmentByIdAsync(teacherId, classId, subjectId);
             if (tasksubmitted == null)
             {
                 return NotFound();
@@ -37,19 +38,19 @@ namespace Backend.Controllers.Users
             return Ok();
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> UpdateTeacherAssignmentAsync([FromBody] TeacherAssignment model)
+        [HttpPut("{teacherId}/{classId}/{subjectId}")]
+        public async Task<ActionResult<bool>> UpdateTeacherAssignmentAsync(int teacherId, int classId, int SubjectId, [FromBody] CreateTeacherAssignmentViewModel model)
         {
-            var Updated = await _teacherassignmentService.UpdateTeacherAssignmentAsync(model);
+            var Updated = await _teacherassignmentService.UpdateTeacherAssignmentAsync(teacherId, classId, SubjectId, model);
             if (Updated == false) return NotFound();
 
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeleteTeacherAssignmentAsync([FromBody] TeacherAssignment model)
+        [HttpDelete("{teacherId}/{classId}/{subjectId}")]
+        public async Task<ActionResult<bool>> DeleteTeacherAssignmentAsync(int teacherId, int classId, int SubjectId)
         {
-            var Deleted = await _teacherassignmentService.DeleteTeacherAssignmentAsync(model);
+            var Deleted = await _teacherassignmentService.DeleteTeacherAssignmentAsync(teacherId, classId, SubjectId);
             if (Deleted == false) return NotFound();
 
             return Ok();
