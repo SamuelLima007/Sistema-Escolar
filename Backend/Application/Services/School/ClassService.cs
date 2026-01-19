@@ -5,6 +5,7 @@ using ProjetoNotas.Domain.Models;
 using ProjetoNotas.ViewModels;
 namespace ProjetoNotas.WebUi.Services
 {
+    
     public class ClassService : IClassService
     {
         private readonly IClassRepository _classRepository;

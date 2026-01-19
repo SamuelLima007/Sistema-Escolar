@@ -1,3 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+@font-face {
+  font-family: 'Poppins-Medium';
+  src: url('app/fonts/Poppins-Medium.ttf') format('opentype');
+  font-style: normal;
+  font-display: swap;
+}
+
+*
+{
+    font-family: "Poppins-Medium";
+}
+
