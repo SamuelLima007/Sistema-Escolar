@@ -2,17 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Backend.Domain.Interfaces.Controllers.Users;
+
 using Backend.Domain.Interfaces.Services.Users;
 using Backend.Domain.Models;
 using Backend.Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.Users
 {
     [ApiController]
     [Route("teacherassignments")]
-    public class TeacherAssignmentController : ControllerBase, ITeacherAssignmentController
+    [Authorize(Roles = "School_Admin, Super_Admin")]
+    public class TeacherAssignmentController : ControllerBase
     {
         private readonly ITeacherAssignmentService _teacherassignmentService;
         public TeacherAssignmentController(ITeacherAssignmentService tasksubmissionService)
@@ -43,7 +45,6 @@ namespace Backend.Controllers.Users
         {
             var Updated = await _teacherassignmentService.UpdateTeacherAssignmentAsync(teacherId, classId, SubjectId, model);
             if (Updated == false) return NotFound();
-
             return Ok();
         }
 
@@ -52,7 +53,6 @@ namespace Backend.Controllers.Users
         {
             var Deleted = await _teacherassignmentService.DeleteTeacherAssignmentAsync(teacherId, classId, SubjectId);
             if (Deleted == false) return NotFound();
-
             return Ok();
         }
     }

@@ -14,8 +14,8 @@ namespace ProjetoNotas.WebUi.Conaollers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("users")]
-
-    public class UserController : ControllerBase, IUserController
+     [Authorize(Roles = "School_Admin, Super_Admin")]
+    public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
         private readonly IAccountService _accountService;
@@ -26,6 +26,7 @@ namespace ProjetoNotas.WebUi.Conaollers
             _accountService = accountService;
         }
 
+        [AllowAnonymous]
         [HttpPost("v1/login")]
         public async Task<ActionResult> Login([FromBody] UserLoginViewModel model)
         {
@@ -51,7 +52,6 @@ namespace ProjetoNotas.WebUi.Conaollers
         [HttpPost]
         public async Task<ActionResult<User>> AddUserAsync([FromBody] CreateUserViewModel model)
         {
-
             try
             {
                 await _userService.AddUserAsync(model);
@@ -59,16 +59,13 @@ namespace ProjetoNotas.WebUi.Conaollers
             }
             catch
             {
-
-
                 return BadRequest();
             }
-
         }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> UpdateUserAsync([FromRoute] int id, [FromBody] CreateUserViewModel user)
         {
-
             try
             {
                 await _userService.UpdateUserAsync(id, user);
@@ -78,7 +75,6 @@ namespace ProjetoNotas.WebUi.Conaollers
             {
                 return NoContent();
             }
-
         }
 
         [HttpDelete("{id}")]
@@ -86,7 +82,6 @@ namespace ProjetoNotas.WebUi.Conaollers
         {
             var Deleted = await _userService.DeleteUserAsync(id);
             if (Deleted == false) return NotFound();
-
             return Ok();
         }
     }

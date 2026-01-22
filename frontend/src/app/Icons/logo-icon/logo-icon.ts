@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { GraduationCap } from 'lucide-angular'
 import { SharedModule } from '../../shared-module/shared/shared-module';
 
@@ -10,4 +10,7 @@ import { SharedModule } from '../../shared-module/shared/shared-module';
 })
 export class LogoIcon {
  readonly GraduationCap = GraduationCap
+
+
+
 }

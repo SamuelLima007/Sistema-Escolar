@@ -1,16 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
-using ProjetoNotas.Data;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Models;
-using ProjetoNotas.InfraStructure.Interfaces;
+
 
 using ProjetoNotas.ViewModels;
 
@@ -18,16 +11,15 @@ namespace ProjetoNotas.Controllers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("class")]
-    public class ClassController : ControllerBase, IClassController
+    [Authorize(Roles = "School_Admin, Super_Admin")]
+    public class ClassController : ControllerBase
     {
         private readonly IClassService _classService;
-
 
         public ClassController(IClassService classService)
         {
             _classService = classService;
         }
-
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClassByIdAsync(int id)
@@ -42,7 +34,6 @@ namespace ProjetoNotas.Controllers
         [HttpPost]
         public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
-           
            try
             {
                  
@@ -59,7 +50,6 @@ namespace ProjetoNotas.Controllers
         {
             var Updated = await _classService.UpdateClassAsync(id, classentity);
             if (Updated == false) return NotFound();
-
             return Ok();
         }
 
@@ -68,7 +58,6 @@ namespace ProjetoNotas.Controllers
         {
             var Deleted = await _classService.DeleteClassAsync(id);
             if (Deleted == false) return NotFound();
-
             return Ok();
         }
     }

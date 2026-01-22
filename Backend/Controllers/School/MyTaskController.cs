@@ -1,5 +1,7 @@
+using Backend.Domain.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoNotas.Domain.Interfaces.Controllers.School;
+
 using ProjetoNotas.Domain.Interfaces.Services.School;
 using ProjetoNotas.Domain.Models;
 using ProjetoNotas.Domain.ViewModels;
@@ -8,10 +10,10 @@ namespace ProjetoNotas.Controllers.School
 {
     [ApiController]
     [Route("tasks")]
-    public class MyTaskController : ControllerBase, IMyTaskController
+    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    public class MyTaskController : ControllerBase
     {
         private readonly IMyTaskService _mytaskService;
-
         public MyTaskController(IMyTaskService mytaskService)
         {
             _mytaskService = mytaskService;
@@ -30,7 +32,7 @@ namespace ProjetoNotas.Controllers.School
         [HttpPost]
         public async Task<ActionResult> AddMyTaskAsync([FromBody] CreateMyTaskViewModel mytask)
         {
-
+            
             var task = await _mytaskService.AddMyTaskAsync(mytask);
             return Ok();
         }
@@ -40,7 +42,6 @@ namespace ProjetoNotas.Controllers.School
         {
             var Updated = await _mytaskService.UpdateMyTaskAsync(id, mytask);
             if (Updated == false) return NotFound();
-
             return Ok();
         }
 
@@ -49,7 +50,6 @@ namespace ProjetoNotas.Controllers.School
         {
             var Deleted = await _mytaskService.DeleteMyTaskAsync(id);
             if (Deleted == false) return NotFound();
-
             return Ok();
         }
     }

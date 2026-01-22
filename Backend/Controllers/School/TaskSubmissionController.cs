@@ -2,18 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Backend.Domain.Interfaces.Controllers.School;
+
 using Backend.Domain.Interfaces.Services.School;
 using Backend.Domain.Models;
 using Backend.Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Backend.Controllers.School
 {
     [ApiController]
     [Route("taskssubmitted")]
+    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
 
-    public class TaskSubmissionController : ControllerBase, ITaskSubmissionController
+    public class TaskSubmissionController : ControllerBase
     {
         private readonly ITaskSubmissionService _tasksubmissionService;
         public TaskSubmissionController(ITaskSubmissionService tasksubmissionService)
@@ -24,7 +26,6 @@ namespace Backend.Controllers.School
         [HttpGet("{studentId}/{taskId}")]
         public async Task<ActionResult<TaskSubmission>> GetTaskSubmissionByIdAsync([FromRoute] int studentId, [FromRoute] int taskId)
         {
-
             var tasksubmitted = await _tasksubmissionService.GetTaskSubmittedByIdAsync(studentId, taskId);
             if (tasksubmitted == null)
             {
@@ -45,7 +46,6 @@ namespace Backend.Controllers.School
         {
             var Updated = await _tasksubmissionService.UpdateTaskSubmittedAsync(studentId, taskId, model);
             if (Updated == false) return NotFound();
-
             return Ok();
         }
 
@@ -54,7 +54,6 @@ namespace Backend.Controllers.School
         {
             var Deleted = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId);
             if (Deleted == false) return NotFound();
-
             return Ok();
         }
     }

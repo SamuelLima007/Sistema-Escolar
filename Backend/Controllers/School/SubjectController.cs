@@ -14,8 +14,8 @@ namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
     [Route("subjects")]
-
-    public class SubjectController : ControllerBase, ISubjectController
+        [Authorize(Roles = "School_Admin, Super_Admin")]
+    public class SubjectController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
         public SubjectController(ISubjectService subjectService)
@@ -46,7 +46,6 @@ namespace ProjetoNotas.WebUi.Controllers
         {
             var Updated = await _subjectService.UpdateSubjectAsync(id, subject);
             if (Updated == false) return NotFound();
-
             return Ok();
         }
 
@@ -55,7 +54,6 @@ namespace ProjetoNotas.WebUi.Controllers
         {
             var Deleted = await _subjectService.DeleteSubjectAsync(id);
             if (Deleted == false) return NotFound();
-
             return Ok();
         }
     }
