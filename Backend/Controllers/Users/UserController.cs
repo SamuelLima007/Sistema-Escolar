@@ -14,7 +14,7 @@ namespace ProjetoNotas.WebUi.Conaollers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("users")]
-     [Authorize(Roles = "School_Admin, Super_Admin")]
+     //[Authorize(Roles = "School_Admin, Super_Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;

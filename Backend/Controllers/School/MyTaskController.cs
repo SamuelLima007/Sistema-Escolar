@@ -10,7 +10,7 @@ namespace ProjetoNotas.Controllers.School
 {
     [ApiController]
     [Route("tasks")]
-    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    //[Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
     public class MyTaskController : ControllerBase
     {
         private readonly IMyTaskService _mytaskService;

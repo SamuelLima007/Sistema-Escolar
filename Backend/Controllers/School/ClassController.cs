@@ -1,4 +1,5 @@
 
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNotas.Domain.Interfaces;
@@ -11,7 +12,7 @@ namespace ProjetoNotas.Controllers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("class")]
-    [Authorize(Roles = "School_Admin, Super_Admin")]
+    //[Authorize(Roles = "School_Admin, Super_Admin")]
     public class ClassController : ControllerBase
     {
         private readonly IClassService _classService;
@@ -24,41 +25,55 @@ namespace ProjetoNotas.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClassByIdAsync(int id)
         {
-            var classentity = await _classService.GetClassByIdAsync(id);
-            if (classentity == null)
-                return NotFound();
-
-            return Ok(classentity);
+            var response = await _classService.GetClassByIdAsync(id);
+            if (response.Data == null && response.Result == false) return NotFound(response);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddClassAsync([FromBody] CreateClassViewModel model)
         {
-           try
+            try
             {
-                 
-             return Ok(await _classService.AddClassAsync(model));
-           }
-           catch
+                var response = await _classService.AddClassAsync(model);
+                if (response.Data.Grade == model.Grade && response.Result == false) return Conflict(response);
+                return Ok(response);
+            }
+            catch
             {
                 return BadRequest();
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateClassAsync(int id, Class classentity)
+        public async Task<IActionResult> UpdateClassAsync(int id, CreateClassViewModel model)
         {
-            var Updated = await _classService.UpdateClassAsync(id, classentity);
-            if (Updated == false) return NotFound();
-            return Ok();
+            try
+            {
+                var response = await _classService.UpdateClassAsync(id, model);
+                if (response.Data == null) return NotFound(response);
+                else if (response.Data.Grade == model.Grade && response.Result == false) return Conflict(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteClassAsync(int id)
         {
-            var Deleted = await _classService.DeleteClassAsync(id);
-            if (Deleted == false) return NotFound();
-            return Ok();
+            try
+            {
+                var response = await _classService.DeleteClassAsync(id);
+                if (response.Data == null) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

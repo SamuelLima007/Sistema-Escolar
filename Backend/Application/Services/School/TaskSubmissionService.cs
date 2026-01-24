@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Domain.Extensions;
 using Backend.Domain.Interfaces.Repositoryes.School;
 using Backend.Domain.Interfaces.Services.School;
 using Backend.Domain.Models;
@@ -69,23 +70,25 @@ namespace Backend.Application.Services.School
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<bool> DeleteTaskSubmittedAsync(int studentId, int mytaskId)
+        public async Task<ApiResponse<TaskSubmission>> DeleteTaskSubmittedAsync(int studentId, int mytaskId)
         {
             try
             {
                 var mytask = await _tasksubmissionRepository.GetByIdAsync(studentId, mytaskId);
                 if (mytask == null)
                 {
-                    return false;
+                     return ResponseApiExtension<TaskSubmission>.CreateApiResponseFail(new ApiResponse<TaskSubmission>("TaskSubmitted inexistente"));
                 }
                 await _tasksubmissionRepository.DeleteAsync(mytask);
 
-                return true;
+                return ResponseApiExtension<TaskSubmission>.CreateApiResponseSucess(new ApiResponse<TaskSubmission>("TaskSubmitted deletada", mytask));
             }
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
+
+        
         }
     }
 }

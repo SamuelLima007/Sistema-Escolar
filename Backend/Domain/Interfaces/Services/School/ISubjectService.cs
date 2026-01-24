@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Models;
@@ -11,9 +12,9 @@ namespace ProjetoNotas.Domain.Interfaces
 {
     public interface ISubjectService
     {
-        Task<Subject> GetSubjectByIdAsync(int id);
-        Task<Subject> AddSubjectAsync(CreateSubjectViewModel subject);
-        Task<bool> UpdateSubjectAsync(int id, CreateSubjectViewModel subject);
-        Task<bool> DeleteSubjectAsync(int id);
+        Task<ApiResponse<Subject>> GetSubjectByIdAsync(int id);
+        Task<ApiResponse<Subject>> AddSubjectAsync(CreateSubjectViewModel subject);
+        Task<ApiResponse<Subject>> UpdateSubjectAsync(int id, CreateSubjectViewModel subject);
+        Task<ApiResponse<Subject>> DeleteSubjectAsync(int id);
     }
 }

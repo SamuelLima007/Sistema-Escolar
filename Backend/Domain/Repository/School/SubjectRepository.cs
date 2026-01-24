@@ -41,5 +41,10 @@ namespace ProjetoNotas.Repository
             _context.Subjects.Remove(subject);
             await _context.SaveChangesAsync();
         }
+
+         public async Task<bool> GetByNameAsync(string name)
+        {
+            return await _context.Subjects.AnyAsync(x => x.Name == name);
+        }
     }
 }

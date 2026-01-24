@@ -37,6 +37,12 @@ namespace ProjetoNotas.Repository
         {
             return await _context.Classs.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<bool> GetByGradeAsync(string grade)
+        {
+            return await _context.Classs.AnyAsync(x => x.Grade == grade);
+        }
+        
         public async Task UpdateAsync(Class classentity)
         {
             _context.Classs.Update(classentity);

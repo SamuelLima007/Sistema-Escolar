@@ -13,7 +13,7 @@ namespace Backend.Controllers.Users
 {
     [ApiController]
     [Route("teacherassignments")]
-    [Authorize(Roles = "School_Admin, Super_Admin")]
+    //[Authorize(Roles = "School_Admin, Super_Admin")]
     public class TeacherAssignmentController : ControllerBase
     {
         private readonly ITeacherAssignmentService _teacherassignmentService;

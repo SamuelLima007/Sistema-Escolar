@@ -38,7 +38,7 @@ namespace ProjetoNotas.Application.Services
         public async Task<MyTask> AddMyTaskAsync(CreateMyTaskViewModel model)
         {
 
-            var Nmytask = new MyTask()
+            var mytask = new MyTask()
             {
                 Name = string.IsNullOrWhiteSpace(model.Name) ? model.Name : model.Name,
                 Description = string.IsNullOrWhiteSpace(model.Description) ? model.Description : model.Description,
@@ -50,8 +50,8 @@ namespace ProjetoNotas.Application.Services
                 score = model.Score
             };
 
-            await _mytaskRepository.AddAsync(Nmytask);
-            return Nmytask;
+            await _mytaskRepository.AddAsync(mytask);
+            return mytask;
 
         }
         public async Task<bool> UpdateMyTaskAsync(int id, CreateMyTaskViewModel mytask)

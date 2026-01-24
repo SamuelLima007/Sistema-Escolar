@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Domain.Extensions;
+using Backend.Domain.Models;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Models;
@@ -17,70 +19,96 @@ namespace ProjetoNotas.WebUi.Services
             _subjectRepository = subjectRepository;
 
         }
-        public async Task<Subject> GetSubjectByIdAsync(int id)
+        public async Task<ApiResponse<Subject>> GetSubjectByIdAsync(int id)
         {
             try
             {
-                var Subject = await _subjectRepository.GetByIdAsync(id);
-                if (Subject == null)
+                var subject = await _subjectRepository.GetByIdAsync(id);
+                if (subject == null)
                 {
-                    return null;
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Disciplina inexistente"));
                 }
-                return Subject;
+                 return ResponseApiExtension<Subject>.CreateApiResponseSucess(new ApiResponse<Subject>("Disciplina Encontrada", subject));
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
+
+        }
+        public async Task<ApiResponse<Subject>> AddSubjectAsync(CreateSubjectViewModel model)
+        {
+
+            try
+            {
+                if (model == null)
+                {
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Verifique o formato do JSON", new Subject() { }));
+                }
+
+                if (await _subjectRepository.GetByNameAsync(model.Name))
+                {
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Já existe uma Disciplina com essa grade", new Subject() { Name = model.Name })); ;
+                }
+                var subject = new Subject()
+                {
+                    Name = model.Name,
+                };
+                await _subjectRepository.AddAsync(subject);
+                return ResponseApiExtension<Subject>.CreateApiResponseSucess(new ApiResponse<Subject>("Disciplina adicionada com sucesso", subject)); ;
+            }
+            catch
+            {
+                throw new Exception("Falha interna no servidor");
+            }
+        }
+        public async Task<ApiResponse<Subject>> UpdateSubjectAsync(int id, CreateSubjectViewModel model)
+        {
+            try
+            {
+                if (model == null)
+                {
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Verifique o formato do JSON", new Subject() { }));
+                }
+
+                if (await _subjectRepository.GetByNameAsync(model.Name))
+                {
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Já existe uma Disciplina com essa grade", new Subject() { Name = model.Name })); ;
+                }
+
+                var updatesubject = await _subjectRepository.GetByIdAsync(id);
+
+                if (updatesubject == null)
+                {
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Disciplina inexistente"));
+                }
+
+                updatesubject.Name = model.Name;
+                await _subjectRepository.UpdateAsync(updatesubject);
+                return ResponseApiExtension<Subject>.CreateApiResponseSucess(new ApiResponse<Subject>("Disciplina Atualizada com sucesso", updatesubject)); ;
             }
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<Subject> AddSubjectAsync(CreateSubjectViewModel model)
-        {
-
-
-            var Subject = new Subject()
-            {
-                Name = model.Name,
-
-            };
-            await _subjectRepository.AddAsync(Subject);
-            return Subject;
-
-
-        }
-        public async Task<bool> UpdateSubjectAsync(int id, CreateSubjectViewModel subject)
+        public async Task<ApiResponse<Subject>> DeleteSubjectAsync(int id)
         {
             try
             {
-                var NSubject = await _subjectRepository.GetByIdAsync(id);
-                if (NSubject == null)
+                var subject = await _subjectRepository.GetByIdAsync(id);
+                if (subject == null)
                 {
-                    return false;
+                    return ResponseApiExtension<Subject>.CreateApiResponseFail(new ApiResponse<Subject>("Disciplina inexistente"));
                 }
-                NSubject.Name = subject.Name;
 
-                await _subjectRepository.UpdateAsync(NSubject);
-                return true;
+                await _subjectRepository.DeleteAsync(subject);
+                return ResponseApiExtension<Subject>.CreateApiResponseSucess(new ApiResponse<Subject>("Disciplina deletada", subject));
             }
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
-        }
-        public async Task<bool> DeleteSubjectAsync(int id)
-        {
-
-            var Subject = await _subjectRepository.GetByIdAsync(id);
-            if (Subject == null)
-            {
-                return false;
-            }
-            await _subjectRepository.DeleteAsync(Subject);
-
-            return true;
-
-
-
-
         }
     }
 }

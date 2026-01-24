@@ -11,7 +11,7 @@ namespace Backend.Domain.Interfaces.Services.School
     {
         Task<TaskSubmission> GetTaskSubmittedByIdAsync(int studentId, int taskId);
         Task<TaskSubmission> AddTaskSubmittedAsync(CreateSubmittedTaskViewModel model);
-        Task<bool> UpdateTaskSubmittedAsync(int studentId,int mytaskId, CreateSubmittedTaskViewModel model);
-        Task<bool> DeleteTaskSubmittedAsync(int studentId,int mytaskId);
+        Task<bool> UpdateTaskSubmittedAsync(int studentId, int mytaskId, CreateSubmittedTaskViewModel model);
+        Task<ApiResponse<TaskSubmission>> DeleteTaskSubmittedAsync(int studentId, int mytaskId);
     }
 }

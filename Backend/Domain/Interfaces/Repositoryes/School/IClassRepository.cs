@@ -14,5 +14,8 @@ namespace ProjetoNotas.Domain.Interfaces
         Task AddAsync(Class classentity);
         Task UpdateAsync(Class classentity);
         Task DeleteAsync(Class classentity);
+        Task<bool> GetByGradeAsync(string grade);
+
+        
     }
 }

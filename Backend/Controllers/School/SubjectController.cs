@@ -14,7 +14,7 @@ namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
     [Route("subjects")]
-        [Authorize(Roles = "School_Admin, Super_Admin")]
+    //[Authorize(Roles = "School_Admin, Super_Admin")]
     public class SubjectController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
@@ -26,35 +26,55 @@ namespace ProjetoNotas.WebUi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Subject>> GetSubjectByIdAsync(int id)
         {
-            var subject = await _subjectService.GetSubjectByIdAsync(id);
-            if (subject == null)
-            {
-                return NotFound();
-            }
-            return Ok(subject);
+            var response = await _subjectService.GetSubjectByIdAsync(id);
+            if (response.Data == null && response.Result == false) return NotFound(response);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<ActionResult<Subject>> AddSubjectAsync([FromBody] CreateSubjectViewModel model)
         {
-            var subject = await _subjectService.AddSubjectAsync(model);
-            return Ok();
+            try
+            {
+                var response = await _subjectService.AddSubjectAsync(model);
+                if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> UpdateSubjectAsync(int id, [FromBody] CreateSubjectViewModel subject)
+        public async Task<ActionResult<bool>> UpdateSubjectAsync(int id, [FromBody] CreateSubjectViewModel model)
         {
-            var Updated = await _subjectService.UpdateSubjectAsync(id, subject);
-            if (Updated == false) return NotFound();
-            return Ok();
+            try
+            {
+                var response = await _subjectService.UpdateSubjectAsync(id, model);
+                if (response.Data == null) return NotFound(response);
+                else if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteSubjectAsync(int id)
         {
-            var Deleted = await _subjectService.DeleteSubjectAsync(id);
-            if (Deleted == false) return NotFound();
-            return Ok();
+            try
+            {
+                var response = await _subjectService.DeleteSubjectAsync(id);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }

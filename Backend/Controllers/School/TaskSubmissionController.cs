@@ -13,7 +13,7 @@ namespace Backend.Controllers.School
 {
     [ApiController]
     [Route("taskssubmitted")]
-    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    //[Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
 
     public class TaskSubmissionController : ControllerBase
     {
@@ -52,9 +52,16 @@ namespace Backend.Controllers.School
         [HttpDelete("{studentId}/{taskId}")]
         public async Task<ActionResult<bool>> DeleteTaskSubmissionAsync(int studentId, int taskId)
         {
-            var Deleted = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId);
-            if (Deleted == false) return NotFound();
-            return Ok();
+             try
+            {
+                var response = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
     }
 }
