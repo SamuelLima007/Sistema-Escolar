@@ -14,7 +14,7 @@ namespace ProjetoNotas.WebUi.Controllers
 {
     [ApiController]
     [Route("subjects")]
-    //[Authorize(Roles = "School_Admin, Super_Admin")]
+    [Authorize(Roles = "School_Admin, Super_Admin")]
     public class SubjectController : ControllerBase
     {
         private readonly ISubjectService _subjectService;

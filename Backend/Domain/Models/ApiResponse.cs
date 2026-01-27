@@ -25,25 +25,29 @@ namespace Backend.Domain.Models
         {
             Result = _result;
             Message = _message;
-        
+
         }
 
         public ApiResponse(string _message, T _data)
         {
             Message = _message;
             Data = _data;
-        
+
         }
 
-         public ApiResponse(string _message)
+        public ApiResponse(string _message)
         {
             Message = _message;
+        }
 
-        
+        public ApiResponse(string _message, string Error)
+        {
+            Message = _message;
+            Errors.Add(Error);
         }
 
 
-     
-        
+
+
     }
 }

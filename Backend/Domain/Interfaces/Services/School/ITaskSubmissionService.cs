@@ -9,9 +9,9 @@ namespace Backend.Domain.Interfaces.Services.School
 {
     public interface ITaskSubmissionService
     {
-        Task<TaskSubmission> GetTaskSubmittedByIdAsync(int studentId, int taskId);
-        Task<TaskSubmission> AddTaskSubmittedAsync(CreateSubmittedTaskViewModel model);
-        Task<bool> UpdateTaskSubmittedAsync(int studentId, int mytaskId, CreateSubmittedTaskViewModel model);
-        Task<ApiResponse<TaskSubmission>> DeleteTaskSubmittedAsync(int studentId, int mytaskId);
+        Task<ApiResponse<TaskSubmission>> GetTaskSubmittedByIdAsync(int studentId, int taskId, int loggedId, string loggedRole);
+        Task<ApiResponse<TaskSubmission>> AddTaskSubmittedAsync(CreateSubmittedTaskViewModel model);
+        Task<ApiResponse<TaskSubmission>> UpdateTaskSubmittedAsync(int studentId, int mytaskId, CreateSubmittedTaskViewModel model, int loggedId, string loggedRole);
+        Task<ApiResponse<TaskSubmission>> DeleteTaskSubmittedAsync(int studentId, int mytaskId, int loggedId, string loggedRole);
     }
 }

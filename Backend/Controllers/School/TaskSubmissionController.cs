@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Backend.Domain.Extensions;
 using Backend.Domain.Interfaces.Services.School;
 using Backend.Domain.Models;
 using Backend.Domain.ViewModels;
@@ -13,7 +13,7 @@ namespace Backend.Controllers.School
 {
     [ApiController]
     [Route("taskssubmitted")]
-    //[Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
 
     public class TaskSubmissionController : ControllerBase
     {
@@ -26,35 +26,57 @@ namespace Backend.Controllers.School
         [HttpGet("{studentId}/{taskId}")]
         public async Task<ActionResult<TaskSubmission>> GetTaskSubmissionByIdAsync([FromRoute] int studentId, [FromRoute] int taskId)
         {
-            var tasksubmitted = await _tasksubmissionService.GetTaskSubmittedByIdAsync(studentId, taskId);
-            if (tasksubmitted == null)
-            {
-                return NotFound();
-            }
-            return Ok(tasksubmitted);
+            var loggedId = User.GetUserLoggedId();
+            var loggedRole = User.GetUserLoggedRole();
+            var response = await _tasksubmissionService.GetTaskSubmittedByIdAsync(studentId, taskId, loggedId, loggedRole);
+            if (response.Data == null && response.Errors.Contains("Forbidden")) return Forbid();
+            if (response.Data == null && response.Result == false) return NotFound(response);
+            return Ok(response);
         }
 
         [HttpPost]
         public async Task<ActionResult<TaskSubmission>> AddTaskSubmissionAsync([FromBody] CreateSubmittedTaskViewModel model)
         {
-            var subject = await _tasksubmissionService.AddTaskSubmittedAsync(model);
-            return Ok();
+            try
+            {
+                var response = await _tasksubmissionService.AddTaskSubmittedAsync(model);
+                //if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("{studentId}/{taskId}")]
         public async Task<ActionResult<bool>> UpdateTaskSubmissionAsync(int studentId, int taskId, [FromBody] CreateSubmittedTaskViewModel model)
         {
-            var Updated = await _tasksubmissionService.UpdateTaskSubmittedAsync(studentId, taskId, model);
-            if (Updated == false) return NotFound();
-            return Ok();
+            var loggedId = User.GetUserLoggedId();
+            var loggedRole = User.GetUserLoggedRole();
+            try
+            {
+                var response = await _tasksubmissionService.UpdateTaskSubmittedAsync(studentId, taskId, model, loggedId, loggedRole);
+                if (response.Data == null) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest();
+            }
         }
 
+
+        [Authorize(Roles = "School_Admin, Super_Admin")]
         [HttpDelete("{studentId}/{taskId}")]
         public async Task<ActionResult<bool>> DeleteTaskSubmissionAsync(int studentId, int taskId)
         {
-             try
+
+            var loggedId = User.GetUserLoggedId();
+            var loggedRole = User.GetUserLoggedRole();
+            try
             {
-                var response = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId);
+                var response = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId, loggedId, loggedRole);
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }

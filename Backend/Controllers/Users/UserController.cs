@@ -14,7 +14,7 @@ namespace ProjetoNotas.WebUi.Conaollers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("users")]
-     //[Authorize(Roles = "School_Admin, Super_Admin")]
+    //[Authorize(Roles = "School_Admin, Super_Admin")]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -30,12 +30,20 @@ namespace ProjetoNotas.WebUi.Conaollers
         [HttpPost("v1/login")]
         public async Task<ActionResult> Login([FromBody] UserLoginViewModel model)
         {
-            var token = await _accountService.ValidateLogin(model.Email, model.Password);
-            if (token != null)
+            Console.WriteLine("teste");
+            try
             {
-                return Ok(token);
+                var token = await _accountService.ValidateLogin(model.Email, model.Password);
+                if (token != null)
+                {
+                    return Ok(token);
+                }
+                return BadRequest();
             }
-            return BadRequest();
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{id}")]

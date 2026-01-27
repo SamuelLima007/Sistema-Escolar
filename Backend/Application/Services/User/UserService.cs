@@ -32,12 +32,12 @@ namespace ProjetoNotas.WebUi.Services
             try
             {
                 var user = await _userRepository.GetByIdAsync(id);
-                Console.WriteLine("teste");
+
                 if (user == null)
                 {
                     return null;
                 }
-                Console.WriteLine("teste");
+
                 return user;
             }
             catch (Exception)

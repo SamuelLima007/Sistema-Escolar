@@ -12,7 +12,7 @@ namespace ProjetoNotas.Controllers
 {
     [ApiController]
     [Microsoft.AspNetCore.Mvc.RouteAttribute("class")]
-    //[Authorize(Roles = "School_Admin, Super_Admin")]
+    [Authorize(Roles = "School_Admin, Super_Admin")]
     public class ClassController : ControllerBase
     {
         private readonly IClassService _classService;
