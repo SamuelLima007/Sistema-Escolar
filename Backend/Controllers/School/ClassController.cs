@@ -25,9 +25,17 @@ namespace ProjetoNotas.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetClassByIdAsync(int id)
         {
-            var response = await _classService.GetClassByIdAsync(id);
-            if (response.Data == null && response.Result == false) return NotFound(response);
-            return Ok(response);
+            try
+            {
+                var response = await _classService.GetClassByIdAsync(id);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpPost]
@@ -41,7 +49,7 @@ namespace ProjetoNotas.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
@@ -57,7 +65,7 @@ namespace ProjetoNotas.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
@@ -72,7 +80,7 @@ namespace ProjetoNotas.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
     }

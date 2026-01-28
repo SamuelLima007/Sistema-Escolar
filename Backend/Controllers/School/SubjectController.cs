@@ -26,9 +26,16 @@ namespace ProjetoNotas.WebUi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Subject>> GetSubjectByIdAsync(int id)
         {
-            var response = await _subjectService.GetSubjectByIdAsync(id);
-            if (response.Data == null && response.Result == false) return NotFound(response);
-            return Ok(response);
+            try
+            {
+                var response = await _subjectService.GetSubjectByIdAsync(id);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpPost]
@@ -42,7 +49,7 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
@@ -58,7 +65,7 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
@@ -73,7 +80,7 @@ namespace ProjetoNotas.WebUi.Controllers
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
     }

@@ -45,5 +45,14 @@ namespace Backend.Domain.Repository.School
             _context.TeacherAssignments.Update(teacherAssignment);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> FindAssignment(int classId, int subjectId, int teacherId)
+        {
+             return await _context.TeacherAssignments.AnyAsync
+            (x => x.TeacherId == teacherId &&
+             x.SubjectId == subjectId &&
+             x.ClassId == classId
+            );
+        }
     }
 }

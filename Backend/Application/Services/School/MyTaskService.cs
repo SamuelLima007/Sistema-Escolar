@@ -8,35 +8,57 @@ using ProjetoNotas.Domain.ViewModels;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces.Services.School;
 using Microsoft.VisualBasic;
+using Backend.Domain.Models;
+using Backend.Domain.Extensions;
+using Backend.Domain.Interfaces.Repositoryes.Users;
 
 namespace ProjetoNotas.Application.Services
 {
     public class MyTaskService : IMyTaskService
     {
         private readonly IMyTaskRepository _mytaskRepository;
-        public MyTaskService(IMyTaskRepository mytaskRepository)
+        private readonly ITeacherAssignmentRepository _teacherassignmentRepository;
+        public MyTaskService(IMyTaskRepository mytaskRepository, ITeacherAssignmentRepository teacherAssignmentRepository)
         {
             _mytaskRepository = mytaskRepository;
+            _teacherassignmentRepository = teacherAssignmentRepository;
 
         }
-        public async Task<MyTask> GetMyTaskByIdAsync(int id)
+        public async Task<ApiResponse<MyTask>> GetMyTaskByIdAsync(int id, string loggedRole, int loggedId)
         {
             try
             {
                 var mytask = await _mytaskRepository.GetByIdAsync(id);
                 if (mytask == null)
                 {
-                    return null;
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Tarefa inexistente"));
                 }
-                return mytask;
+                if (loggedRole == "Teacher" && loggedId != mytask.TeacherId)
+                {
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Permitido apenas para o professor que criou a tarefa", "Forbidden"));
+                }
+
+                return ResponseApiExtension<MyTask>.CreateApiResponseSucess(new ApiResponse<MyTask>("Tarefa Encontrada", mytask));
             }
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
+
+
         }
-        public async Task<MyTask> AddMyTaskAsync(CreateMyTaskViewModel model)
+        public async Task<ApiResponse<MyTask>> AddMyTaskAsync(CreateMyTaskViewModel model, int loggedId)
         {
+
+            if (model == null)
+            {
+                return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Verifique o formato do JSON", new MyTask() { }));
+            }
+
+            if (!await _teacherassignmentRepository.FindAssignment(loggedId, model.Classid, model.SubjectId))
+            {
+                return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("O professor pode adicionar apenas tarefas da classe e disciplina que ele leciona", "Forbidden"));
+            }
 
             var mytask = new MyTask()
             {
@@ -46,47 +68,64 @@ namespace ProjetoNotas.Application.Services
                 ExpirationDate = model.ExpirationDate,
                 ClassId = model.Classid,
                 SubjectId = model.SubjectId,
-                TeacherId = (int)model.TeacherId,
+                TeacherId = loggedId,
                 score = model.Score
             };
 
             await _mytaskRepository.AddAsync(mytask);
-            return mytask;
+            return ResponseApiExtension<MyTask>.CreateApiResponseSucess(new ApiResponse<MyTask>("Tarefa adicionada com sucesso", mytask)); ;
 
         }
-        public async Task<bool> UpdateMyTaskAsync(int id, CreateMyTaskViewModel mytask)
+        public async Task<ApiResponse<MyTask>> UpdateMyTaskAsync(int id, CreateMyTaskViewModel model, string loggedRole, int loggedId)
         {
             try
             {
-                var Nmytask = await _mytaskRepository.GetByIdAsync(id);
-                if (Nmytask == null)
+                if (model == null)
                 {
-                    return false;
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Verifique o formato do JSON", new MyTask() { }));
                 }
-                Nmytask.Name = string.IsNullOrWhiteSpace(mytask.Name) ? mytask.Name : mytask.Name;
-                Nmytask.Description = string.IsNullOrWhiteSpace(mytask.Description) ? mytask.Description : mytask.Description;
-                Nmytask.ExpirationDate = mytask.ExpirationDate;
 
-                await _mytaskRepository.UpdateAsync(Nmytask);
-                return true;
+                var mytask = await _mytaskRepository.GetByIdAsync(id);
+                if (mytask == null)
+                {
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Tarefa inexistente"));
+                }
+
+                if (loggedRole == "Teacher" && loggedId != mytask.TeacherId)
+                {
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Apenas o professor que criou a tarefa pode atualizar", "Forbidden"));
+                }
+
+                mytask.Name = string.IsNullOrWhiteSpace(model.Name) ? model.Name : model.Name;
+                mytask.Description = string.IsNullOrWhiteSpace(model.Description) ? model.Description : model.Description;
+                mytask.ExpirationDate = model.ExpirationDate;
+
+                await _mytaskRepository.UpdateAsync(mytask);
+                return ResponseApiExtension<MyTask>.CreateApiResponseSucess(new ApiResponse<MyTask>("Tarefa Atualizada com sucesso", mytask)); ;
             }
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
+
+
         }
-        public async Task<bool> DeleteMyTaskAsync(int id)
+        public async Task<ApiResponse<MyTask>> DeleteMyTaskAsync(int id, string loggedRole, int loggedId)
         {
             try
             {
                 var mytask = await _mytaskRepository.GetByIdAsync(id);
                 if (mytask == null)
                 {
-                    return false;
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Tarefa inexistente"));
+                }
+                if (loggedRole == "Teacher" && loggedId != mytask.TeacherId)
+                {
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Apenas o professor que criou a tarefa pode fazer a exclusão", "Forbidden"));
                 }
                 await _mytaskRepository.DeleteAsync(mytask);
+                return ResponseApiExtension<MyTask>.CreateApiResponseSucess(new ApiResponse<MyTask>("Tarefa deletada", mytask));
 
-                return true;
             }
             catch (Exception)
             {

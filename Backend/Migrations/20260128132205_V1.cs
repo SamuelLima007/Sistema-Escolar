@@ -12,19 +12,6 @@ namespace ProjetoNotas.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Class",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Grade = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Class", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -47,27 +34,22 @@ namespace ProjetoNotas.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ClassUser",
+                name: "Class",
                 columns: table => new
                 {
-                    ClassesId = table.Column<int>(type: "integer", nullable: false),
-                    UsersId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Grade = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ClassUser", x => new { x.ClassesId, x.UsersId });
+                    table.PrimaryKey("PK_Class", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ClassUser_Class_ClassesId",
-                        column: x => x.ClassesId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClassUser_Users_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_Class_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -157,7 +139,7 @@ namespace ProjetoNotas.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskSubmission",
+                name: "SubmittedTask",
                 columns: table => new
                 {
                     StudentId = table.Column<int>(type: "integer", nullable: false),
@@ -166,15 +148,15 @@ namespace ProjetoNotas.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TaskSubmission", x => new { x.StudentId, x.MyTaskId });
+                    table.PrimaryKey("PK_SubmittedTask", x => new { x.StudentId, x.MyTaskId });
                     table.ForeignKey(
-                        name: "FK_TaskSubmission_Task_MyTaskId",
+                        name: "FK_SubmittedTask_Task_MyTaskId",
                         column: x => x.MyTaskId,
                         principalTable: "Task",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TaskSubmission_Users_StudentId",
+                        name: "FK_SubmittedTask_Users_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -182,9 +164,9 @@ namespace ProjetoNotas.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ClassUser_UsersId",
-                table: "ClassUser",
-                column: "UsersId");
+                name: "IX_Class_UserId",
+                table: "Class",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subject_Name",
@@ -196,6 +178,17 @@ namespace ProjetoNotas.Migrations
                 name: "IX_Subject_UserId",
                 table: "Subject",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubmittedTask_MyTaskId",
+                table: "SubmittedTask",
+                column: "MyTaskId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubmittedTask_StudentId_MyTaskId",
+                table: "SubmittedTask",
+                columns: new[] { "StudentId", "MyTaskId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Task_ClassId",
@@ -211,17 +204,6 @@ namespace ProjetoNotas.Migrations
                 name: "IX_Task_TeacherId",
                 table: "Task",
                 column: "TeacherId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TaskSubmission_MyTaskId",
-                table: "TaskSubmission",
-                column: "MyTaskId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TaskSubmission_StudentId_MyTaskId",
-                table: "TaskSubmission",
-                columns: new[] { "StudentId", "MyTaskId" },
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeacherAssignments_ClassId",
@@ -250,10 +232,7 @@ namespace ProjetoNotas.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ClassUser");
-
-            migrationBuilder.DropTable(
-                name: "TaskSubmission");
+                name: "SubmittedTask");
 
             migrationBuilder.DropTable(
                 name: "TeacherAssignments");

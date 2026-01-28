@@ -22,35 +22,70 @@ namespace ProjetoNotas.Controllers.School
         [HttpGet("{id}")]
         public async Task<ActionResult<MyTask>> GetMyTaskByIdAsync(int id)
         {
-            var myTask = await _mytaskService.GetMyTaskByIdAsync(id);
-            if (myTask == null)
-                return NotFound();
+            try
+            {
+                var loggedRole = User.GetUserLoggedRole();
+                var loggedId = User.GetUserLoggedId();
+                var response = await _mytaskService.GetMyTaskByIdAsync(id, loggedRole, loggedId);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
 
-            return Ok(myTask);
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddMyTaskAsync([FromBody] CreateMyTaskViewModel mytask)
+        public async Task<ActionResult> AddMyTaskAsync([FromBody] CreateMyTaskViewModel model)
         {
+            try
+            {
 
-            var task = await _mytaskService.AddMyTaskAsync(mytask);
-            return Ok();
+                var loggedId = User.GetUserLoggedId();
+                var response = await _mytaskService.AddMyTaskAsync(model, loggedId);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateMyTaskAsync(int id, [FromBody] CreateMyTaskViewModel mytask)
+        public async Task<ActionResult> UpdateMyTaskAsync(int id, [FromBody] CreateMyTaskViewModel model)
         {
-            var Updated = await _mytaskService.UpdateMyTaskAsync(id, mytask);
-            if (Updated == false) return NotFound();
-            return Ok();
+            try
+            {
+                var loggedRole = User.GetUserLoggedRole();
+                var loggedId = User.GetUserLoggedId();
+                var response = await _mytaskService.UpdateMyTaskAsync(id, model, loggedRole, loggedId);
+                if (response.Data == null) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMyTaskAsync(int id)
         {
-            var Deleted = await _mytaskService.DeleteMyTaskAsync(id);
-            if (Deleted == false) return NotFound();
-            return Ok();
+
+            var loggedRole = User.GetUserLoggedRole();
+            var loggedId = User.GetUserLoggedId();
+            try
+            {
+                var response = await _mytaskService.DeleteMyTaskAsync(id, loggedRole, loggedId);
+                if (response.Data == null) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
     }
 }

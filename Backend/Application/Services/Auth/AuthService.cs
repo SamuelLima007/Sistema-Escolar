@@ -10,23 +10,23 @@ namespace ProjetoNotas.Application.Services
 {
 
 
-    public class AccountService : IAccountService
+    public class AuthService : IAuthService
     {
 
 
-        private readonly IAccountRepository _accountRepository;
+        private readonly IAuthRepository _authRepository;
         private readonly ITokenService _tokenservice;
-        public AccountService(IAccountRepository accountRepository, ITokenService tokenservice)
+        public AuthService(IAuthRepository authRepository, ITokenService tokenservice)
         {
 
-            _accountRepository = accountRepository;
+            _authRepository = authRepository;
             _tokenservice = tokenservice;
         }
         public async Task<string> ValidateLogin(string email, string password)
         {
-            if (await _accountRepository.IsEmailRegisteredAsync(email))
+            if (await _authRepository.IsEmailRegisteredAsync(email))
             {
-                var user = await _accountRepository.LoginUserAsync(email);
+                var user = await _authRepository.LoginUserAsync(email);
 
                 var isvalid = PasswordHasher.Verify(user.Password, password);
                 if (!isvalid)
@@ -39,7 +39,7 @@ namespace ProjetoNotas.Application.Services
         }
         public async Task<bool> IsEmailRegisteredAsync(string email)
         {
-            return await _accountRepository.IsEmailRegisteredAsync(email);
+            return await _authRepository.IsEmailRegisteredAsync(email);
         }
 
         public bool LogoutAsync()

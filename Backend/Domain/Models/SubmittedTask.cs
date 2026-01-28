@@ -6,7 +6,7 @@ using ProjetoNotas.Domain.Models;
 
 namespace Backend.Domain.Models
 {
-    public class TaskSubmission
+    public class SubmittedTask
     {
 
         public int StudentId { get; set; }

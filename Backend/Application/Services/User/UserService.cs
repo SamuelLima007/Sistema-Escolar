@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Domain.Extensions;
+using Backend.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -27,18 +29,16 @@ namespace ProjetoNotas.WebUi.Services
         }
 
 
-        public async Task<User> GetUserByIdAsync(int id)
+        public async Task<ApiResponse<User>> GetUserByIdAsync(int id)
         {
             try
             {
                 var user = await _userRepository.GetByIdAsync(id);
-
                 if (user == null)
                 {
-                    return null;
+                    return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Usuario inexistente"));
                 }
-
-                return user;
+                return ResponseApiExtension<User>.CreateApiResponseSucess(new ApiResponse<User>("Usuario encontrado", user));
             }
             catch (Exception)
             {
@@ -46,77 +46,76 @@ namespace ProjetoNotas.WebUi.Services
             }
 
         }
-        public async Task<User> AddUserAsync(CreateUserViewModel model)
+        public async Task<ApiResponse<User>> AddUserAsync(CreateUserViewModel model)
         {
-            // if (!ModelState.IsValid)
-            // {
-            //     return _controller.BadRequest("validacao errada");
-            // }
-            var classentity = await _context.Classs.FirstOrDefaultAsync();
-            var user = new User()
-            {
-                Name = model.Name,
-                Email = model.Email,
-                Password = PasswordHasher.Hash(model.Password),
-                Role = model.Role,
-                ClassId = model.ClassId
-            };
             try
             {
-                await _userRepository.AddAsync(user);
-                return user;
-            }
-            catch (DbUpdateException ex)
-            {
+                if (model == null)
+                {
+                    return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Verifique o formato do JSON", new User() { }));
+                }
 
-                Console.WriteLine($"Erro ao salvar no banco de dados: {ex.InnerException?.Message}");
-                throw;
+                var user = new User()
+                {
+                    Name = model.Name,
+                    Email = model.Email,
+                    Password = PasswordHasher.Hash(model.Password),
+                    Role = model.Role,
+                    ClassId = model.ClassId
+                };
+
+                await _userRepository.AddAsync(user);
+                return ResponseApiExtension<User>.CreateApiResponseSucess(new ApiResponse<User>("Usuario adicionado com sucesso", user));
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<bool> UpdateUserAsync(int id, CreateUserViewModel model)
+        public async Task<ApiResponse<User>> UpdateUserAsync(int id, CreateUserViewModel model)
         {
             try
             {
-
                 var user = await _userRepository.GetByIdAsync(id);
-
+                if (model == null)
+                {
+                    return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Verifique o formato do JSON", new User() { }));
+                }
 
                 if (user == null)
                 {
-                    return false;
+                    return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Usuario não encontrado"));
                 }
                 user.Name = string.IsNullOrWhiteSpace(model.Name) ? user.Name : model.Name;
                 user.Email = string.IsNullOrWhiteSpace(model.Email) ? user.Email : model.Email;
                 user.Password = string.IsNullOrWhiteSpace(model.Password) ? user.Password : model.Password;
 
-
                 await _userRepository.UpdateAsync(user);
-                return true;
+                return ResponseApiExtension<User>.CreateApiResponseSucess(new ApiResponse<User>("Usuario atualizado com sucesso", user)); ;
             }
+
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<bool> DeleteUserAsync(int id)
+        public async Task<ApiResponse<User>> DeleteUserAsync(int id)
         {
             try
             {
                 var user = await _userRepository.GetByIdAsync(id);
                 if (user == null)
                 {
-                    return false;
+                    return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Usuario inexistente"));
                 }
                 await _userRepository.DeleteAsync(user);
-
-                return true;
+                return ResponseApiExtension<User>.CreateApiResponseSucess(new ApiResponse<User>("Usuario deletado com sucesso", user));
             }
             catch (Exception)
             {
                 throw new Exception("Falha interna no servidor");
             }
+            
         }
-
-
     }
 }

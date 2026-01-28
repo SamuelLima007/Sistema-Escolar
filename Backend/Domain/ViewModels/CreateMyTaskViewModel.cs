@@ -10,7 +10,7 @@ namespace ProjetoNotas.Domain.ViewModels
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public DateTime? CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; } = DateTime.Now;
         public DateTime ExpirationDate { get; set; }
 
         public int Score { get; set; }

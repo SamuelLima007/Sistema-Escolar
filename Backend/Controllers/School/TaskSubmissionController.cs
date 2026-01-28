@@ -15,74 +15,83 @@ namespace Backend.Controllers.School
     [Route("taskssubmitted")]
     [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
 
-    public class TaskSubmissionController : ControllerBase
+    public class SubmittedTaskController : ControllerBase
     {
-        private readonly ITaskSubmissionService _tasksubmissionService;
-        public TaskSubmissionController(ITaskSubmissionService tasksubmissionService)
+        private readonly ISubmittedTaskService _submittedtaskService;
+        public SubmittedTaskController(ISubmittedTaskService submittedtaskService)
         {
-            _tasksubmissionService = tasksubmissionService;
+            _submittedtaskService = submittedtaskService;
         }
 
         [HttpGet("{studentId}/{taskId}")]
-        public async Task<ActionResult<TaskSubmission>> GetTaskSubmissionByIdAsync([FromRoute] int studentId, [FromRoute] int taskId)
-        {
-            var loggedId = User.GetUserLoggedId();
-            var loggedRole = User.GetUserLoggedRole();
-            var response = await _tasksubmissionService.GetTaskSubmittedByIdAsync(studentId, taskId, loggedId, loggedRole);
-            if (response.Data == null && response.Errors.Contains("Forbidden")) return Forbid();
-            if (response.Data == null && response.Result == false) return NotFound(response);
-            return Ok(response);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<TaskSubmission>> AddTaskSubmissionAsync([FromBody] CreateSubmittedTaskViewModel model)
+        public async Task<ActionResult<SubmittedTask>> GetSubmittedTaskByIdAsync([FromRoute] int studentId, [FromRoute] int taskId)
         {
             try
             {
-                var response = await _tasksubmissionService.AddTaskSubmittedAsync(model);
+                var loggedId = User.GetUserLoggedId();
+                var loggedRole = User.GetUserLoggedRole();
+                var response = await _submittedtaskService.GetSubmittedTaskByIdAsync(studentId, taskId, loggedId, loggedRole);
+                if (response.Data == null && response.Errors.Contains("Forbidden")) return Forbid();
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<SubmittedTask>> AddSubmittedTaskAsync([FromBody] CreateSubmittedTaskViewModel model)
+        {
+            try
+            {
+                var loggedRole = User.GetUserLoggedRole();
+                var loggedId = User.GetUserLoggedId();
+                var response = await _submittedtaskService.AddSubmittedTaskAsync(model, loggedRole, loggedId);
                 //if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
                 return Ok(response);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
         [HttpPut("{studentId}/{taskId}")]
-        public async Task<ActionResult<bool>> UpdateTaskSubmissionAsync(int studentId, int taskId, [FromBody] CreateSubmittedTaskViewModel model)
+        public async Task<ActionResult<bool>> UpdateSubmittedTaskAsync(int studentId, int taskId, [FromBody] CreateSubmittedTaskViewModel model)
         {
             var loggedId = User.GetUserLoggedId();
             var loggedRole = User.GetUserLoggedRole();
             try
             {
-                var response = await _tasksubmissionService.UpdateTaskSubmittedAsync(studentId, taskId, model, loggedId, loggedRole);
+                var response = await _submittedtaskService.UpdateSubmittedTaskAsync(studentId, taskId, model, loggedId, loggedRole);
                 if (response.Data == null) return NotFound(response);
                 return Ok(response);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
 
         [Authorize(Roles = "School_Admin, Super_Admin")]
         [HttpDelete("{studentId}/{taskId}")]
-        public async Task<ActionResult<bool>> DeleteTaskSubmissionAsync(int studentId, int taskId)
+        public async Task<ActionResult<bool>> DeleteSubmittedTaskAsync(int studentId, int taskId)
         {
 
             var loggedId = User.GetUserLoggedId();
             var loggedRole = User.GetUserLoggedRole();
             try
             {
-                var response = await _tasksubmissionService.DeleteTaskSubmittedAsync(studentId, taskId, loggedId, loggedRole);
+                var response = await _submittedtaskService.DeleteSubmittedTaskAsync(studentId, taskId, loggedId, loggedRole);
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
     }

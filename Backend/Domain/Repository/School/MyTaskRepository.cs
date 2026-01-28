@@ -41,5 +41,6 @@ namespace ProjetoNotas.Domain.Repository
             _context.MyTasks.Update(myTask);
             await _context.SaveChangesAsync();
         }
+        
     }
 }

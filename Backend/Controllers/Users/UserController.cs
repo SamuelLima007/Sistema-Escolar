@@ -18,43 +18,25 @@ namespace ProjetoNotas.WebUi.Conaollers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        private readonly IAccountService _accountService;
 
-        public UserController(IUserService userService, IAccountService accountService)
+        public UserController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
-            _accountService = accountService;
-        }
-
-        [AllowAnonymous]
-        [HttpPost("v1/login")]
-        public async Task<ActionResult> Login([FromBody] UserLoginViewModel model)
-        {
-            Console.WriteLine("teste");
-            try
-            {
-                var token = await _accountService.ValidateLogin(model.Email, model.Password);
-                if (token != null)
-                {
-                    return Ok(token);
-                }
-                return BadRequest();
-            }
-            catch
-            {
-                return BadRequest();
-            }
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUserByIdAsync([FromRoute] int id)
         {
-            var user = await _userService.GetUserByIdAsync(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var response = await _userService.GetUserByIdAsync(id);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
             }
-            return Ok(user);
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpPost]
@@ -62,35 +44,45 @@ namespace ProjetoNotas.WebUi.Conaollers
         {
             try
             {
-                await _userService.AddUserAsync(model);
-                return Ok();
+                var response = await _userService.AddUserAsync(model);
+                if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
+                return Ok(response);
             }
             catch
             {
-                return BadRequest();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<bool>> UpdateUserAsync([FromRoute] int id, [FromBody] CreateUserViewModel user)
+        public async Task<ActionResult<bool>> UpdateUserAsync([FromRoute] int id, [FromBody] CreateUserViewModel model)
         {
             try
             {
-                await _userService.UpdateUserAsync(id, user);
-                return Ok();
+                var response = await _userService.UpdateUserAsync(id, model);
+                if (response.Data == null) return NotFound(response);
+                else if (response.Data.Email == model.Email && response.Result == false) return Conflict(response);
+                return Ok(response);
             }
             catch
             {
-                return NoContent();
+                return BadRequest("Falha interna no servidor");
             }
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> DeleteUserAsync(int id)
         {
-            var Deleted = await _userService.DeleteUserAsync(id);
-            if (Deleted == false) return NotFound();
-            return Ok();
+            try
+            {
+                var response = await _userService.DeleteUserAsync(id);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
     }
 }

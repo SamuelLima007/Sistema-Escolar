@@ -4,7 +4,7 @@ using ProjetoNotas.Domain.Models;
 
 namespace ProjetoNotas.Domain.Interfaces.Services.School
 {
-    public interface IAccountService
+    public interface IAuthService
     {
         Task<string> ValidateLogin(string username, string password);
         bool LogoutAsync();

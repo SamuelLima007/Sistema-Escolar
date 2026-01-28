@@ -8,17 +8,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Backend.InfraStructure.Mapping
 {
-    public class TaskSubmissionMapping : IEntityTypeConfiguration<TaskSubmission>
+    public class SubmittedTaskMapping : IEntityTypeConfiguration<SubmittedTask>
     {
-        public void Configure(EntityTypeBuilder<TaskSubmission> builder)
+        public void Configure(EntityTypeBuilder<SubmittedTask> builder)
         {
 
-            builder.ToTable("TaskSubmission");
+            builder.ToTable("SubmittedTask");
 
             builder.HasKey(x => new { x.StudentId, x.MyTaskId });
 
             builder.HasOne(x => x.Student)
-                   .WithMany(x => x.TasksSubmission)
+                   .WithMany(x => x.SubmittedTasks)
                    .HasForeignKey(x => x.StudentId)
                    .OnDelete(DeleteBehavior.Restrict);
 

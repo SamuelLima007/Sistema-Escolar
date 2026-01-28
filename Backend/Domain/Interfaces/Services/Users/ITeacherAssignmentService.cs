@@ -9,9 +9,9 @@ namespace Backend.Domain.Interfaces.Services.Users
 {
     public interface ITeacherAssignmentService
     {
-        Task<TeacherAssignment> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int SubjectId);
-        Task<TeacherAssignment> AddTeacherAssignmentAsync(TeacherAssignment model);
-        Task<bool> UpdateTeacherAssignmentAsync(int teacherId, int classId, int SubjectId, CreateTeacherAssignmentViewModel model);
-        Task<bool> DeleteTeacherAssignmentAsync(int teacherId, int classId, int SubjectId);
+        Task<ApiResponse<TeacherAssignment>> GetTeacherAssignmentByIdAsync(int teacherId, int classId, int subjectId);
+        Task<ApiResponse<TeacherAssignment>> AddTeacherAssignmentAsync(TeacherAssignment model);
+        Task<ApiResponse<TeacherAssignment>> UpdateTeacherAssignmentAsync(int teacherId, int classId, int subjectId, CreateTeacherAssignmentViewModel model);
+        Task<ApiResponse<TeacherAssignment>> DeleteTeacherAssignmentAsync(int teacherId, int classId, int subjectId);
     }
 }

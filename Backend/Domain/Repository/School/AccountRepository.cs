@@ -12,10 +12,10 @@ using SecureIdentity.Password;
 
 namespace ProjetoNotas.Repository
 {
-    public class AccountRepository : IAccountRepository
+    public class AuthRepository : IAuthRepository
     {
         private readonly EscolaDataContext _context;
-        public AccountRepository(EscolaDataContext context)
+        public AuthRepository(EscolaDataContext context)
         {
             _context = context;
         }

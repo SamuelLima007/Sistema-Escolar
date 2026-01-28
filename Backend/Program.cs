@@ -62,14 +62,14 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<IMyTaskService, MyTaskService>();
     builder.Services.AddScoped<IMyTaskRepository, MyTaskRepository>();
 
-    builder.Services.AddScoped<IAccountService, AccountService>();
-    builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+    builder.Services.AddScoped<IAuthService, AuthService>();
+    builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
     builder.Services.AddScoped<ITeacherAssignmentService, TeacherAssignmentService>();
     builder.Services.AddScoped<ITeacherAssignmentRepository, TeacherAssignmentRepository>();
 
-    builder.Services.AddScoped<ITaskSubmissionService, TaskSubmissionService>();
-    builder.Services.AddScoped<ITaskSubmissionRepository, TaskSubmissionRepository>();
+    builder.Services.AddScoped<ISubmittedTaskService, SubmittedTaskService>();
+    builder.Services.AddScoped<ISubmittedTaskRepository, SubmittedTaskRepository>();
 
     builder.Services.AddScoped<ITokenService, TokenService>();
 

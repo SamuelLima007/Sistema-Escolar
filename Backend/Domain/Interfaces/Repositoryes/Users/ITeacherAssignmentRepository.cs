@@ -14,5 +14,6 @@ namespace Backend.Domain.Interfaces.Repositoryes.Users
         Task AddAsync(TeacherAssignment teacher);
         Task UpdateAsync(TeacherAssignment teacher);
         Task DeleteAsync(TeacherAssignment teacher);
+        Task<bool> FindAssignment(int classId, int subjectId, int teacherId);
     }
 }

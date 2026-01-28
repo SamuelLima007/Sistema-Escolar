@@ -7,7 +7,7 @@ using ProjetoNotas.Domain.Models;
 
 namespace ProjetoNotas.Domain.Interfaces.Repositoryes.School
 {
-    public interface IAccountRepository
+    public interface IAuthRepository
     {
         Task<User> LoginUserAsync(string email);
        
