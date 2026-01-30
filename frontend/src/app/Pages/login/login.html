@@ -1,6 +1,23 @@
-<div class="container w-full min-h-screen flex justify-center">
+<div
+  class="container w-full min-h-screen flex flex-col justify-center items-center gap-7 bg-gray-900"
+>
+  <div class="bg-blue-500 inline-block p-2.5 rounded-xl mt-2 ml-2">
+    <lucide-angular
+      [img]="GraduationCap"
+      class="icon logo-icon text-white w-14 h-20"
+    ></lucide-angular>
+  </div>
 
-    <app-logo-icon></app-logo-icon>
+  <P>School</P>
+  <p>Entre para acessar o sistemas</p>
 
+  <div class="bg-gray-800 flex flex-col gap-3 p-4 rounded-2xl">
+    <label for="" class="text-white">E-mail</label>
+    <input type="text" class="bg-gray-700 border-gray-700 text-white placeholder:text-gray-400" />
 
+    <label for="" class="text-white">Senha</label>
+    <input type="text" class="bg-gray-700 border-gray-700 text-white placeholder:text-gray-400" />
+
+    <div class="button bg-blue-800 text-center">Entrar</div>
+  </div>
 </div>
