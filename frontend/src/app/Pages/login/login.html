@@ -8,25 +8,41 @@
         <p class="text-gray-600 text-sm">Entre para acessar o sistema</p>
     </div>
 
-    <form
+    <form [formGroup]="loginForm"
         class="card-container bg-gray-900/20 flex flex-col justify-center items-center gap-1 p-4 py-8 rounded-2xl border-2 border-gray-700/90 w-3/4 sm:w-7/12 md:w-6/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 2xl:max-w-xl mb-16"
         action="">
+        <div class="flex flex-col min-h-14 w-11/12 mb-6">
+            <label for="email" class="text-white ml-1">E-mail</label>
+            <input type="text" id="email" placeholder="seu@email.com" formControlName="email" autocomplete="off"
+                class="bg-gray-900/60 border-2 border-gray-700/70 p-2 text-white/80 font-normal placeholder:text-gray-400/50 rounded-lg placeholder:p-2 min-h-14  focus:outline-0 focus:border-gray-400/70 focus:text-white" />
 
-        
-        
-        <label for="" class="text-white self-start ml-6">E-mail</label>
-        <input type="text" placeholder="seu@email.com"
-            class="bg-gray-900/60 border-2 border-gray-700/70 p-2 text-white font-mono placeholder:text-gray-400/50 rounded-lg placeholder:p-2 min-h-14 w-11/12 mb-6" />
-
-        <label for="" class="text-white self-start ml-6">Senha</label>
-        <input type="password" placeholder="************"
-            class="bg-gray-900/60 border-2 border-gray-700/70 p-2 text-white font-mono placeholder:text-gray-400/50 rounded-lg placeholder:p-2 min-h-14 w-11/12" />
-
-        <div
-            class="button bg-blue-800 flex self-center justify-center items-center text-white rounded-2xl min-h-12 mt-6 p-3 hover:cursor-pointer transition-all w-10/12 hover:bg-blue-800/70">
-            Entrar
+            <ng-container *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.['required']">
+                <p-message class="mt-1" severity="error" variant="simple" size="small">Email é
+                    obrigatório!</p-message>
+            </ng-container>
         </div>
 
-        <p class="text-gray-600 text-sm mt-2">Não possui acesso? entre em contato com seu gestor escolar</p>
+        <div class="flex flex-col min-h-14 w-11/12 mb-6">
+            <label for="password" class="text-white ml-1">E-mail</label>
+            <input type="password" id="password" placeholder="••••••••••••" formControlName="password" autocomplete="off"
+                class="bg-gray-900/60 border-2 border-gray-700/70 p-2 text-white/80 font-normal placeholder:text-gray-400/50 rounded-lg placeholder:p-2 min-h-14  focus:outline-0 focus:border-gray-400/70 focus:text-white" />
+
+            <ng-container *ngIf="loginForm.controls.password.touched && loginForm.controls.password.errors?.['required']">
+                <p-message class="mt-1" severity="error" variant="simple" size="small">Senha é
+                    obrigatória!</p-message>
+            </ng-container>
+        </div>
+
+        <button [disabled]="!loginForm.valid"
+            class="button bg-blue-800 flex self-center justify-center items-center text-white rounded-2xl min-h-12 mt-2 p-3 hover:cursor-pointer transition-all w-10/12 hover:bg-blue-800/70">
+            Entrar
+        </button>
+
+        <p class="text-gray-600 text-sm mt-2">
+            Não possui acesso? entre em contato com seu gestor escolar
+        </p>
     </form>
 </div>
+<ng-container *ngIf="loginForm.controls.email.touched && loginForm.controls.email.errors?.['required']">
+    <p-message class="self-start ml-6" severity="error" variant="simple" size="small">Senha é obrigatória!</p-message>
+</ng-container>
