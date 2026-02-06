@@ -11,11 +11,11 @@ using ProjetoNotas.Domain.ViewModels;
 
 namespace Backend.Controllers.Auth
 {
-    [Route("Auth")]
+    [Route("auth")]
     public class AuthController : Controller
     {
 
-         private readonly IAuthService _authService;
+        private readonly IAuthService _authService;
 
         public AuthController(IAuthService authService)
         {
@@ -31,7 +31,7 @@ namespace Backend.Controllers.Auth
                 var token = await _authService.ValidateLogin(model.Email, model.Password);
                 if (token != null)
                 {
-                    return Ok(token);
+                    return Ok(new { token });
                 }
                 return BadRequest();
             }
@@ -41,6 +41,6 @@ namespace Backend.Controllers.Auth
             }
         }
 
-    
+
     }
 }

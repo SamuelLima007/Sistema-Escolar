@@ -19,26 +19,44 @@ namespace ProjetoNotas.WebUi.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly IClassRepository _classRepository;
 
-        public readonly EscolaDataContext _context;
-        public UserService(IUserRepository userRepository, EscolaDataContext context)
+
+        public UserService(IUserRepository userRepository, IClassRepository classRepository)
         {
             _userRepository = userRepository;
-            _context = context;
+            _classRepository = classRepository;
+
 
         }
 
-
-        public async Task<ApiResponse<User>> GetUserByIdAsync(int id)
+        public async Task<ApiResponse<UserResponse>> GetUserByIdAsync(int id)
         {
             try
             {
                 var user = await _userRepository.GetByIdAsync(id);
+
+
+
                 if (user == null)
                 {
-                    return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Usuario inexistente"));
+                    return ResponseApiExtension<UserResponse>.CreateApiResponseFail(new ApiResponse<UserResponse>("Usuario inexistente"));
                 }
-                return ResponseApiExtension<User>.CreateApiResponseSucess(new ApiResponse<User>("Usuario encontrado", user));
+
+                var UseResponse = new UserResponse
+                {
+                    Name = user.Name,
+                    Id = user.Id,
+                    Role = user.Role,
+                    ClassId = user.ClassId,
+                    Class = _classRepository.GetByIdAsync((int)user.ClassId).ToString(),
+                    Score1 = user.Score1,
+                    Score2 = user.Score2,
+                    Score3 = user.Score3,
+                    Score4 = user.Score4,
+
+                };
+                return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado", UseResponse));
             }
             catch (Exception)
             {
@@ -86,9 +104,8 @@ namespace ProjetoNotas.WebUi.Services
                 {
                     return ResponseApiExtension<User>.CreateApiResponseFail(new ApiResponse<User>("Usuario não encontrado"));
                 }
-                user.Name = string.IsNullOrWhiteSpace(model.Name) ? user.Name : model.Name;
-                user.Email = string.IsNullOrWhiteSpace(model.Email) ? user.Email : model.Email;
-                user.Password = string.IsNullOrWhiteSpace(model.Password) ? user.Password : model.Password;
+                if (model.Password != null) model.Password = PasswordHasher.Hash(model.Password);
+                user.Update(model.Name, model.Email, model.Password);
 
                 await _userRepository.UpdateAsync(user);
                 return ResponseApiExtension<User>.CreateApiResponseSucess(new ApiResponse<User>("Usuario atualizado com sucesso", user)); ;
@@ -115,7 +132,7 @@ namespace ProjetoNotas.WebUi.Services
             {
                 throw new Exception("Falha interna no servidor");
             }
-            
+
         }
     }
 }

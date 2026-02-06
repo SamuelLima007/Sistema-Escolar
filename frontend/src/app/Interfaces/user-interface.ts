@@ -1,6 +1,10 @@
 export interface UserInterface {
-
-    name: string;
-    email :string;
-    password :string;
+  name: string;
+  role: string;
+  classid: number;
+  class: string;
+  score1: number;
+  score2: number;
+  score3: number;
+  score4: number;
 }

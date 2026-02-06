@@ -31,5 +31,27 @@ namespace ProjetoNotas.Domain.Models
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
         public ICollection<Class>? Classes { get; set; } = new List<Class>();
         public ICollection<SubmittedTask>? SubmittedTasks { get; set; } = new List<SubmittedTask>();
+
+
+        public void Update(string? newPassword, string? newEmail, string? newName)
+        {
+            if (newPassword != null)
+            {
+                Password = newPassword;
+            }
+
+            if (newEmail != null)
+            {
+                Email = newEmail;
+            }
+
+            if (newName != null)
+            {
+                Name = newName;
+            }
+        }
+
+
+
     }
 }

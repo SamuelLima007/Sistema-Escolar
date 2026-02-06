@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<div class="container px-5 py-4 min-w-full min-h-screen flex flex-col gap-3 bg-gray-950">
+    <div class="text w-full text-center text-white text-4xl font-semibold">
+        <P>Bem vindo, {{User().name}}! </P>
+        <ng-container *ngIf="User().role === 'Student'">
+            <P>Turma: {{User().class}}</P>
+
+        </ng-container>
+
+    </div>
+
+
+    <app-cards></app-cards>
+
+
+
+</div>

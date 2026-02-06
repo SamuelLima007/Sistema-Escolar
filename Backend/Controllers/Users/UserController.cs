@@ -8,7 +8,9 @@ using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Interfaces.Services.School;
 using ProjetoNotas.Domain.Models;
 using ProjetoNotas.Domain.ViewModels;
+using Backend.Domain.Extensions;
 using ProjetoNotas.ViewModels;
+using Backend.Domain.Models;
 
 namespace ProjetoNotas.WebUi.Conaollers
 {
@@ -22,6 +24,27 @@ namespace ProjetoNotas.WebUi.Conaollers
         public UserController(IUserService userService, IAuthService authService)
         {
             _userService = userService;
+        }
+
+
+        [HttpGet]
+
+        public async Task<ActionResult<UserResponse>> GetUserLogged()
+        {
+
+            var loggedId = User.GetUserLoggedId();
+
+            try
+            {
+
+                var response = await _userService.GetUserByIdAsync(loggedId);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
         }
 
         [HttpGet("{id}")]

@@ -1,9 +1,11 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { SharedModule } from '../../shared-module/shared/shared-module';
 import { LogoIcon } from '../../Icons/logo-icon/logo-icon';
 import { GraduationCap } from 'lucide-angular/src/icons';
 import { Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
+import { Authservice } from '../../Services/Auth/authservice';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,28 +14,42 @@ import { FormBuilder } from '@angular/forms';
   styleUrl: './login.css',
 })
 export class Login {
-  private formBuilder = inject(FormBuilder);
+  private _formBuilder = inject(FormBuilder);
+  private _authService = inject(Authservice);
 
-  loginForm = this.formBuilder.group({
-    email: [
-      '',
-      Validators.required,
-      Validators.pattern(
-        '^[a-zA-Z0-9.!#$%&&#39;*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)*$',
-      ),
-    ],
-    password: ['', Validators.required, Validators.minLength(12) ],
+  constructor(private _router: Router) {}
+
+  loginForm = this._formBuilder.group({
+    email: ['', [Validators.required]],
+    password: ['', [Validators.required]],
   });
   readonly GraduationCap = GraduationCap;
+  ErrorLogin = signal(false);
+  ErrorMessage = signal('');
 
+  UpdateLoginErrorState(state: boolean) {
+    this.ErrorLogin.update(() => state);
+  }
 
-  onSubmit()
-  {
-    if (this.loginForm.valid)
-    {
+  onSubmit() {
+    if (this.loginForm.valid) {
+      this.ErrorMessage.set('');
+      this._authService
 
+        .Login(this.loginForm.value.email!, this.loginForm.value.password!)
+        .subscribe({
+          next: (res) => {
+            this._authService.Savetoken(res.token);
+            this._router.navigate(['/main']);
+          },
+
+          error: (err) => {
+            this.UpdateLoginErrorState(true);
+          },
+        });
+    } else {
+      this.UpdateLoginErrorState(false);
+      this.ErrorMessage.set('Preencha todos os campos corretamente.');
     }
-    
-   
   }
 }

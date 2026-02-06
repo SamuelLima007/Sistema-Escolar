@@ -12,7 +12,7 @@ namespace ProjetoNotas.Domain.Interfaces
 {
     public interface IUserService
     {
-        Task<ApiResponse<User>> GetUserByIdAsync(int id);
+        Task<ApiResponse<UserResponse>> GetUserByIdAsync(int id);
         Task<ApiResponse<User>> AddUserAsync(CreateUserViewModel user);
         Task<ApiResponse<User>> UpdateUserAsync(int id, CreateUserViewModel user);
         Task<ApiResponse<User>> DeleteUserAsync(int id);
