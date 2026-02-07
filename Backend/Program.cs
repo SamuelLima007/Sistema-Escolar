@@ -100,7 +100,13 @@ void ConfigureMvc(WebApplicationBuilder builder)
     builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     {
         options.SuppressModelStateInvalidFilter = true;
-    });
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });;
+
+    
 
     builder.Services.AddHttpClient();
 }

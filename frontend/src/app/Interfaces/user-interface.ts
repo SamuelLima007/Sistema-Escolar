@@ -7,4 +7,5 @@ export interface UserInterface {
   score2: number;
   score3: number;
   score4: number;
+  
 }

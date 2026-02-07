@@ -42,20 +42,23 @@ namespace ProjetoNotas.WebUi.Services
                 {
                     return ResponseApiExtension<UserResponse>.CreateApiResponseFail(new ApiResponse<UserResponse>("Usuario inexistente"));
                 }
-
+              
+                var UserClass = await _classRepository.GetByIdAsync(2);
+                Console.Write(UserClass);
                 var UseResponse = new UserResponse
                 {
                     Name = user.Name,
                     Id = user.Id,
                     Role = user.Role,
                     ClassId = user.ClassId,
-                    Class = _classRepository.GetByIdAsync((int)user.ClassId).ToString(),
+                    Class = UserClass.Grade,
                     Score1 = user.Score1,
                     Score2 = user.Score2,
                     Score3 = user.Score3,
                     Score4 = user.Score4,
 
                 };
+             
                 return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado", UseResponse));
             }
             catch (Exception)

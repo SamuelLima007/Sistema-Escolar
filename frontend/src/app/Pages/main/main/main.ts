@@ -1,12 +1,15 @@
 import { Component, signal, Signal } from '@angular/core';
 import { Navbar } from '../../../Components/navbar/navbar';
-import { Cards } from '../../../Components/cards/cards';
+import { Cards } from '../../../Components/cards/student-status-card/cards';
 import { Userservice } from '../../../Services/Users/userservice';
 import { UserInterface } from '../../../Interfaces/user-interface';
+import { SharedModule } from '../../../shared-module/shared/shared-module';
+import { PendingTasksCard } from "../../../Components/cards/pending-tasks-card/pending-tasks-card";
+import { UpcomingTestsCard } from "../../../Components/cards/upcoming-tests-card/upcoming-tests-card";
 
 @Component({
   selector: 'app-main',
-  imports: [Navbar, Cards],
+  imports: [Navbar, Cards, SharedModule, PendingTasksCard, UpcomingTestsCard],
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
@@ -34,8 +37,9 @@ export class Main {
         console.log('Sucesso ao obter dados do usuário:', res.data);
         this.User.set(res.data);
 
-        console.log(this.User().name);
+        console.log(this.User().name, this.User().role);
         return this.User;
+        
       },
       error: (err) => {
         console.log('Erro ao obter dados do usuário:', err);
