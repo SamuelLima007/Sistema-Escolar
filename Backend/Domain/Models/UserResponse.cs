@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ProjetoNotas.Domain.Enums;
+using ProjetoNotas.Domain.Models;
 
 namespace Backend.Domain.Models
 {
@@ -24,6 +25,8 @@ namespace Backend.Domain.Models
         public int? Score3 { get; set; }
 
         public int? Score4 { get; set; }
+
+         public Subject[]? Subjects { get; set; }
 
     }
 }

@@ -1,3 +1,3 @@
 export interface SubjectInterface {
-      Name: string
+      name: string
 }

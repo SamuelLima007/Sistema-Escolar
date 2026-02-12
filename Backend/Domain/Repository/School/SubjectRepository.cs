@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Backend.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
@@ -42,9 +43,15 @@ namespace ProjetoNotas.Repository
             await _context.SaveChangesAsync();
         }
 
-         public async Task<bool> GetByNameAsync(string name)
+        public async Task<bool> GetByNameAsync(string name)
         {
             return await _context.Subjects.AnyAsync(x => x.Name == name);
         }
+
+        public async Task<List<Subject>> GetByClassIdAsync(List<int> Ids)
+        {
+          return await _context.Subjects.Where(x => Ids.Contains(x.Id)).ToListAsync();
+        }
+
     }
 }

@@ -15,5 +15,7 @@ namespace Backend.Domain.Interfaces.Repositoryes.Users
         Task UpdateAsync(TeacherAssignment teacher);
         Task DeleteAsync(TeacherAssignment teacher);
         Task<bool> FindAssignment(int classId, int subjectId, int teacherId);
+
+        Task<List<TeacherAssignment>> GetByClassIdAsync(int classId);
     }
 }

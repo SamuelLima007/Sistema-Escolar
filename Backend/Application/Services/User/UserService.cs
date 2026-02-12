@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Backend.Domain.Extensions;
+using Backend.Domain.Interfaces.Repositoryes.Users;
 using Backend.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjetoNotas.Data;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Models;
-
+using ProjetoNotas.Repository;
 using ProjetoNotas.ViewModels;
 using SecureIdentity.Password;
 namespace ProjetoNotas.WebUi.Services
@@ -21,12 +22,18 @@ namespace ProjetoNotas.WebUi.Services
         private readonly IUserRepository _userRepository;
         private readonly IClassRepository _classRepository;
 
+         private readonly ITeacherAssignmentRepository _teacherassignmentRepository;
 
-        public UserService(IUserRepository userRepository, IClassRepository classRepository)
+         private readonly ISubjectRepository _subjectRepository;
+
+
+
+        public UserService(IUserRepository userRepository, IClassRepository classRepository, ITeacherAssignmentRepository teacherassignmentRepository, ISubjectRepository subjectRepository)
         {
             _userRepository = userRepository;
             _classRepository = classRepository;
-
+            _teacherassignmentRepository = teacherassignmentRepository;
+            _subjectRepository = subjectRepository;
 
         }
 
@@ -36,15 +43,15 @@ namespace ProjetoNotas.WebUi.Services
             {
                 var user = await _userRepository.GetByIdAsync(id);
 
-
-
                 if (user == null)
                 {
                     return ResponseApiExtension<UserResponse>.CreateApiResponseFail(new ApiResponse<UserResponse>("Usuario inexistente"));
                 }
               
-                var UserClass = await _classRepository.GetByIdAsync(2);
-                Console.Write(UserClass);
+                var UserClass = await _classRepository.GetByIdAsync((int)user.ClassId);
+                var IDS = await _teacherassignmentRepository.GetByClassIdAsync((int)user.ClassId);
+                var UserSubjects = await _subjectRepository.GetByClassIdAsync(IDS.Select(x => x.SubjectId).ToList());
+               
                 var UseResponse = new UserResponse
                 {
                     Name = user.Name,
@@ -56,6 +63,7 @@ namespace ProjetoNotas.WebUi.Services
                     Score2 = user.Score2,
                     Score3 = user.Score3,
                     Score4 = user.Score4,
+                    Subjects = UserSubjects.ToArray()
 
                 };
              

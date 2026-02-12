@@ -36,7 +36,6 @@ namespace ProjetoNotas.WebUi.Conaollers
 
             try
             {
-
                 var response = await _userService.GetUserByIdAsync(loggedId);
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);

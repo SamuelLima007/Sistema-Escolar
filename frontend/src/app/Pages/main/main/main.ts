@@ -6,10 +6,11 @@ import { UserInterface } from '../../../Interfaces/user-interface';
 import { SharedModule } from '../../../shared-module/shared/shared-module';
 import { PendingTasksCard } from "../../../Components/cards/pending-tasks-card/pending-tasks-card";
 import { UpcomingTestsCard } from "../../../Components/cards/upcoming-tests-card/upcoming-tests-card";
+import { GeneralStatusCard } from "../../../Components/cards/general-status-card/general-status-card";
 
 @Component({
   selector: 'app-main',
-  imports: [Navbar, Cards, SharedModule, PendingTasksCard, UpcomingTestsCard],
+  imports: [Navbar, Cards, SharedModule, PendingTasksCard, UpcomingTestsCard, GeneralStatusCard],
   templateUrl: './main.html',
   styleUrl: './main.css',
 })
@@ -29,6 +30,8 @@ export class Main {
     score2: 0,
     score3: 0,
     score4: 0,
+    subjects: [],
+
   });
 
   GetUserLogged() {
@@ -37,7 +40,7 @@ export class Main {
         console.log('Sucesso ao obter dados do usuário:', res.data);
         this.User.set(res.data);
 
-        console.log(this.User().name, this.User().role);
+        
         return this.User;
         
       },

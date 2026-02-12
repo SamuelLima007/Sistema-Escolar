@@ -26,6 +26,8 @@ namespace ProjetoNotas.Data
         public DbSet<TeacherAssignment> TeacherAssignments { get; set; }
 
         public DbSet<SubmittedTask> SubmittedTasks { get; set; }
+
+        public DbSet<ClassSubject> ClassSubjects { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             options.UseNpgsql("Host=localhost;Port=5432;Database=Sistema_escolar;Username=postgres;Password=1234");
@@ -39,6 +41,7 @@ namespace ProjetoNotas.Data
             modelBuilder.ApplyConfiguration(new TeacherAssignmentMapping());
             modelBuilder.ApplyConfiguration(new SubmittedTaskMapping());
             modelBuilder.ApplyConfiguration(new MyTaskMapping());
+            modelBuilder.ApplyConfiguration(new ClassSubjectMapping());
         }
     }
 }

@@ -15,5 +15,10 @@ namespace ProjetoNotas.Domain.Interfaces
         Task UpdateAsync(Subject subject);
         Task DeleteAsync(Subject subject);
         Task<bool> GetByNameAsync(string name);
+
+        Task<List<Subject>> GetByClassIdAsync(List<int> Ids);
+
+        
+        
     }
 }

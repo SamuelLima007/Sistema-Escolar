@@ -48,11 +48,17 @@ namespace Backend.Domain.Repository.School
 
         public async Task<bool> FindAssignment(int classId, int subjectId, int teacherId)
         {
-             return await _context.TeacherAssignments.AnyAsync
-            (x => x.TeacherId == teacherId &&
-             x.SubjectId == subjectId &&
-             x.ClassId == classId
-            );
+            return await _context.TeacherAssignments.AnyAsync
+           (x => x.TeacherId == teacherId &&
+            x.SubjectId == subjectId &&
+            x.ClassId == classId
+           );
         }
+
+        public async Task<List<TeacherAssignment>> GetByClassIdAsync(int classId)
+        {
+            return await _context.TeacherAssignments.Where(x => x.ClassId == classId).ToListAsync();
+        }
+
     }
 }

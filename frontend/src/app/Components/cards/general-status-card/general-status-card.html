@@ -1,0 +1,19 @@
+<div
+    class="card-container bg-gray-900/20 grid grid-cols-3 items-center gap-1 p-4 py-4 rounded-2xl border-2 border-gray-700/90 w-full min-h-90 relative">
+    <select name="Subjects" id="" class="text-red-600 self-end absolute top-2 col-start-3 justify-self-end mr-2"
+        [(ngModel)]="valorSelecionado">
+        <ng-container *ngFor="let subject of subjects">
+            <option selected [value]="subject.name">{{subject.name}}</option>
+
+        </ng-container>
+
+    </select>
+
+
+    <div class=" flex flex-col justify-center items-center col-start-2 row-start-1 self-start gap-2  ">
+        <p class="text-white text-3xl font-bold">{{valorSelecionado()}}</p>
+
+    </div>
+
+   
+</div>

@@ -10,11 +10,10 @@
         </ng-container>
 
     </div>
-    <app-cards></app-cards>
+    <app-student-status-card [SubjectCount]="User().subjects.length"></app-student-status-card>
     <div class="grid grid-cols-3 gap-4">
         <app-pending-tasks-card class="col-start-3"></app-pending-tasks-card>
-        <app-upcoming-tests-card class="col-start-1 col-end-3 row-start-1"></app-upcoming-tests-card>
-                <app-upcoming-tests-card class="col-start-1 col-end-3 row-start-1"></app-upcoming-tests-card>
+        <app-general-status-card [subjects]="User().subjects" class="col-start-1 col-end-3 row-start-1"></app-general-status-card>
     </div>
 
 
