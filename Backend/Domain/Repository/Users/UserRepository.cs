@@ -45,5 +45,17 @@ namespace ProjetoNotas.Repository
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
         }
+        public async Task<User> CompleteUser(int id)
+        {
+            var user = await _context.Users
+            .Include(u => u.SubmittedTasks)
+            .Include(u => u.Class)
+            .ThenInclude(c => c.MyTasks)
+            .FirstOrDefaultAsync(u => u.Id == id);
+
+
+            return user;
+
+        }
     }
 }

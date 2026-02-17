@@ -9,5 +9,6 @@ import { SharedModule } from 'primeng/api';
 })
 export class Cards {
   @Input() SubjectCount = 0;
+  
 
 }

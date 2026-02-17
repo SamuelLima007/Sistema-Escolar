@@ -1,21 +1,16 @@
 <app-navbar></app-navbar>
-<div class="container px-5 py-4 min-w-full min-h-screen flex flex-col gap-3 bg-gray-950">
+<div class="container px-5 py-4 min-w-full min-h-screen flex flex-col gap-3 bg-gray-950 font-bold">
     <div class="text w-full ml-2 text-white text-3xl font-semibold">
-        <P>Bem vindo, {{User().name}}! </P>
-       
+        <P>Olá, {{ User().name }}! </P>
+
         <ng-container *ngIf="User().role == 'Student'">
-            
-            <P class="text-gray-600 text-xs ">Matricula: 000000 Turma: {{User().class}}</P>
-
+            <P class="text-gray-600 text-xs">Matricula: 000000 Turma: {{ User().class.grade }}</P>
         </ng-container>
-
     </div>
-    <app-student-status-card [SubjectCount]="User().subjects.length"></app-student-status-card>
+    <app-student-status-card  [SubjectCount]='User().class.subjects.length'></app-student-status-card>
     <div class="grid grid-cols-3 gap-4">
-        <app-pending-tasks-card class="col-start-3"></app-pending-tasks-card>
-        <app-general-status-card [subjects]="User().subjects" class="col-start-1 col-end-3 row-start-1"></app-general-status-card>
+        <app-pending-tasks-card [pendingtasks]='User().class.myTasks' class="col-start-3"></app-pending-tasks-card>
+        <app-general-status-card [submittedtasks]='User().submittedtasks' [subjects]="User().class.subjects"
+            class="col-start-1 col-end-3 row-start-1"></app-general-status-card>
     </div>
-
-
-
 </div>

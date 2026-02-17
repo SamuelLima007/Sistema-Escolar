@@ -17,11 +17,7 @@ namespace ProjetoNotas.InfraStructure.Mapping
             builder.Property(x => x.CreationDate).IsRequired().HasConversion<string>();
             builder.Property(x => x.ExpirationDate).IsRequired().HasConversion<string>();
 
-            builder.HasOne(x => x.Subject)
-                .WithMany(x => x.MyTasks)
-                .HasForeignKey(x => x.SubjectId)
-                .OnDelete(DeleteBehavior.NoAction);
-
+          
             builder.HasOne(x => x.Class)
                 .WithMany(x => x.MyTasks)
                 .HasForeignKey(x => x.ClassId)

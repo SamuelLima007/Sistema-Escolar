@@ -18,6 +18,7 @@ namespace ProjetoNotas.Domain.Models
         public UserType Role { get; set; }
 
         public int? ClassId { get; set; }
+           public Class Class { get; set; } 
 
         public int? Score1 { get; set; }
 

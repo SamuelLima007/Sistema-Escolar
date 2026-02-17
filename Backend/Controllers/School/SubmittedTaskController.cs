@@ -12,8 +12,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Backend.Controllers.School
 {
     [ApiController]
-    [Route("taskssubmitted")]
-    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    [Route("submittedtasks")]
+    //[Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
 
     public class SubmittedTaskController : ControllerBase
     {
@@ -42,7 +42,7 @@ namespace Backend.Controllers.School
         }
 
         [HttpPost]
-        public async Task<ActionResult<SubmittedTask>> AddSubmittedTaskAsync([FromBody] CreateSubmittedTaskViewModel model)
+        public async Task<ActionResult<SubmittedTask>> AddSubmittedTaskAsync(CreateSubmittedTaskViewModel model)
         {
             try
             {

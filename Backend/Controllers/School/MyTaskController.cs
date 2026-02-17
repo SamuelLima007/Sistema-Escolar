@@ -10,7 +10,7 @@ namespace ProjetoNotas.Controllers.School
 {
     [ApiController]
     [Route("tasks")]
-    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    //[Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
     public class MyTaskController : ControllerBase
     {
         private readonly IMyTaskService _mytaskService;
@@ -32,6 +32,25 @@ namespace ProjetoNotas.Controllers.School
             }
 
             catch
+            {
+                return BadRequest("Falha interna no servidor");
+            }
+        }
+
+         [HttpGet("classtasks/{id}")]
+
+         public async Task<ActionResult<MyTask>> GetMyTaskByClassId(int id)
+        {
+            try
+            {
+                var loggedRole = User.GetUserLoggedRole();
+                var loggedId = User.GetUserLoggedId();
+                var response = await _mytaskService.GetMyTaskByClassId(id, loggedRole, loggedId);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+
+            catch 
             {
                 return BadRequest("Falha interna no servidor");
             }

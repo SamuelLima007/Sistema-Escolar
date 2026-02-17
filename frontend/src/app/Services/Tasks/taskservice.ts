@@ -13,7 +13,7 @@ export class Taskservice {
     private router: Router,
   ) {}
 
-  GetUserLogged() {
+  GetNextTasks() {
     return this.http.get<any>(this.ApiUrl);
   }
 }

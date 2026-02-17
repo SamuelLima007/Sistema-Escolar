@@ -44,37 +44,73 @@ namespace ProjetoNotas.Application.Services
             {
                 throw new Exception("Falha interna no servidor");
             }
+        }
 
+        public async Task<ApiResponse<List<MyTask>>> GetMyTaskByClassId(int id, string loggedRole, int loggedId)
+        {
+            try
+            {
+                var mytask = await _mytaskRepository.GetMyTaskByClassId(id);
 
+                if (mytask == null || !mytask.Any())
+                {
+                    return ResponseApiExtension<List<MyTask>>.CreateApiResponseFail(new ApiResponse<List<MyTask>>("Tarefa inexistente"));
+                }
+
+                
+                if (loggedRole == "Teacher" && loggedId != mytask[0].TeacherId)
+                {
+                    return ResponseApiExtension<List<MyTask>>.CreateApiResponseFail(new ApiResponse<List<MyTask>>("Permitido apenas para o professor que criou a tarefa", "Forbidden"));
+                }
+
+                return ResponseApiExtension<List<MyTask>>.CreateApiResponseSucess(new ApiResponse<List<MyTask>>("Tarefa Encontrada", mytask));
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
         }
         public async Task<ApiResponse<MyTask>> AddMyTaskAsync(CreateMyTaskViewModel model, int loggedId)
         {
 
-            if (model == null)
+            if (loggedId == 0)
             {
-                return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Verifique o formato do JSON", new MyTask() { }));
+                loggedId = (int)model.TeacherId;
             }
 
-            if (!await _teacherassignmentRepository.FindAssignment(loggedId, model.Classid, model.SubjectId))
+            try
             {
-                return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("O professor pode adicionar apenas tarefas da classe e disciplina que ele leciona", "Forbidden"));
+                if (model == null)
+                {
+                    return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("Verifique o formato do JSON", new MyTask() { }));
+                }
+
+                //if (!await _teacherassignmentRepository.FindAssignment(loggedId, model.Classid, model.SubjectId))
+                //{
+                // return ResponseApiExtension<MyTask>.CreateApiResponseFail(new ApiResponse<MyTask>("O professor pode adicionar apenas tarefas da classe e disciplina que ele leciona", "Forbidden"));
+                // }
+
+                var mytask = new MyTask()
+                {
+                    Name = string.IsNullOrWhiteSpace(model.Name) ? model.Name : model.Name,
+                    Description = string.IsNullOrWhiteSpace(model.Description) ? model.Description : model.Description,
+                    CreationDate = model.CreationDate,
+                    ExpirationDate = model.ExpirationDate,
+                    ClassId = model.Classid,
+                    SubjectId = model.SubjectId,
+                    TeacherId = loggedId,
+                    score = model.Score
+                };
+
+                await _mytaskRepository.AddAsync(mytask);
+                return ResponseApiExtension<MyTask>.CreateApiResponseSucess(new ApiResponse<MyTask>("Tarefa adicionada com sucesso", mytask)); ;
+
             }
 
-            var mytask = new MyTask()
+            catch (Exception ex)
             {
-                Name = string.IsNullOrWhiteSpace(model.Name) ? model.Name : model.Name,
-                Description = string.IsNullOrWhiteSpace(model.Description) ? model.Description : model.Description,
-                CreationDate = model.CreationDate,
-                ExpirationDate = model.ExpirationDate,
-                ClassId = model.Classid,
-                SubjectId = model.SubjectId,
-                TeacherId = loggedId,
-                score = model.Score
-            };
-
-            await _mytaskRepository.AddAsync(mytask);
-            return ResponseApiExtension<MyTask>.CreateApiResponseSucess(new ApiResponse<MyTask>("Tarefa adicionada com sucesso", mytask)); ;
-
+                throw new Exception(ex.ToString());
+            }
         }
         public async Task<ApiResponse<MyTask>> UpdateMyTaskAsync(int id, CreateMyTaskViewModel model, string loggedRole, int loggedId)
         {

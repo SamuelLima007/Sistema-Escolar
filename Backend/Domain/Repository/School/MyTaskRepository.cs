@@ -41,6 +41,11 @@ namespace ProjetoNotas.Domain.Repository
             _context.MyTasks.Update(myTask);
             await _context.SaveChangesAsync();
         }
+
+        public async Task<List<MyTask>> GetMyTaskByClassId(int id)
+        {
+            return await _context.MyTasks.Where(x => x.ClassId == id).ToListAsync();
+        }
         
     }
 }

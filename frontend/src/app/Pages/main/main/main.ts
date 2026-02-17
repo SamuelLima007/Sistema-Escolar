@@ -2,11 +2,11 @@ import { Component, signal, Signal } from '@angular/core';
 import { Navbar } from '../../../Components/navbar/navbar';
 import { Cards } from '../../../Components/cards/student-status-card/cards';
 import { Userservice } from '../../../Services/Users/userservice';
-import { UserInterface } from '../../../Interfaces/user-interface';
+import { StudentInterface } from '../../../Interfaces/student-interface';
 import { SharedModule } from '../../../shared-module/shared/shared-module';
-import { PendingTasksCard } from "../../../Components/cards/pending-tasks-card/pending-tasks-card";
-import { UpcomingTestsCard } from "../../../Components/cards/upcoming-tests-card/upcoming-tests-card";
-import { GeneralStatusCard } from "../../../Components/cards/general-status-card/general-status-card";
+import { PendingTasksCard } from '../../../Components/cards/pending-tasks-card/pending-tasks-card';
+import { UpcomingTestsCard } from '../../../Components/cards/upcoming-tests-card/upcoming-tests-card';
+import { GeneralStatusCard } from '../../../Components/cards/general-status-card/general-status-card';
 
 @Component({
   selector: 'app-main',
@@ -21,28 +21,31 @@ export class Main {
     this.GetUserLogged();
   }
 
-  User = signal<UserInterface>({
+  User = signal<StudentInterface>({
     name: '',
     role: '',
-    classid: 0,
-    class: '',
+    class: {
+      id: 0,
+      grade: '',
+      subjects: [],
+      myTasks: [],
+    },
     score1: 0,
     score2: 0,
     score3: 0,
     score4: 0,
-    subjects: [],
-
+    submittedtasks: []
   });
 
   GetUserLogged() {
     this._userservice.GetUserLogged().subscribe({
       next: (res) => {
-        console.log('Sucesso ao obter dados do usuário:', res.data);
+       
         this.User.set(res.data);
+    
+        console.log(this.User());
 
-        
         return this.User;
-        
       },
       error: (err) => {
         console.log('Erro ao obter dados do usuário:', err);

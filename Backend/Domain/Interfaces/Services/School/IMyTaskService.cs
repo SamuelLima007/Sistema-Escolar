@@ -15,5 +15,6 @@ namespace ProjetoNotas.Domain.Interfaces.Services.School
         Task<ApiResponse<MyTask>> AddMyTaskAsync(CreateMyTaskViewModel user, int loggedId);
         Task<ApiResponse<MyTask>> UpdateMyTaskAsync(int id, CreateMyTaskViewModel myclass, string loggedRole, int loggedId);
         Task <ApiResponse<MyTask>> DeleteMyTaskAsync(int id, string loggedRole, int loggedId);
+        Task<ApiResponse<List<MyTask>>> GetMyTaskByClassId(int id, string loggedRole, int loggedId);
     }
 }

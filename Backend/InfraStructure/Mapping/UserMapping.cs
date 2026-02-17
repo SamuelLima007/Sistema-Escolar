@@ -20,6 +20,18 @@ namespace ProjetoNotas.Mapping
 
             builder.HasIndex(x => x.Email).IsUnique();
 
+            builder.HasOne(x => x.Class)
+            .WithMany(x => x.Students)
+            .HasForeignKey(x => x.ClassId);
+
+         ;
+
+      
+           
+            
+           
+      
+
             
         }
     }

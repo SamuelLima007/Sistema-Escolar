@@ -1,32 +1,22 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Backend.Domain.Models.Responses;
 using ProjetoNotas.Domain.Enums;
 using ProjetoNotas.Domain.Models;
 
 namespace Backend.Domain.Models
 {
+    [JsonDerivedType(typeof(UserResponse), typeDiscriminator: "base")]
+    [JsonDerivedType(typeof(StudentResponse), typeDiscriminator: "Student")]
     public class UserResponse
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
         public UserType Role { get; set; }
-
-        public int? ClassId { get; set; }
-
-        public string? Class { get; set; }
-
-        public int? Score1 { get; set; }
-
-        public int? Score2 { get; set; }
-
-        public int? Score3 { get; set; }
-
-        public int? Score4 { get; set; }
-
-         public Subject[]? Subjects { get; set; }
 
     }
 }

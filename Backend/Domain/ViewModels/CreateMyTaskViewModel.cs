@@ -20,5 +20,6 @@ namespace ProjetoNotas.Domain.ViewModels
         public int SubjectId { get; set; }
 
         public int? TeacherId { get; set; }
+        public int? Unit { get; set; }
     }
 }

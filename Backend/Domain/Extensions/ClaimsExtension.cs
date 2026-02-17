@@ -12,12 +12,14 @@ namespace Backend.Domain.Extensions
         public static int GetUserLoggedId(this ClaimsPrincipal User)
         {
             var id = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var userid = int.Parse(id);
-            if (userid != null)
+            if (id != null)
             {
+                var userid = int.Parse(id);
                 return userid;
             }
-            return -1;
+           
+    
+             return 0;
         }
 
         public static string GetUserLoggedRole(this ClaimsPrincipal User)

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Backend.Domain.Extensions;
 using Backend.Domain.Interfaces.Repositoryes.Users;
 using Backend.Domain.Models;
+using Backend.Domain.Models.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -41,33 +42,37 @@ namespace ProjetoNotas.WebUi.Services
         {
             try
             {
-                var user = await _userRepository.GetByIdAsync(id);
-
+                var user = await _userRepository.CompleteUser(id);
                 if (user == null)
                 {
                     return ResponseApiExtension<UserResponse>.CreateApiResponseFail(new ApiResponse<UserResponse>("Usuario inexistente"));
                 }
-              
-                var UserClass = await _classRepository.GetByIdAsync((int)user.ClassId);
                 var IDS = await _teacherassignmentRepository.GetByClassIdAsync((int)user.ClassId);
-                var UserSubjects = await _subjectRepository.GetByClassIdAsync(IDS.Select(x => x.SubjectId).ToList());
-               
-                var UseResponse = new UserResponse
+                user.Subjects =  await _subjectRepository.GetByClassIdAsync(IDS.Select(x => x.SubjectId).ToList());
+
+
+                var classresponse = new ClassResponse
+                {
+                    Id = (int)user.ClassId,
+                    Grade = user.Class.Grade,
+                    Subjects = user.Subjects.ToArray()
+                };
+                classresponse.ConvertTasks(user.Class.MyTasks);
+            
+                var UserResponse = new StudentResponse
                 {
                     Name = user.Name,
                     Id = user.Id,
                     Role = user.Role,
-                    ClassId = user.ClassId,
-                    Class = UserClass.Grade,
+                    Class = classresponse,
                     Score1 = user.Score1,
                     Score2 = user.Score2,
                     Score3 = user.Score3,
                     Score4 = user.Score4,
-                    Subjects = UserSubjects.ToArray()
-
                 };
+                UserResponse.ConvertSubmittedTasks(user.SubmittedTasks.ToArray());
              
-                return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado", UseResponse));
+                return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado", UserResponse));
             }
             catch (Exception)
             {

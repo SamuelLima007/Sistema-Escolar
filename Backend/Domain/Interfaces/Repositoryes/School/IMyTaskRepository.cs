@@ -14,5 +14,6 @@ namespace ProjetoNotas.Domain.Interfaces.Repositoryes.School
         Task AddAsync(MyTask mytask);
         Task UpdateAsync(MyTask mytask);
         Task DeleteAsync(MyTask mytask);
+        Task<List<MyTask>> GetMyTaskByClassId(int id);
     }
 }
