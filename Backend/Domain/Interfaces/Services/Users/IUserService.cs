@@ -16,5 +16,8 @@ namespace ProjetoNotas.Domain.Interfaces
         Task<ApiResponse<User>> AddUserAsync(CreateUserViewModel user);
         Task<ApiResponse<User>> UpdateUserAsync(int id, CreateUserViewModel user);
         Task<ApiResponse<User>> DeleteUserAsync(int id);
+
+        Task<ApiResponse<UserResponse>> GetStudentByIdAsync(int id);
+        Task<ApiResponse<UserResponse>> GetTeacherByClassAndSubject( int subjectId, int classId);
     }
 }

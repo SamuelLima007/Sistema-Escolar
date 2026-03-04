@@ -22,7 +22,8 @@ namespace ProjetoNotas.Mapping
 
             builder.HasOne(x => x.Class)
             .WithMany(x => x.Students)
-            .HasForeignKey(x => x.ClassId);
+            .HasForeignKey(x => x.ClassId)
+            .IsRequired(false);
 
          ;
 

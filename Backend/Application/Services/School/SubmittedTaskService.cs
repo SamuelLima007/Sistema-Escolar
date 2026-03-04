@@ -7,6 +7,7 @@ using Backend.Domain.Extensions;
 using Backend.Domain.Interfaces.Repositoryes.School;
 using Backend.Domain.Interfaces.Services.School;
 using Backend.Domain.Models;
+using Backend.Domain.Models.Responses;
 using Backend.Domain.ViewModels;
 using ProjetoNotas.Domain.Interfaces;
 using ProjetoNotas.Domain.Interfaces.Repositoryes.School;
@@ -49,24 +50,24 @@ namespace Backend.Application.Services.School
                 throw new Exception("Falha interna no servidor");
             }
         }
-        public async Task<ApiResponse<SubmittedTask>> AddSubmittedTaskAsync(CreateSubmittedTaskViewModel model, string loggedRole, int loggedId)
+        public async Task<ApiResponse<SubmittedTaskResponse>> AddSubmittedTaskAsync(CreateSubmittedTaskViewModel model, string loggedRole, int loggedId)
         {
 
             if (model == null)
             {
-                return ResponseApiExtension<SubmittedTask>.CreateApiResponseFail(new ApiResponse<SubmittedTask>("Verifique o formato do JSON", new SubmittedTask() { }));
+                return ResponseApiExtension<SubmittedTaskResponse>.CreateApiResponseFail(new ApiResponse<SubmittedTaskResponse>("Verifique o formato do JSON", new SubmittedTaskResponse() { }));
             }
             var mytask = await _mytaskRepository.GetByIdAsync(model.MyTaskId);
             var student = await _userRepository.GetByIdAsync(model.StudentId);
 
             if (loggedRole == "Teacher" && loggedId != mytask.TeacherId)
             {
-                return ResponseApiExtension<SubmittedTask>.CreateApiResponseFail(new ApiResponse<SubmittedTask>("Apenas o professor que criou a tarefa pode adicionar a nota", "Forbidden"));
+                return ResponseApiExtension<SubmittedTaskResponse>.CreateApiResponseFail(new ApiResponse<SubmittedTaskResponse>("Apenas o professor que criou a tarefa pode adicionar a nota", "Forbidden"));
             }
 
             else if (student.ClassId != mytask.ClassId)
             {
-                return ResponseApiExtension<SubmittedTask>.CreateApiResponseFail(new ApiResponse<SubmittedTask>("O estudante precisa estar na mesma classe que a tarefa"));
+                return ResponseApiExtension<SubmittedTaskResponse>.CreateApiResponseFail(new ApiResponse<SubmittedTaskResponse>("O estudante precisa estar na mesma classe que a tarefa"));
             }
 
             var submittedTask = new SubmittedTask()
@@ -77,7 +78,7 @@ namespace Backend.Application.Services.School
             };
 
             await _submittedtaskRepository.AddAsync(submittedTask);
-            return ResponseApiExtension<SubmittedTask>.CreateApiResponseSucess(new ApiResponse<SubmittedTask>("Nota da tarefa adicionada com sucesso", submittedTask));
+            return ResponseApiExtension<SubmittedTaskResponse>.CreateApiResponseSucess(new ApiResponse<SubmittedTaskResponse>("Nota da tarefa adicionada com sucesso", new SubmittedTaskResponse{StudentId = submittedTask.StudentId, MyTaskId = submittedTask.MyTaskId, Score = submittedTask.Score }));
         }
         public async Task<ApiResponse<SubmittedTask>> UpdateSubmittedTaskAsync(int studentId, int mytaskId, CreateSubmittedTaskViewModel model, int loggedId, string loggedRole)
         {

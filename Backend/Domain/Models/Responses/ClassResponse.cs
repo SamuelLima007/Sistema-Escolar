@@ -32,6 +32,8 @@ namespace Backend.Domain.Models.Responses
                     SubjectId = task.SubjectId,
                     TeacherId = task.TeacherId,
                     Score = task.score,
+                    type = task.Type,
+                    Unit = task.Unit
                     
                     
                 };

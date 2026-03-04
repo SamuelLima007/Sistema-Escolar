@@ -28,7 +28,7 @@ namespace Backend.InfraStructure.Mapping
                    .OnDelete(DeleteBehavior.Restrict);
 
 
-            builder.Property(x => x.Score).IsRequired().HasMaxLength(100);
+            builder.Property(x => x.Score).IsRequired().HasColumnType("numeric(5,2)");;
 
             builder.HasIndex(x => new { x.StudentId, x.MyTaskId })
                    .IsUnique();

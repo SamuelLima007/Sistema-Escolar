@@ -32,9 +32,9 @@ namespace ProjetoNotas.Controllers
                 return Ok(response);
             }
 
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -47,9 +47,9 @@ namespace ProjetoNotas.Controllers
                 if (response.Data.Grade == model.Grade && response.Result == false) return Conflict(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -63,9 +63,9 @@ namespace ProjetoNotas.Controllers
                 else if (response.Data.Grade == model.Grade && response.Result == false) return Conflict(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -78,9 +78,9 @@ namespace ProjetoNotas.Controllers
                 if (response.Data == null) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
     }

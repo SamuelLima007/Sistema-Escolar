@@ -71,6 +71,9 @@ void ConfigureServices(WebApplicationBuilder builder)
     builder.Services.AddScoped<ISubmittedTaskService, SubmittedTaskService>();
     builder.Services.AddScoped<ISubmittedTaskRepository, SubmittedTaskRepository>();
 
+       builder.Services.AddScoped<IAcademicPeriodService, AcademicPeriodService>();
+    builder.Services.AddScoped<IAcademicPeriodRepository, AcademicPeriodRepository>();
+
     builder.Services.AddScoped<ITokenService, TokenService>();
 
     builder.Services

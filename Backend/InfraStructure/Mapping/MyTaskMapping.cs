@@ -16,6 +16,8 @@ namespace ProjetoNotas.InfraStructure.Mapping
             builder.Property(x => x.Description).IsRequired().HasMaxLength(500);
             builder.Property(x => x.CreationDate).IsRequired().HasConversion<string>();
             builder.Property(x => x.ExpirationDate).IsRequired().HasConversion<string>();
+            builder.Property(x => x.Type).IsRequired().HasConversion<string>();
+            builder.Property(x => x.score).IsRequired().HasColumnType("numeric(5,2)");;
 
           
             builder.HasOne(x => x.Class)

@@ -17,5 +17,6 @@ namespace Backend.Domain.Interfaces.Repositoryes.Users
         Task<bool> FindAssignment(int classId, int subjectId, int teacherId);
 
         Task<List<TeacherAssignment>> GetByClassIdAsync(int classId);
+        Task<TeacherAssignment> GetBySubjectAndClassIdAsync(int subjectId, int classId);
     }
 }

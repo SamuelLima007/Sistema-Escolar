@@ -52,9 +52,9 @@ namespace Backend.Controllers.School
                 //if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -69,9 +69,9 @@ namespace Backend.Controllers.School
                 if (response.Data == null) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -89,9 +89,9 @@ namespace Backend.Controllers.School
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
     }

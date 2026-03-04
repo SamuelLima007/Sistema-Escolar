@@ -15,10 +15,12 @@ namespace Backend.Domain.Models.Responses
     public DateTime? ExpirationDate { get; set; }
     public TaskType type { get; set; }
     public int ClassId { get; set; }
-    public string SubjectName { get; set; }
+    public string? SubjectName { get; set; }
     public int SubjectId { get; set; }
     public int TeacherId { get; set; }
     public decimal Score { get; set; }
+
+     public int Unit { get; set; }
 }
 
 }

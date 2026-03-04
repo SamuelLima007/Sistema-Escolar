@@ -9,6 +9,6 @@ namespace Backend.Domain.ViewModels
     {
         public int StudentId { get; set; }
         public int MyTaskId { get; set; }
-        public int Score { get; set; }
+        public float Score { get; set; }
     }
 }

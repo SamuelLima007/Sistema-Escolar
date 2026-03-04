@@ -31,9 +31,9 @@ namespace ProjetoNotas.Controllers.School
                 return Ok(response);
             }
 
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -50,9 +50,9 @@ namespace ProjetoNotas.Controllers.School
                 return Ok(response);
             }
 
-            catch 
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -66,9 +66,9 @@ namespace ProjetoNotas.Controllers.School
                 var response = await _mytaskService.AddMyTaskAsync(model, loggedId);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -83,9 +83,9 @@ namespace ProjetoNotas.Controllers.School
                 if (response.Data == null) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -101,9 +101,9 @@ namespace ProjetoNotas.Controllers.School
                 if (response.Data == null) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
     }

@@ -3,6 +3,8 @@ export interface SubmittedTaskInterface {
  description: string,
  studentId: number,
  myTaskId: number,
+ subjectId: number
  score: number
+  unit: number
  
 }

@@ -12,14 +12,7 @@ namespace Backend.Domain.Models.Responses
 
         public ClassResponse Class { get; set; }
 
-         public int? Score1 { get; set; }
-
-        public int? Score2 { get; set; }
-
-        public int? Score3 { get; set; }
-
-        public int? Score4 { get; set; }
-
+         
         public ICollection<SubmittedTaskResponse?> SubmittedTasks { get; set; } =  new List<SubmittedTaskResponse>();
 
         public void ConvertSubmittedTasks(ICollection<SubmittedTask> tasks)
@@ -36,7 +29,9 @@ namespace Backend.Domain.Models.Responses
                         Score = task.Score,
                         StudentId = task.StudentId,
                         Description = classtask.Description,
-                        Name = classtask.Description
+                        Name = classtask.Name,
+                        SubjectId = classtask.SubjectId,
+                        Unit = classtask.Unit
                     };
                     SubmittedTasks.Add(submittedtask);
                 }

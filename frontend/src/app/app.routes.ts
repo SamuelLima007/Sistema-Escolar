@@ -6,7 +6,7 @@ import { LogoIcon } from './Icons/logo-icon/logo-icon';
 import { authGuard } from './Services/Auth/authguard-guard';
 import { Main } from './Pages/main/main/main';
 import { PendingTasks } from '@angular/core';
-import { PendingTasksCard } from './Components/cards/pending-tasks-card/pending-tasks-card';
+import { PendingTasksCard } from './Components/cards/Student/pending-tasks-card/pending-tasks-card';
 
 export const routes: Routes = [
   { path: '', component: Login, data: { ShowNavBar: true } },

@@ -19,6 +19,8 @@ namespace ProjetoNotas.Data
         public DbSet<Class> Classs { get; set; }
         public DbSet<Subject> Subjects { get; set; }
 
+            public DbSet<AcademicPeriod> Periods { get; set; }
+
         public DbSet<MyTask> MyTasks { get; set; }
 
         public DbSet<User> Users { get; set; }
@@ -42,6 +44,7 @@ namespace ProjetoNotas.Data
             modelBuilder.ApplyConfiguration(new SubmittedTaskMapping());
             modelBuilder.ApplyConfiguration(new MyTaskMapping());
             modelBuilder.ApplyConfiguration(new ClassSubjectMapping());
+            modelBuilder.ApplyConfiguration(new AcademicPeriodMapping());
         }
     }
 }

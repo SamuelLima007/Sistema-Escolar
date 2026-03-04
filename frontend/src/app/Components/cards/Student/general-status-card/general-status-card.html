@@ -1,0 +1,120 @@
+<div
+  class="card-container h-full bg-gray-900/20 grid grid-cols-3 grid-rows-[auto_1fr] gap-8 p-4 py-4 rounded-2xl border-2 border-gray-700/30 w-full min-h-90 relative"
+>
+  <div
+    class="col-start-2 col-end-4 row-start-1 row-end-2 flex flex-row gap-2 w-full h-fit justify-end"
+  >
+    <select
+      name="Subjects"
+      id=""
+      class="text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 border appearance-none border-gray-700/80 bg-gray-900/20 rounded-xl text-center p-2"
+      [(ngModel)]="SelectedSubject"
+    >
+      <ng-container *ngFor="let subject of subjects">
+        <option [ngValue]="subject">{{ subject.name }}</option>
+      </ng-container>
+    </select>
+
+    <select
+      name="Unit"
+      id="Unit"
+      class="text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 border appearance-none border-gray-700/80 bg-gray-900/20 rounded-xl text-center p-2"
+      [(ngModel)]="Unit"
+    >
+      <option selected [value]="1">1ª Unidade</option>
+      <option selected [value]="2">2ª Unidade</option>
+      <option selected [value]="3">3ª Unidade</option>
+      <option selected [value]="4">4ª Unidade</option>
+    </select>
+  </div>
+
+  <div
+    class="apresentation flex flex-col justify-center items-center col-start-1 row-start-1 self-start gap-2 leading-none mt-2.5"
+  >
+    <div class="flex gap-4 self-start">
+      <lucide-angular
+        size="24"
+        [img]="TrendingUp"
+        class="my-icon text-blue-400 self-start"
+      ></lucide-angular>
+      <p class="text-white text-xl font-bold leading-none">Minha Disciplina</p>
+    </div>
+  </div>
+
+  <div class="col-start-1 col-end-4 row-start-1 mt-14">
+    <div
+      class="subject-card bg-gray-600/20 p-4 w-full rounded-xl text-white grid grid-cols-3 gap-1.5 relative"
+    >
+      <div class="col-start-1 row-start-1">
+        <p class="text-2xl font-bold">{{ SelectedSubject().name }}</p>
+      </div>
+
+      <div class="flex flex-col col-start-1 row-start-1 gap-0.5 self-end">
+        <p class="text-gray-400/80 text-sm">{{ Teacher().name }}</p>
+        <p class="text-gray-300/35 text-xs">{{ Teacher().email }}</p>
+      </div>
+
+      <div class="flex flex-col col-start-4 text-end gap-2 w-fit self-end items-center">
+        <p class="text-4xl text-green-500 font-bold" [ngClass]="studentstatuscolor.css">{{ subjectscore }}</p>
+        <p class="px-3 py-0.5 rounded-xl w-fit font-bold" [ngClass]="statusConfig.css">
+  {{ stundentstatus() }}
+</p>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col gap-4 col-start-1 col-end-4">
+
+  <div class="flex flex-col gap-3">
+    <p class="text-gray-400/75 text-lg">Correções</p>
+
+    <ng-container *ngIf="viewsubmittedtasks.length > 0; else noTasks">
+      <ng-container *ngFor="let submittedtask of viewsubmittedtasks">
+        <div class="bg-gray-600/20 w-full rounded-xl text-white p-4 flex justify-between items-center">
+          <div class="flex flex-col gap-1">
+            <p class="font-semibold text-lg">{{ submittedtask.name }}</p>
+            <p class="text-gray-400 text-sm">{{ Teacher().email }}</p>
+          </div>
+          <p class="text-green-500 text-sm">{{submittedtask.score | number:'1.1-1'}}</p>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noTasks>
+      <div class="flex items-center gap-3 bg-gray-700/20 rounded-xl p-4">
+        <div class="w-9 h-9 rounded-full bg-gray-700/50 flex items-center justify-center shrink-0">
+          <lucide-angular size="16" [img]="FileText" class="my-icon text-gray-500"></lucide-angular>
+        </div>
+        <p class="text-gray-500 text-sm">Nenhuma correção disponível</p>
+      </div>
+    </ng-template>
+  </div>
+  <div class="flex flex-col gap-2">
+    <p class="text-gray-400/75 text-lg">Próximas Provas</p>
+
+    <ng-container *ngFor="let nexttest of viewnexttests">
+      <div class="bg-blue-500/10 border border-blue-500/20 p-4 rounded-xl flex justify-between items-center">
+        <div class="flex flex-col gap-1">
+          <p class="text-white font-semibold">{{ nexttest.name }}</p>
+          <p class="text-gray-400 text-xs">{{ nexttest.description }}</p>
+        </div>
+        <span class="text-blue-300 text-xs bg-blue-500/20 px-3 py-1 rounded-lg shrink-0">
+          {{ nexttest.expirationDate | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="viewnexttests.length === 0">
+      <div class="flex items-center gap-3 bg-gray-700/20 rounded-xl p-4">
+        <div class="w-9 h-9 rounded-full bg-gray-700/50 flex items-center justify-center shrink-0">
+          <lucide-angular size="16" [img]="Calendar" class="my-icon text-gray-500"></lucide-angular>
+        </div>
+        <p class="text-gray-500 text-sm">Nenhuma prova pendente</p>
+      </div>
+    </ng-container>
+  </div>
+
+   
+ 
+
+
+</div>

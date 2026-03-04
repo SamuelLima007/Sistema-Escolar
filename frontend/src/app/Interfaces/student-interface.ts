@@ -10,5 +10,5 @@ export interface StudentInterface {
   score2: number;
   score3: number;
   score4: number;
-  submittedtasks: SubmittedTaskInterface[]
+  submittedTasks: SubmittedTaskInterface[]
 }

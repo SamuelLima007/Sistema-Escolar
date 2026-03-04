@@ -60,5 +60,9 @@ namespace Backend.Domain.Repository.School
             return await _context.TeacherAssignments.Where(x => x.ClassId == classId).ToListAsync();
         }
 
+        public async Task<TeacherAssignment> GetBySubjectAndClassIdAsync(int subjectId, int classId)
+        {
+            return await _context.TeacherAssignments.FirstOrDefaultAsync(x => x.ClassId == classId && x.SubjectId == subjectId);
+        }
     }
 }

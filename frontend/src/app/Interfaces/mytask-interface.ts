@@ -10,4 +10,5 @@ export interface MyTaskInterface {
   subjectId: number;
   classId: number;
   teacherId: number;
+  type: string;
 }

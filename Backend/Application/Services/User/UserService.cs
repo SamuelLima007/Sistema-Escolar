@@ -42,6 +42,35 @@ namespace ProjetoNotas.WebUi.Services
         {
             try
             {
+                var user = await _userRepository.GetByIdAsync(id);
+                if (user == null)
+                {
+                    return ResponseApiExtension<UserResponse>.CreateApiResponseFail(new ApiResponse<UserResponse>("Usuario inexistente"));
+               
+                }
+
+            
+                var UserResponse = new UserResponse
+                {
+                    Name = user.Name,
+                    Id = user.Id,
+                    Role = user.Role,
+                 
+                };
+              
+                return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado", UserResponse));
+            }
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
+
+        }
+
+        public async Task<ApiResponse<UserResponse>> GetStudentByIdAsync(int id)
+        {
+            try
+            {
                 var user = await _userRepository.CompleteUser(id);
                 if (user == null)
                 {
@@ -65,18 +94,15 @@ namespace ProjetoNotas.WebUi.Services
                     Id = user.Id,
                     Role = user.Role,
                     Class = classresponse,
-                    Score1 = user.Score1,
-                    Score2 = user.Score2,
-                    Score3 = user.Score3,
-                    Score4 = user.Score4,
+                   
                 };
                 UserResponse.ConvertSubmittedTasks(user.SubmittedTasks.ToArray());
              
                 return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado", UserResponse));
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception("Falha interna no servidor");
+                throw new Exception(ex.Message);
             }
 
         }
@@ -150,5 +176,35 @@ namespace ProjetoNotas.WebUi.Services
             }
 
         }
+
+        public async Task<ApiResponse<UserResponse>> GetTeacherByClassAndSubject(int subjectId, int classId)
+        {
+            try
+            {
+                var assignment = await _teacherassignmentRepository.GetBySubjectAndClassIdAsync(subjectId, classId);
+                var user = await _userRepository.GetByIdAsync(assignment.TeacherId);
+                if (user == null)
+                {
+                    return ResponseApiExtension<UserResponse>.CreateApiResponseFail(new ApiResponse<UserResponse>("Usuario inexistente"));
+                }
+                var teacher = new TeacherResponse()
+                {
+                    Name = user.Name,
+                    email = user.Email,
+                    Role = user.Role,
+                  
+                };
+
+                return ResponseApiExtension<UserResponse>.CreateApiResponseSucess(new ApiResponse<UserResponse>("Usuario encontrado com sucesso", teacher));
+            }
+
+            catch (Exception)
+            {
+                throw new Exception("Falha interna no servidor");
+            }
+
+        }
+
+        
     }
 }

@@ -16,5 +16,7 @@ namespace ProjetoNotas.Domain.Interfaces
         Task UpdateAsync(User user);
         Task DeleteAsync(User user);
      Task<User> CompleteUser(int id);
+
+  
     }
 }

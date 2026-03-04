@@ -11,6 +11,7 @@ namespace Backend.Domain.Models
 {
     [JsonDerivedType(typeof(UserResponse), typeDiscriminator: "base")]
     [JsonDerivedType(typeof(StudentResponse), typeDiscriminator: "Student")]
+    [JsonDerivedType(typeof(TeacherResponse), typeDiscriminator: "Teacher")]
     public class UserResponse
     {
         public int Id { get; set; }

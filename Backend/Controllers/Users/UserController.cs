@@ -40,9 +40,9 @@ namespace ProjetoNotas.WebUi.Conaollers
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -55,9 +55,9 @@ namespace ProjetoNotas.WebUi.Conaollers
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
-            catch
+           catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -70,9 +70,9 @@ namespace ProjetoNotas.WebUi.Conaollers
                 if (response.Data.Name == model.Name && response.Result == false) return Conflict(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -86,9 +86,9 @@ namespace ProjetoNotas.WebUi.Conaollers
                 else if (response.Data.Email == model.Email && response.Result == false) return Conflict(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -101,9 +101,42 @@ namespace ProjetoNotas.WebUi.Conaollers
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
+            }
+        }
+
+        [HttpGet("teacher/{subjectId}/{classId}")]
+        public async Task<ActionResult<bool>> GetTeacherByClassAndSubject(int subjectId, int classId)
+        {
+            try
+            {
+                var response = await _userService.GetTeacherByClassAndSubject(subjectId, classId);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Falha interna no servidor" + ex.Message);
+            }
+        }
+
+        [HttpGet("student")]
+       public async Task<ActionResult<User>> GetStudentById([FromRoute] int id)
+        {
+           
+            var loggedId = User.GetUserLoggedId();
+
+            try
+            {
+                var response = await _userService.GetStudentByIdAsync(loggedId);
+                if (response.Data == null && response.Result == false) return NotFound(response);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
     }

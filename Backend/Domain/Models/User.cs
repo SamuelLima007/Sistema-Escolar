@@ -20,14 +20,6 @@ namespace ProjetoNotas.Domain.Models
         public int? ClassId { get; set; }
            public Class Class { get; set; } 
 
-        public int? Score1 { get; set; }
-
-        public int? Score2 { get; set; }
-
-        public int? Score3 { get; set; }
-
-        public int? Score4 { get; set; }
-
         public ICollection<MyTask>? MyTasks { get; set; } = new List<MyTask>();
         public ICollection<Subject> Subjects { get; set; } = new List<Subject>();
         public ICollection<Class>? Classes { get; set; } = new List<Class>();

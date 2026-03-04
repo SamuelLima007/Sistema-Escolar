@@ -99,7 +99,9 @@ namespace ProjetoNotas.Application.Services
                     ClassId = model.Classid,
                     SubjectId = model.SubjectId,
                     TeacherId = loggedId,
-                    score = model.Score
+                    score = model.Score,
+                    Type = model.Type,
+                    Unit = model.Unit
                 };
 
                 await _mytaskRepository.AddAsync(mytask);

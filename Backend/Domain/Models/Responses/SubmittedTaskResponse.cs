@@ -14,6 +14,10 @@ namespace Backend.Domain.Models.Responses
 
         public int MyTaskId { get; set; }
 
-        public decimal Score { get; set; }
+        public float Score { get; set; }
+
+        public int SubjectId { get; set; }
+
+        public int Unit { get; set; }
     }
 }

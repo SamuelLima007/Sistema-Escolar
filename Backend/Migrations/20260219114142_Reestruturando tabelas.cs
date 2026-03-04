@@ -6,7 +6,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ProjetoNotas.Migrations
 {
     /// <inheritdoc />
-    public partial class Update : Migration
+    public partial class Reestruturandotabelas : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,8 @@ namespace ProjetoNotas.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Grade = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
+                    Grade = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    UserId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -35,11 +36,7 @@ namespace ProjetoNotas.Migrations
                     Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Password = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Role = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
-                    ClassId = table.Column<int>(type: "integer", nullable: true),
-                    Score1 = table.Column<int>(type: "integer", nullable: true),
-                    Score2 = table.Column<int>(type: "integer", nullable: true),
-                    Score3 = table.Column<int>(type: "integer", nullable: true),
-                    Score4 = table.Column<int>(type: "integer", nullable: true)
+                    ClassId = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,30 +46,6 @@ namespace ProjetoNotas.Migrations
                         column: x => x.ClassId,
                         principalTable: "Class",
                         principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ClassUser",
-                columns: table => new
-                {
-                    ClassesId = table.Column<int>(type: "integer", nullable: false),
-                    TeachersId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ClassUser", x => new { x.ClassesId, x.TeachersId });
-                    table.ForeignKey(
-                        name: "FK_ClassUser_Class_ClassesId",
-                        column: x => x.ClassesId,
-                        principalTable: "Class",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ClassUser_Users_TeachersId",
-                        column: x => x.TeachersId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,6 +103,7 @@ namespace ProjetoNotas.Migrations
                     score = table.Column<int>(type: "integer", nullable: false),
                     CreationDate = table.Column<string>(type: "character varying(48)", nullable: false),
                     ExpirationDate = table.Column<string>(type: "character varying(48)", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false),
                     SubjectId = table.Column<int>(type: "integer", nullable: false),
                     ClassId = table.Column<int>(type: "integer", nullable: false),
                     TeacherId = table.Column<int>(type: "integer", nullable: false)
@@ -146,7 +120,8 @@ namespace ProjetoNotas.Migrations
                         name: "FK_Task_Subject_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subject",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Task_Users_TeacherId",
                         column: x => x.TeacherId,
@@ -211,6 +186,11 @@ namespace ProjetoNotas.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Class_UserId",
+                table: "Class",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClassSubject_ClassId_SubjectId",
                 table: "ClassSubject",
                 columns: new[] { "ClassId", "SubjectId" },
@@ -220,11 +200,6 @@ namespace ProjetoNotas.Migrations
                 name: "IX_ClassSubject_SubjectId",
                 table: "ClassSubject",
                 column: "SubjectId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ClassUser_TeachersId",
-                table: "ClassUser",
-                column: "TeachersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subject_Name",
@@ -289,16 +264,24 @@ namespace ProjetoNotas.Migrations
                 table: "Users",
                 column: "Email",
                 unique: true);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Class_Users_UserId",
+                table: "Class",
+                column: "UserId",
+                principalTable: "Users",
+                principalColumn: "Id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "ClassSubject");
+            migrationBuilder.DropForeignKey(
+                name: "FK_Class_Users_UserId",
+                table: "Class");
 
             migrationBuilder.DropTable(
-                name: "ClassUser");
+                name: "ClassSubject");
 
             migrationBuilder.DropTable(
                 name: "SubmittedTask");

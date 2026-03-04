@@ -32,9 +32,9 @@ namespace Backend.Controllers.Users
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -51,9 +51,9 @@ namespace Backend.Controllers.Users
                 }
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -71,9 +71,9 @@ namespace Backend.Controllers.Users
                 }
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
 
@@ -86,9 +86,9 @@ namespace Backend.Controllers.Users
                 if (response.Data == null && response.Result == false) return NotFound(response);
                 return Ok(response);
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest("Falha interna no servidor");
+                return BadRequest("Falha interna no servidor" + ex.Message);
             }
         }
     }

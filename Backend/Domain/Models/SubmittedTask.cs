@@ -16,6 +16,6 @@ namespace Backend.Domain.Models
         public int MyTaskId { get; set; }
         public MyTask Task { get; set; }
 
-        public decimal Score { get; set; }
+        public float Score { get; set; }
     }
 }
