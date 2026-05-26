@@ -1,12 +1,16 @@
-<nav class="flex p-2 lg:px-4 lg:py-2 bg-slate-950 border-b border-slate-700">
-  <app-logo-icon></app-logo-icon>
+<nav class="relative flex items-center px-4 py-3 bg-gray-950 border-b border-white/[0.06] shadow-lg">
 
-  <div class="flex flex-col justify-center px-2 relative ml-1">
-    <h1 class="text-white text-xl">Schooly</h1>
-    <p class="text-slate-400/70 text-xs">Portal do Aluno</p>
+  <div class="absolute inset-0 bg-gradient-to-r from-blue-500/3 via-transparent to-purple-500/3 pointer-events-none"></div>
+
+  <div class="flex items-center gap-3 shrink-0">
+    <app-logo-icon></app-logo-icon>
+    <div class="flex flex-col leading-tight">
+      <h1 class="text-white text-sm font-semibold tracking-wide">Schooly</h1>
+      <p class="text-white/25 text-[10px] font-mono uppercase tracking-wider">Portal do Aluno</p>
+    </div>
   </div>
 
-  <div class="ml-auto flex gap-2 lg:gap-2 relative items-center mb-1">
+   <div class="ml-auto flex gap-2 lg:gap-2 relative items-center mb-1">
     <app-bell-icon></app-bell-icon>
     <div
       [ngClass]="{ visible: Notification }"
@@ -15,4 +19,5 @@
     <app-logout-icon (click)="Loggout()"></app-logout-icon>
   </div>
   <div></div>
+
 </nav>

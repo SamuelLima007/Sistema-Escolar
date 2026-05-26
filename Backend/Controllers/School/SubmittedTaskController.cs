@@ -13,7 +13,7 @@ namespace Backend.Controllers.School
 {
     [ApiController]
     [Route("submittedtasks")]
-    //[Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
+    [Authorize(Roles = "School_Admin, Super_Admin, Teacher")]
 
     public class SubmittedTaskController : ControllerBase
     {

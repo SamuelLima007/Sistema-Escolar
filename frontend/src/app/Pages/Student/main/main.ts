@@ -25,9 +25,7 @@ import { PendingTestsCard } from '../../../Components/cards/Student/pending-test
 export class Main {
   constructor(private _userservice: Userservice) {}
 
-  
 
-  
   ngOnInit(): void {
     this.GetUserLogged();
   }

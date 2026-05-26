@@ -6,6 +6,5 @@ export interface ClassInterface {
   grade: string;
   subjects: SubjectInterface[];
    myTasks: MyTaskInterface[];
- 
 }
 
